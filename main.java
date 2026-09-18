@@ -1,17 +1,28 @@
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        String sequence = args[0];
+        String user_input = args[0];
+        String type = args[1];
 
-        // Roep getLength functie aan met sequentie meegegeven.
-        int length = SequenceFunctions.getLength(sequence);
+        if (user_input.endsWith(".gtf")) {
+            ReadGTF.getGTFPath(user_input, type);
 
-        // Roep getGCPercentage aan en geef sequentie ook mee.
-        double gc_percentage = SequenceFunctions.getGCPercentage(sequence);
+            String result = ReadGTF.getGTFPath(user_input, type);
+            System.out.println(type + ": " + result);
+        }
+        else    {
+            // Roep getLength functie aan met sequentie meegegeven.
+            int length = SequenceFunctions.getLength(user_input);
 
-        // Moet wel even netjes natuurlijk.
-        System.out.println("Sequence: " + sequence);
-        System.out.println("Length: " + length);
-        System.out.println("GC percentage: " + gc_percentage);
+            // Roep getGCPercentage aan en geef sequentie ook mee.
+            double gc_percentage = SequenceFunctions.getGCPercentage(user_input);
+
+            // Moet wel even netjes natuurlijk.
+            System.out.println("Sequence: " + user_input);
+            System.out.println("Length: " + length);
+            System.out.println("GC percentage: " + gc_percentage);
+        }
     }
 }
