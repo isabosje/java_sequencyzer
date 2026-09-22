@@ -8,19 +8,35 @@ public class SequenceFunctions {
 
     // Deze functie gebruikt een for en if statement om het GC percentage te berekenen en terug te geven.
     public static double getGCPercentage(String user_input) {
+        boolean is_valid_nucleotide = true;
+
         double gc_bases = 0;
 
         for (int i = 0; i < user_input.length(); i++) {
 
+            char nucleotide = user_input.charAt(i);
+
+            if (nucleotide != 'A' && nucleotide != 'a' &&
+                    nucleotide != 'C' && nucleotide != 'c' &&
+                    nucleotide != 'G' && nucleotide != 'g' &&
+                    nucleotide != 'T' && nucleotide != 't' &&
+                    nucleotide != 'U' && nucleotide != 'u') {
+
+                is_valid_nucleotide = false;
+            }
+
             // Char commando pakt een character en onthoud deze.
             // Wordt hier gebruikt om G en C op te tellen in sequentie.
-            if (user_input.charAt(i) == 'G' || user_input.charAt(i) == 'g') {
+            if (nucleotide == 'G' || nucleotide == 'g') {
                 gc_bases++;
             }
 
-            if (user_input.charAt(i) == 'C' || user_input.charAt(i) == 'c') {
+            if (nucleotide == 'C' || nucleotide == 'c') {
                 gc_bases++;
             }
+        }
+        if (!is_valid_nucleotide) {
+            return -1;
         }
 
         double gc_percentage = gc_bases / user_input.length() * 100;
