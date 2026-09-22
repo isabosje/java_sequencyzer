@@ -3,31 +3,12 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        // Probeer hier alle opties te laten zien als ze niks invullen
-        // Soort --help
-        if (args.length == 0 || args[0].equals("help")) {
-            System.out.println("DSequencyzer -> GTF-files");
-            System.out.println();
-            System.out.println("Options:");
-            System.out.println("seqname");
-            System.out.println("source");
-            System.out.println("feature");
-            System.out.println("start");
-            System.out.println("end");
-            System.out.println("score");
-            System.out.println("strand");
-            System.out.println("frame");
-            System.out.println("attributes");
-
-            return;
-        }
-
         String user_input = args[0];
-        String type = args[1];
+        String gtf_option = args[1];
 
         if (user_input.endsWith(".gtf")) {
-            String result = ReadGTF.getGTFPath(user_input, type);
-            System.out.println(type + ": " + result);
+            String result = ReadGTF.getGTFPath(user_input, gtf_option);
+            System.out.println(gtf_option + ": " + result);
         }
         else    {
             // Roep getLength functie aan met sequentie meegegeven.
