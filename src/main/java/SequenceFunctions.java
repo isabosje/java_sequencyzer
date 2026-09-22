@@ -1,3 +1,5 @@
+import javax.crypto.AEADBadTagException;
+
 public class SequenceFunctions {
 
     // Deze functie gebruikt .length om de lengte van de sequentie terug te geven.
@@ -42,5 +44,24 @@ public class SequenceFunctions {
         double gc_percentage = gc_bases / user_input.length() * 100;
 
         return gc_percentage;
+    }
+
+    public static int getStartStop(String dna_sequence)  {
+        int startPosition = dna_sequence.indexOf("ATG");
+
+        if (startPosition == -1) {
+            return -1;
+        }
+        for (int i = startPosition; i < dna_sequence.length() -2; i += 3) {
+            String codon = dna_sequence.substring(i, i + 3);
+            if (codon.equals("TGA") ||
+            codon.equals("TGA") ||
+            codon.equals("TAA")) {
+                return i;
+            }
+        }
+
+    return -1
+
     }
 }

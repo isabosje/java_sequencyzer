@@ -27,10 +27,14 @@ public class Main {
 
                 if (gc_percentage == -1) {
                     System.out.println("Invalid sequence. A sequence can only consist of A, C, T, G and U nucleotides.");
-                }
-                else {
+                } else {
                     System.out.println("GC percentage: " + gc_percentage);
                 }
+            }
+                // Roep getStartStop aan.
+            else if (sequence_option.equals("startstop")) {
+                    int startStop = SequenceFunctions.getStartStop(user_input);
+                    System.out.println("Start/stop position: " + startStop);
             }
         }
     }
