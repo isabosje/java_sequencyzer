@@ -1,12 +1,24 @@
+import java.io.IOException;
+
 public class SequenceFunctions {
 
-    // Deze functie gebruikt .length om de lengte van de sequentie terug te geven.
+    /**
+     * Returns the length of a given sequence through the terminal.
+     *
+     * @param user_input - the given sequence
+     * @return user_input.length - the length of the given DNA sequence
+     */
     public static int getLength(String user_input) {
 
         return user_input.length();
     }
 
-    // Deze functie gebruikt een for en if statement om het GC percentage te berekenen en terug te geven.
+    /**
+     * Returns the percentage of G and C nucleotides by using a for-loop and if-statements.
+     *
+     * @param user_input - the given sequence
+     * @return gc_percentage - the percentage of G and C nucleotides
+     */
     public static double getGCPercentage(String user_input) {
         boolean is_valid_nucleotide = true;
 
@@ -25,8 +37,6 @@ public class SequenceFunctions {
                 is_valid_nucleotide = false;
             }
 
-            // Char commando pakt een character en onthoud deze.
-            // Wordt hier gebruikt om G en C op te tellen in sequentie.
             if (nucleotide == 'G' || nucleotide == 'g') {
                 gc_bases++;
             }

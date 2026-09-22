@@ -1,19 +1,30 @@
 import java.io.IOException;
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        String user_input = args[0];
+        String user_input = args[1];
+
+        File file = new File(user_input);
 
         if (user_input.endsWith(".gtf")) {
-            String gtf_option = args[1];
+            String gtf_option = args[0];
 
-            String result = ReadGTF.getGTFPath(user_input, gtf_option);
+            String result = GTFFunctions.getGTFColumn(user_input, gtf_option);
             System.out.println(gtf_option + ": " + result);
         }
 
+        else if (file.isFile()) {
+            String file_option = args[0];
+
+            if (file_option.equals("head")) {
+                FileFunctions.getHeader(user_input);
+            }
+        }
+
         else {
-            String sequence_option = args[1];
+            String sequence_option = args[0];
 
             // Roep getLength functie aan met sequentie meegegeven.
             if (sequence_option.equals("length")) {

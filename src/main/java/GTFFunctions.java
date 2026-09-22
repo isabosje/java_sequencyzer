@@ -1,8 +1,14 @@
 import java.io.*;
 
-public class ReadGTF {
+public class GTFFunctions {
 
-    public static String getGTFPath(String filePath, String option) throws IOException {
+    /**
+     * Returns the specific column or data requested by the user in a GTF-file.
+     *
+     * @param filePath the path to the file
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     */
+    public static String getGTFColumn(String filePath, String option) throws IOException {
         if (filePath.endsWith(".gtf")) {
 
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
