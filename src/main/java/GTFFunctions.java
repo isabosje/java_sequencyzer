@@ -65,6 +65,6 @@ public class GTFFunctions {
             reader.close();
         }
 
-        return "";
+        return " ";
     }
 }
