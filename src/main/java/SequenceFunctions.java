@@ -55,7 +55,7 @@ public class SequenceFunctions {
         for (int i = startPosition; i < dna_sequence.length() -2; i += 3) {
             String codon = dna_sequence.substring(i, i + 3);
             if (codon.equals("TGA") ||
-            codon.equals("TGA") ||
+            codon.equals("TAG") ||
             codon.equals("TAA")) {
                 return i;
             }
