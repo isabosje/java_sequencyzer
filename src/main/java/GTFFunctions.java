@@ -5,54 +5,56 @@ public class GTFFunctions {
     /**
      * Returns the specific column or data requested by the user in a GTF-file.
      *
-     * @param filePath the path to the file
+     * @param user_input the path to the file
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static String getGTFColumn(String filePath, String option) throws IOException {
-        if (filePath.endsWith(".gtf")) {
+    public static String getGTFColumn(String user_input, String gtf_option) throws IOException {
+        if (user_input.endsWith(".gtf")) {
 
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            // BufferedReader can read the lines and FileReader opens the file.
+            BufferedReader reader = new BufferedReader(new FileReader(user_input));
 
             String line = reader.readLine();
 
             while (line != null) {
 
+                // Skip all the # in the beginning (= no data).
                 if (!line.startsWith("#")) {
                     String[] columns = line.split("\t");
 
-                    if (option.equals("seqname")) {
+                    if (gtf_option.equals("seqname")) {
                         return columns[0];
                     }
 
-                    if (option.equals("source")) {
+                    if (gtf_option.equals("source")) {
                         return columns[1];
                     }
 
-                    if (option.equals("feature")) {
+                    if (gtf_option.equals("feature")) {
                         return columns[2];
                     }
 
-                    if (option.equals("start")) {
+                    if (gtf_option.equals("start")) {
                         return columns[3];
                     }
 
-                    if (option.equals("end")) {
+                    if (gtf_option.equals("end")) {
                         return columns[4];
                     }
 
-                    if (option.equals("score")) {
+                    if (gtf_option.equals("score")) {
                         return columns[5];
                     }
 
-                    if (option.equals("strand")) {
+                    if (gtf_option.equals("strand")) {
                         return columns[6];
                     }
 
-                    if (option.equals("frame")) {
+                    if (gtf_option.equals("frame")) {
                         return columns[7];
                     }
 
-                    if (option.equals("attributes")) {
+                    if (gtf_option.equals("attributes")) {
                         return columns[8];
                     }
                 }
