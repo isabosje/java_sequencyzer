@@ -5,66 +5,33 @@ public class GTFFunctions {
     /**
      * Returns the specific column or data requested by the user in a GTF-file.
      *
-     * @param user_input the path to the file
+     * @param input_file the path to the file
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static String getGTFColumn(String user_input, String gtf_option) throws IOException {
-        if (user_input.endsWith(".gtf")) {
+    public static int countFeatures(String input_file, String feature) throws IOException {
 
-            // BufferedReader can read the lines and FileReader opens the file.
-            BufferedReader reader = new BufferedReader(new FileReader(user_input));
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
-            String line = reader.readLine();
+        String line = reader.readLine();
+        int count = 0;
 
-            while (line != null) {
+        while (line != null) {
 
-                // Skip all the # in the beginning (= no data).
-                if (!line.startsWith("#")) {
-                    String[] columns = line.split("\t");
+            if (!line.startsWith("#")) {
+                String[] columns = line.split("\t");
 
-                    if (gtf_option.equals("seqname")) {
-                        return columns[0];
-                    }
-
-                    if (gtf_option.equals("source")) {
-                        return columns[1];
-                    }
-
-                    if (gtf_option.equals("feature")) {
-                        return columns[2];
-                    }
-
-                    if (gtf_option.equals("start")) {
-                        return columns[3];
-                    }
-
-                    if (gtf_option.equals("end")) {
-                        return columns[4];
-                    }
-
-                    if (gtf_option.equals("score")) {
-                        return columns[5];
-                    }
-
-                    if (gtf_option.equals("strand")) {
-                        return columns[6];
-                    }
-
-                    if (gtf_option.equals("frame")) {
-                        return columns[7];
-                    }
-
-                    if (gtf_option.equals("attributes")) {
-                        return columns[8];
-                    }
+                if (columns[2].equals(feature)) {
+                    count++;
                 }
-
-                line = reader.readLine();
             }
 
-            reader.close();
+            line = reader.readLine();
         }
 
-        return " ";
+        reader.close();
+
+        return count;
     }
 }
+
+    public static int

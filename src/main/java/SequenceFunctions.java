@@ -1,21 +1,19 @@
-import java.io.IOException;
-
 public class SequenceFunctions {
 
     /**
      * Returns if all nucleotides in a sequence are valid nucleotides by using a boolean.
      *
-     * @param user_input - the given sequence
+     * @param input_file - the given sequence
      * @return is_valid_nucleotide - valid nucleotides will return true, otherwise it will return false
      */
-    public static boolean isValidNucleotide(String user_input) {
+    public static boolean isValidNucleotide(String input_file) {
 
         boolean is_valid_nucleotide = true;
 
         // Loop over all nucleotides / elements
-        for (int i = 0; i < user_input.length(); i++) {
+        for (int i = 0; i < input_file.length(); i++) {
 
-            char nucleotide = user_input.charAt(i);
+            char nucleotide = input_file.charAt(i);
 
             // Check if this can be done more efficiently.
             if (nucleotide != 'A' && nucleotide != 'a' &&
