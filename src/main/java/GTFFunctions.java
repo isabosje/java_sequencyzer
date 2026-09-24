@@ -1,27 +1,43 @@
 import java.io.*;
+import java.util.HashMap;
 
 public class GTFFunctions {
 
     /**
-     * Returns the specific column or data requested by the user in a GTF-file.
+     * Returns the count of all features in the terminal.
      *
      * @param input_file the path to the file
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static int countFeatures(String input_file, String feature) throws IOException {
+    public static void summaryCount(String input_file) throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         String line = reader.readLine();
-        int count = 0;
+
+        // Stores each feature and how often it occurs
+        // I used the next site: https://www.w3schools.com/java/java_hashmap.asp#:~:text=A%20HashMap%20stores%20items%20in%20key%2Fvalue%20pairs%2C%20where,use%20a%20key%20to%20retrieve%20its%20associated%20value.
+        HashMap<String, Integer> features = new HashMap<>();
 
         while (line != null) {
 
+            // Skip comments and header lines
             if (!line.startsWith("#")) {
-                String[] columns = line.split("\t");
 
-                if (columns[2].equals(feature)) {
-                    count++;
+                String[] columns = line.split("\t");
+                String feature = columns[2];
+
+                // Check if this feature has already been found
+                if (features.containsKey(feature)) {
+
+                    // Add one to the existing count
+                    int count = features.get(feature);
+                    features.put(feature, count + 1);
+
+                } else {
+
+                    // If feature not found-> start at 1
+                    features.put(feature, 1);
                 }
             }
 
@@ -30,8 +46,14 @@ public class GTFFunctions {
 
         reader.close();
 
-        return count;
+        // Print summary + features and count together
+        System.out.println("GTF Summary");
+        for (String feature : features.keySet()) {
+            System.out.println(feature + ": " + features.get(feature));
+        }
     }
 }
 
-    public static int
+
+
+    // public static int
