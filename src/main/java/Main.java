@@ -14,6 +14,13 @@ public class Main {
             if (gtf_option.equals("summary")) {
                 GTFFunctions.summaryCount(input_file);
             }
+
+            else if (gtf_option.equals("find")) {
+
+                String gene = args[2];
+
+                GTFFunctions.findGene(input_file, gene);
+            }
         }
 
         else {
@@ -38,7 +45,7 @@ public class Main {
                 }
 
                 // Gets length of sequence by referring to getLength.
-                if (sequence_option.equals("length")) {
+                else if (sequence_option.equals("length")) {
                     int length = SequenceFunctions.getLength(input_file);
                     System.out.println("Length: " + length);
                 }

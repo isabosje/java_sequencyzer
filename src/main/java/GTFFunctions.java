@@ -49,11 +49,48 @@ public class GTFFunctions {
         // Print summary + features and count together
         System.out.println("GTF Summary");
         for (String feature : features.keySet()) {
-            System.out.println(feature + ": " + features.get(feature));
+            System.out.println(feature + " : " + features.get(feature));
         }
+    }
+
+    /**
+     * Filters on a gene and gives back all lines connected to the gene.
+     * Saves those lines in a seperate .gtf file.
+     *
+     * @param input_file the path to the file
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     */
+    public static void findGene(String input_file, String gene)
+            throws IOException {
+
+        // Read .gtf file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        // Writes new .gtf file with chosen lines
+        BufferedWriter writer = new BufferedWriter(new FileWriter(gene + ".gtf"));
+
+        String line = reader.readLine();
+
+        while (line != null) {
+
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
+
+                // Print line if gene is in it
+                if (columns[8].contains(gene)) {
+                    System.out.println(line);
+
+                    writer.write(line);
+                    writer.newLine();
+                }
+            }
+
+            line = reader.readLine();
+        }
+
+        reader.close();
+        writer.close();
     }
 }
 
-
-
-    // public static int
