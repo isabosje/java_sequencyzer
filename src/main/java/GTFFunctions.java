@@ -7,7 +7,7 @@ public class GTFFunctions {
     /**
      * Returns the count of all features in the terminal.
      *
-     * @param input_file the path to the file
+     * @param input_file   the path to the file
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public static void summaryCount(String input_file) throws IOException {
@@ -58,8 +58,9 @@ public class GTFFunctions {
      * Filters on a gene and gives back all lines connected to the gene.
      * Saves those lines in a seperate .gtf file.
      *
-     * @param input_file the path to the file
-     * @param option     input argument 2
+     * @param input_file   the path to the file
+     * @param option       input argument 2 - the feature the user wants to filter
+     * @param value        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public static void findValue(String input_file, String option, String value)
@@ -116,10 +117,10 @@ public class GTFFunctions {
     /**
      * Filters a certain region between an end and start point on a chromosome.
      *
-     * @param input_file the path to the file
-     * @param chromosome input a chromosome
-     * @param start input the start coordinates
-     * @param end input the end coordinates
+     * @param input_file   the path to the file
+     * @param chromosome   input a chromosome
+     * @param start        input the start coordinates
+     * @param end          input the end coordinates
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public static void findRegion(String input_file, String chromosome, String start, String end) throws IOException {

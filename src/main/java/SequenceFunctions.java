@@ -3,8 +3,8 @@ public class SequenceFunctions {
     /**
      * Returns if all nucleotides in a sequence are valid nucleotides by using a boolean.
      *
-     * @param input_file - the given sequence
-     * @return is_valid_nucleotide - valid nucleotides will return true, otherwise it will return false
+     * @param input_file           the given sequence
+     * @return is_valid_nucleotide valid nucleotides will return true, otherwise it will return false
      */
     public static boolean isValidNucleotide(String input_file) {
 
@@ -34,8 +34,8 @@ public class SequenceFunctions {
         /**
          * Returns the length of a given sequence through the terminal.
          *
-         * @param user_input - the given sequence
-         * @return user_input.length - the length of the given DNA sequence
+         * @param user_input         the given sequence
+         * @return user_input.length the length of the given DNA sequence
          */
         public static int getLength (String user_input){
 
@@ -45,8 +45,8 @@ public class SequenceFunctions {
         /**
          * Returns the percentage of G and C nucleotides by using a for-loop and if-statements.
          *
-         * @param user_input - the given sequence
-         * @return gc_percentage - the percentage of G and C nucleotides
+         * @param user_input     the given sequence
+         * @return gc_percentage the percentage of G and C nucleotides
          */
         public static double getGCPercentage (String user_input){
             double gc_bases = 0;

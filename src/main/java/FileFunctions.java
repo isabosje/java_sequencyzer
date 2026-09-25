@@ -6,7 +6,7 @@ public class FileFunctions {
     /**
      * Reads the first 10 lines of a file.
      *
-     * @param input_file the path to the file
+     * @param input_file   the path to the file
      * @throws IOException if the file cannot be read
      */
     public static void getHeader(String input_file) throws IOException {
