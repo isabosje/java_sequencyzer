@@ -10,7 +10,8 @@ import java.io.IOException;
 
 public class ReadBLAST {
 
-    public static void readBlast(String filePath) throws IOException {
+    public static String readBlast(String filePath) throws IOException {
+        // Blast bestand verwerken v0.1
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 

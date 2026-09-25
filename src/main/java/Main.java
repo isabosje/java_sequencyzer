@@ -12,6 +12,15 @@ public class Main {
             System.out.println(gtf_option + ": " + result);
         }
 
+        // blast-functie wordt aangeroepen
+        else if (user_input.endsWith(".blast")) {
+            String blast_option = args[1];
+
+            String result = ReadBLAST.readBlast(user_input, blast_option);
+            System.out.println(blast_option + ":  " + result);
+        }
+        // rest BLAST afhandeling
+
         else {
             String sequence_option = args[1];
 
