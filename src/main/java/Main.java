@@ -17,9 +17,10 @@ public class Main {
 
             else if (gtf_option.equals("find")) {
 
-                String gene = args[2];
+                String option = args[2];
+                String value = args[3];
 
-                GTFFunctions.findGene(input_file, gene);
+                GTFFunctions.findValue(input_file, option, value);
             }
         }
 

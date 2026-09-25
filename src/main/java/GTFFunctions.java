@@ -58,16 +58,17 @@ public class GTFFunctions {
      * Saves those lines in a seperate .gtf file.
      *
      * @param input_file the path to the file
+     * @param option     input argument 2
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static void findGene(String input_file, String gene)
+    public static void findValue(String input_file, String option, String value)
             throws IOException {
 
         // Read .gtf file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         // Writes new .gtf file with chosen lines
-        BufferedWriter writer = new BufferedWriter(new FileWriter(gene + ".gtf"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(value + ".gtf"));
 
         String line = reader.readLine();
 
@@ -77,15 +78,33 @@ public class GTFFunctions {
 
                 String[] columns = line.split("\t");
 
-                // Print line if gene is in it
-                if (columns[8].contains(gene)) {
-                    System.out.println(line);
+                if (option.equals("gene")) {
 
-                    writer.write(line);
-                    writer.newLine();
+                    if (columns[8].contains(value)) {
+                        System.out.println(line);
+                        writer.write(line);
+                        writer.newLine();
+                    }
+
+                } else if (option.equals("chromosome")) {
+
+                    if (columns[0].equals(value)) {
+                        System.out.println(line);
+                        writer.write(line);
+                        writer.newLine();
+                    }
+
+                } else if (option.equals("feature")) {
+
+                    if (columns[2].equals(value)) {
+                        System.out.println(line);
+                        writer.write(line);
+                        writer.newLine();
+                    }
                 }
             }
 
+            // Read next line
             line = reader.readLine();
         }
 
