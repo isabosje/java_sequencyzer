@@ -22,6 +22,15 @@ public class Main {
 
                 GTFFunctions.findValue(input_file, option, value);
             }
+
+            else if (gtf_option.equals("region")) {
+
+                String chromosome = args[2];
+                String start = args[3];
+                String end = args[4];
+
+                GTFFunctions.findRegion(input_file, chromosome, start, end);
+            }
         }
 
         else {

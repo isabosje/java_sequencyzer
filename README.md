@@ -8,6 +8,14 @@ for short: DSequencyzer.
 - This is the file you have to run to use the DSequencyzer.
   This can be done by opening a new terminal, going to the `java_sequencyzer` folder and typing `Java main.java --file --option`
 
-'ReadGTF.java':
--
+'GTFFunctions.java':
+- Uses the user_input and gtf_option to open a .gtf-file and return a specific value the user chooses.
 
+'FileFunctions.java':
+- Uses the user_input and the file_option to analyze any file besides GTF.
+
+'SequenceFunctions.java':
+- 
+
+Map maken voor output files + in .gitignore
+- > 

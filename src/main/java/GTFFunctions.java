@@ -1,4 +1,5 @@
 import java.io.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class GTFFunctions {
@@ -111,5 +112,57 @@ public class GTFFunctions {
         reader.close();
         writer.close();
     }
+
+    /**
+     * Filters a certain region between an end and start point on a chromosome.
+     *
+     * @param input_file the path to the file
+     * @param chromosome input a chromosome
+     * @param start input the start coordinates
+     * @param end input the end coordinates
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     */
+    public static void findRegion(String input_file, String chromosome, String start, String end) throws IOException {
+        // Read .gtf file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        // Writes new .gtf file with chosen lines
+        BufferedWriter writer = new BufferedWriter(new FileWriter(chromosome + ".gtf"));
+
+        // Needs to be integer because of numbers
+        int region_start = Integer.parseInt(start);
+        int region_end = Integer.parseInt(end);
+
+        String line = reader.readLine();
+
+        while (line != null) {
+
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
+
+                // Also needs to be integers because numbers
+                int feature_start = Integer.parseInt(columns[3]);
+                int feature_end = Integer.parseInt(columns[4]);
+
+                // First arg is chromosome number
+                if (columns[0].equals(chromosome)) {
+
+                    // Region falls in between the start and end in the gtf file
+                    if (feature_start >= region_start && feature_end <= region_end) {
+
+                        System.out.println(line);
+
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
+            }
+            line = reader.readLine();
+        }
+        reader.close();
+        writer.close();
+    }
 }
+
 
