@@ -9,3 +9,11 @@ public class SummaryCommand implements Runnable {
     String input_file;
 
     @Override
+    public void run() {
+        try {
+            GTFFunctions.summaryCount(input_file);
+        } catch (IOException e) {
+            System.out.println("Error reading GTF file.");
+        }
+    }
+}

@@ -18,3 +18,11 @@ public class RegionCommand implements Runnable {
     String end;
 
     @Override
+    public void run() {
+        try {
+            GTFFunctions.findRegion(input_file, chromosome, start, end);
+        } catch (IOException e) {
+            System.out.println("Error reading GTF file.");
+        }
+    }
+}
