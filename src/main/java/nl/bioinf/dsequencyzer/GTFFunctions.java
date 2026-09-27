@@ -14,6 +14,8 @@ public class GTFFunctions {
 
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
+        BufferedWriter writer = new BufferedWriter(new FileWriter( input_file + "_summary.txt"));
+
         String line = reader.readLine();
 
         // Stores each feature and how often it occurs

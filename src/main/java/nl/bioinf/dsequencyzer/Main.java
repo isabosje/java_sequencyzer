@@ -1,15 +1,29 @@
-import java.io.IOException;
 import java.io.File;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+@Command(name = "DSequencyzer")
+public class Main implements Runnable {
+
+    // Commandline arguments
+    @Parameters
+    String[] arguments;
+
+    public static void main(String[] args) {
+        new CommandLine(new Main()).execute(args);
+    }
+
+    @Override
+    public void run() {
+
         // input_file = input file / sequence
-        String input_file = args[1];
+        String input_file = arguments[1];
 
         // Check .gtf extension (maybe switch this with file object as well).
         if (input_file.endsWith(".gtf")) {
 
-            String gtf_option = args[0];
+            String gtf_option = arguments[0];
 
             if (gtf_option.equals("summary")) {
                 GTFFunctions.summaryCount(input_file);
@@ -17,17 +31,17 @@ public class Main {
 
             else if (gtf_option.equals("find")) {
 
-                String option = args[2];
-                String value = args[3];
+                String option = arguments[2];
+                String value = arguments[3];
 
                 GTFFunctions.findValue(input_file, option, value);
             }
 
             else if (gtf_option.equals("region")) {
 
-                String chromosome = args[2];
-                String start = args[3];
-                String end = args[4];
+                String chromosome = arguments[2];
+                String start = arguments[3];
+                String end = arguments[4];
 
                 GTFFunctions.findRegion(input_file, chromosome, start, end);
             }
@@ -39,17 +53,17 @@ public class Main {
 
             // Check if file is indeed a file.
             if (file.isFile()) {
-                String file_option = args[0];
+                String file_option = arguments[0];
 
                 if (file_option.equals("head")) {
                     FileFunctions.getHeader(input_file);
                 }
             }
 
-        else {
-            String sequence_option = args[0];
+            else {
+                String sequence_option = arguments[0];
 
-            // Check if sequence consists of valid nucleotides.
+                // Check if sequence consists of valid nucleotides.
                 if (!SequenceFunctions.isValidNucleotide(input_file)) {
                     System.out.println("Invalid sequence. A sequence can only consist of A, C, T, G and U nucleotides.");
                 }
@@ -64,9 +78,9 @@ public class Main {
                 else if (sequence_option.equals("gc")) {
                     double gc_percentage = SequenceFunctions.getGCPercentage(input_file);
                     System.out.println("GC_percentage: " + gc_percentage);
-
                 }
             }
         }
     }
 }
+

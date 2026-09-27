@@ -1,10 +1,11 @@
 plugins {
     id("java")
+    id("application")
     id("com.gradleup.shadow") version "9.6.1"
 }
 
-group = "nl.bioinf.marcelk"
-version = "1.0-SNAPSHOT"
+group = "nl.bioinf.dsequencyzer"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -17,7 +18,10 @@ dependencies {
 
     // Source: https://mvnrepository.com/artifact/info.picocli/picocli
     implementation("info.picocli:picocli:4.7.7")
+}
 
+application {
+    mainClass.set("Main")
 }
 
 tasks.test {
