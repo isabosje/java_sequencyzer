@@ -1,21 +1,26 @@
 package nl.bioinf.dsequencyzer;
+
 import java.io.*;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class GTFFunctions {
 
+    private String input_file;
+
+    public GTFFunctions(String input_file) {
+        this.input_file = input_file;
+    }
+
     /**
      * Returns the count of all features in the terminal.
      *
-     * @param input_file   the path to the file
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static void summaryCount(String input_file) throws IOException {
+    public void summaryCount() throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter( input_file + "_summary.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(input_file + "_summary.txt"));
 
         String line = reader.readLine();
 
@@ -61,12 +66,11 @@ public class GTFFunctions {
      * Filters on a gene and gives back all lines connected to the gene.
      * Saves those lines in a seperate .gtf file.
      *
-     * @param input_file   the path to the file
      * @param option       input argument 2 - the feature the user wants to filter
      * @param value        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static void findValue(String input_file, String option, String value)
+    public void findValue(String option, String value)
             throws IOException {
 
         // Read .gtf file
@@ -120,13 +124,13 @@ public class GTFFunctions {
     /**
      * Filters a certain region between an end and start point on a chromosome.
      *
-     * @param input_file   the path to the file
      * @param chromosome   input a chromosome
      * @param start        input the start coordinates
      * @param end          input the end coordinates
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public static void findRegion(String input_file, String chromosome, String start, String end) throws IOException {
+    public void findRegion(String chromosome, String start, String end) throws IOException {
+
         // Read .gtf file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
@@ -162,11 +166,12 @@ public class GTFFunctions {
                     }
                 }
             }
+
             line = reader.readLine();
         }
+
         reader.close();
         writer.close();
     }
 }
-
 

@@ -1,13 +1,19 @@
 package nl.bioinf.dsequencyzer;
+
 import java.io.IOException;
 
 public class SummaryCommand {
 
-    public static void run(String input_file) {
+    public void run(String input_file) {
+
         try {
-            GTFFunctions.summaryCount(input_file);
+            GTFFunctions gtf = new GTFFunctions(input_file);
+            gtf.summaryCount();
+
         } catch (IOException e) {
             System.out.println("Error reading GTF file.");
         }
     }
 }
+
+

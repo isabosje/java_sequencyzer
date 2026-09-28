@@ -4,22 +4,28 @@ import java.io.*;
 
 public class FileFunctions {
 
+    private String input_file;
+
+    public FileFunctions(String input_file) {
+        this.input_file = input_file;
+    }
+
     /**
-     * Reads the first 10 lines of a file.
+     * Returns the first 10 lines of a file in the terminal.
      *
-     * @param input_file   the path to the file
      * @throws IOException if the file cannot be read
      */
-    public static void getHeader(String input_file) throws IOException {
+    public void getHeader() throws IOException {
 
-        // BufferedReader can read the lines and FileReader opens the file.
+        // Read input file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         String line = reader.readLine();
         int lineNumber = 0;
 
-        // Take only 10 first lines.
+        // Print the first 10 lines
         while (line != null && lineNumber < 10) {
+
             System.out.println(line);
 
             lineNumber++;

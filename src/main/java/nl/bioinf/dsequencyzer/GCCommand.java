@@ -2,14 +2,16 @@ package nl.bioinf.dsequencyzer;
 
 public class GCCommand {
 
-    public static void run(String sequence) {
+    public void run(String sequence) {
 
-        if (!SequenceFunctions.isValidNucleotide(sequence)) {
+        SequenceFunctions sequence_functions = new SequenceFunctions(sequence);
+
+        if (!sequence_functions.isValidNucleotide()) {
             System.out.println("Invalid sequence. A sequence can only consist of A, C, T, G and U nucleotides.");
         }
 
         else {
-            double gc_percentage = SequenceFunctions.getGCPercentage(sequence);
+            double gc_percentage = sequence_functions.getGCPercentage();
             System.out.println("GC_percentage: " + gc_percentage);
         }
     }

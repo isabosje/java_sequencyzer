@@ -1,6 +1,4 @@
 package nl.bioinf.dsequencyzer;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
 import java.io.IOException;
 
 public class FindCommand {
