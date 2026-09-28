@@ -1,15 +1,9 @@
 package nl.bioinf.dsequencyzer;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
+import java.io.IOException;
 
-@Command(name = "summary", description = "Shows a summary of all GTF features.")
-public class SummaryCommand implements Runnable {
+public class SummaryCommand {
 
-    @Parameters(index = "0", description = "Path to the GTF file")
-    String input_file;
-
-    @Override
-    public void run() {
+    public static void run(String input_file) {
         try {
             GTFFunctions.summaryCount(input_file);
         } catch (IOException e) {

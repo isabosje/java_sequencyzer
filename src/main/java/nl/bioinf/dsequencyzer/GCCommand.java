@@ -1,15 +1,8 @@
 package nl.bioinf.dsequencyzer;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Parameters;
 
-@Command(name = "gc", description = "Returns the GC percentage of a nucleotide sequence.")
-public class GCCommand implements Runnable {
+public class GCCommand {
 
-    @Parameters(index = "0", description = "Nucleotide sequence")
-    String sequence;
-
-    @Override
-    public void run() {
+    public static void run(String sequence) {
 
         if (!SequenceFunctions.isValidNucleotide(sequence)) {
             System.out.println("Invalid sequence. A sequence can only consist of A, C, T, G and U nucleotides.");

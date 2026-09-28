@@ -1,3 +1,4 @@
+package nl.bioinf.dsequencyzer;
 import java.io.IOException;
 import java.io.*;
 
