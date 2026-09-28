@@ -1,6 +1,9 @@
 package nl.bioinf.dsequencyzer;
 import picocli.CommandLine;
 
+@CommandLine.Command(
+        name = "GCCommand",
+        description = "Gives GC percentage")
 public class GCCommand implements Runnable {
     @CommandLine.Option( names = {"-g", "--gc"},
             description = "Calculate the GC percentage of a sequence")
