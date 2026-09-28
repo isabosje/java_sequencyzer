@@ -3,6 +3,7 @@ package nl.bioinf.dsequencyzer;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
 @Command(
         name = "DSequencyzer", version="1.0", mixinStandardHelpOptions = true)
@@ -44,14 +45,46 @@ public class Main implements Runnable {
     )
     boolean gc;
 
+    @Parameters(
+            description = "Input file, sequence and additional arguments."
+    )
+    String[] arguments;
+
     public static void main(String[] args) {
         new CommandLine(new Main()).execute(args);
-        System.exit(exitCode);
     }
 
     @Override
     public void run() {
 
+        if (length) {
+            LengthCommand.run(arguments[0]);
+        }
+
+        if (gc) {
+            GCCommand.run(arguments[0]);
+        }
+
+        if (head) {
+            HeadCommand.run(arguments[0]);
+        }
+
+        if (summary) {
+            SummaryCommand.run(arguments[0]);
+        }
+
+        if (find) {
+            FindCommand.run(arguments[0], arguments[1], arguments[2]);
+        }
+
+        if (region) {
+            RegionCommand.run(
+                    arguments[0],
+                    arguments[1],
+                    arguments[2],
+                    arguments[3]
+            );
+        }
     }
 }
 

@@ -1,3 +1,4 @@
+package nl.bioinf.dsequencyzer;
 import java.io.*;
 import java.io.IOException;
 import java.util.HashMap;

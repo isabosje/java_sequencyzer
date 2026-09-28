@@ -1,3 +1,5 @@
+package nl.bioinf.dsequencyzer;
+
 public class SequenceFunctions {
 
     /**

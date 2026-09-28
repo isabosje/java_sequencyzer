@@ -21,7 +21,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("Main")
+    mainClass.set("nl.bioinf.dsequencyzer.Main")
 }
 
 tasks.test {
@@ -30,6 +30,6 @@ tasks.test {
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "Main"
+        attributes["Main-Class"] = "nl.bioinf.dsequencyzer.Main"
     }
 }
