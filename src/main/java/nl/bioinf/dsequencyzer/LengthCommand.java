@@ -1,8 +1,17 @@
 package nl.bioinf.dsequencyzer;
+import picocli.CommandLine;
 
-public class LengthCommand {
+@CommandLine.Command(
+        name = "LengthCommand",
+        description = "Gives length")
 
-    public void run(String sequence) {
+public class LengthCommand implements Runnable {
+    @CommandLine.Option( names = {"-l", "--length"},
+            description = "Give a sequence")
+    String sequence;
+
+    @Override
+    public void run() {
 
         SequenceFunctions sequence_functions = new SequenceFunctions(sequence);
 

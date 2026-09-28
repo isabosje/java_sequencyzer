@@ -1,23 +1,21 @@
 package nl.bioinf.dsequencyzer;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Command;
 
-// OO checken (Object Oriented)
+// TODO: Check if everything is OO now.
 
-@Command(
-        subcommands = {
-                RegionCommand.class,
-                LengthCommand.class,
-                GCCommand.class,
-                HeadCommand.class,
-                SummaryCommand.class,
-                FindCommand.class
-        },
+@CommandLine.Command(
         name = "DSequencyzer",
         version = "1.0",
-        mixinStandardHelpOptions = true)
-
+        mixinStandardHelpOptions = true,
+        subcommands = {
+                GCCommand.class,
+                LengthCommand.class,
+                RegionCommand.class,
+                FindCommand.class,
+                HeadCommand.class,
+                SummaryCommand.class
+        })
 public class Main implements Runnable {
 
     public static void main(String[] args) {
@@ -29,4 +27,5 @@ public class Main implements Runnable {
 
     }
 }
+
 

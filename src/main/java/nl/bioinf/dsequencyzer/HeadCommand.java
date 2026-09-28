@@ -1,10 +1,20 @@
 package nl.bioinf.dsequencyzer;
 
+import picocli.CommandLine;
+
 import java.io.IOException;
 
-public class HeadCommand {
+@CommandLine.Command(
+        name = "HeadCommand",
+        description = "Gives 10 lines")
 
-    public void run(String input_file) {
+public class HeadCommand implements Runnable {
+    @CommandLine.Option(names = {"-i", "--input"},
+            description = "Input file")
+    String input_file;
+
+    @Override
+    public void run() {
 
         try {
             FileFunctions file = new FileFunctions(input_file);

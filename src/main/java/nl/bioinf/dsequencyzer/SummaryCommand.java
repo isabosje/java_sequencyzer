@@ -1,10 +1,19 @@
 package nl.bioinf.dsequencyzer;
 
+import picocli.CommandLine;
 import java.io.IOException;
 
-public class SummaryCommand {
+@CommandLine.Command(
+        name = "SummaryCommand",
+        description = "Gives summary gtf file")
 
-    public void run(String input_file) {
+public class SummaryCommand implements Runnable {
+    @CommandLine.Option(names = {"-i", "--input"},
+            description = "Input GTF file")
+    String input_file;
+
+    @Override
+    public void run() {
 
         try {
             GTFFunctions gtf = new GTFFunctions(input_file);
