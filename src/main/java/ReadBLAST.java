@@ -10,7 +10,7 @@ import java.io.IOException;
 // *
 public class ReadBLAST {
 
-    public static String readBlast(String filePath, String option) throws IOException {
+    public String readBlast(String filePath, String option) throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
@@ -43,10 +43,10 @@ public class ReadBLAST {
         reader.close();
 
         // informatie teruggeven
-        if (option.equals("hits")) {
+        if (option.equals("hits")) {  // Aantal blast hits
             return String.valueOf(hits);
         }
-        else if (option.equals("average")) {
+        else if (option.equals("average")) { //
             return String.valueOf(totalIdentity / hits);
         }
         else if (option.equals("best")) {

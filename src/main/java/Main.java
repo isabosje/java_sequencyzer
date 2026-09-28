@@ -18,7 +18,9 @@ public class Main {
             String blast_option = args[1];
             String blast_file = args[2];
 
-            String result = ReadBLAST.readBlast(blast_file, blast_option);
+            ReadBLAST blastReader = new ReadBLAST();
+
+            String result = blastReader.readBlast(blast_file, blast_option);
             System.out.println(blast_option + ": " + result);
         }
 
@@ -41,10 +43,10 @@ public class Main {
                     System.out.println("GC percentage: " + gc_percentage);
                 }
             }
-                // Roep getStartStop aan.
+            // Roep getStartStop aan.
             else if (sequence_option.equals("startstop")) {
-                    int startStop = SequenceFunctions.getStartStop(user_input);
-                    System.out.println("Start/stop position: " + startStop);
+                int startStop = SequenceFunctions.getStartStop(user_input);
+                System.out.println("Start/stop position: " + startStop);
             }
         }
     }
