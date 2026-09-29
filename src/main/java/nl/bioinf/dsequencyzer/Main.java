@@ -14,7 +14,8 @@ import picocli.CommandLine;
                 RegionCommand.class,
                 FindCommand.class,
                 HeadCommand.class,
-                SummaryCommand.class
+                SummaryCommand.class,
+                BlastCommand.class
         })
 public class Main implements Runnable {
 
