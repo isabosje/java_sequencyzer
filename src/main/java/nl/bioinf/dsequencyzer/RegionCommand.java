@@ -10,7 +10,8 @@ public class RegionCommand implements Runnable {
 
     @CommandLine.Option(
             names = {"-i"},
-            description = "input file")
+            description = "input file",
+    required = true)
     String input_file;
 
     @CommandLine.Option(

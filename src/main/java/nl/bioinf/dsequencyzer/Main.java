@@ -19,6 +19,7 @@ import picocli.CommandLine;
 public class Main implements Runnable {
 
     public static void main(String[] args) {
+
         new CommandLine(new Main()).execute(args);
     }
 
