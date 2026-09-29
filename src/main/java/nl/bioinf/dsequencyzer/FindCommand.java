@@ -1,25 +1,29 @@
 package nl.bioinf.dsequencyzer;
 
-import picocli.CommandLine;
-
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 import java.io.IOException;
 
-@CommandLine.Command(
-        name = "FindCommand",
-        description = "Finds features")
+@Command(
+        name = "--find",
+        description = "Searches for given features in a GTF file with a value input option.")
 
 public class FindCommand implements Runnable {
 
-    @CommandLine.Option(names = {"-i", "--input"},
-            description = "Input GTF file")
+    @Option(
+            names = {"-i, --input"},
+            description = "Input a GTF file",
+            required = true)
     String input_file;
 
-    @CommandLine.Option(names = {"-o", "--option"},
+    @Option(names = {"-o", "--option"},
             description = "What to search for: gene, chromosome or feature")
     String option;
 
-    @CommandLine.Option(names = {"-v", "--value"},
-            description = "Value to search for")
+    @Option(names = {"-v", "--value"},
+            description = "Value to search for" +
+    "Can be a gene name, chromosome number or feature type for instance.")
     String value;
 
     @Override

@@ -1,32 +1,37 @@
 package nl.bioinf.dsequencyzer;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 import java.io.IOException;
 
-@CommandLine.Command(
-        name = "RegionCommand",
-        description = "Gives region")
+@Command(
+        name = "--region",
+        description = "Retrieves the region on a given chromosome based on the start and end points.")
 public class RegionCommand implements Runnable {
 
-    @CommandLine.Option(
-            names = {"-i"},
-            description = "input file",
+    @Option(
+            names = {"-i, --input"},
+            description = "Input a valid GTF file",
     required = true)
     String input_file;
 
-    @CommandLine.Option(
+    @Option(
             names = {"-chr"},
-            description = "give chromosome")
+            description = "Add a chromosome and its number" +
+                    "Note it the following way: 'chr1', chr2, etc.")
     String chromosome;
 
-    @CommandLine.Option(
+    @Option(
             names = {"-s"},
-            description = "give start")
+            description = "Add a start point" +
+    "By default, the numbers go up to millions.")
     String start;
 
-    @CommandLine.Option(
+    @Option(
             names = {"-e"},
-            description = "give end")
+            description = "Add an end point" +
+                    "By default, the numbers go up to millions.")
     String end;
 
     @Override
