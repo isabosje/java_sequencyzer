@@ -1,5 +1,6 @@
 package nl.bioinf.dsequencyzer;
 
+import nl.bioinf.dsequencyzer.command.*;
 import picocli.CommandLine;
 
 // TODO: Check if everything is OO now.

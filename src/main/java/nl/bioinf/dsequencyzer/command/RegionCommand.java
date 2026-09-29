@@ -1,5 +1,6 @@
-package nl.bioinf.dsequencyzer;
+package nl.bioinf.dsequencyzer.command;
 
+import nl.bioinf.dsequencyzer.GTFFunctions;
 import picocli.CommandLine;
 import java.io.IOException;
 

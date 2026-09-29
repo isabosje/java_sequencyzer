@@ -1,7 +1,6 @@
-package nl.bioinf.dsequencyzer;
+package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.io.ReadBLAST;
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 

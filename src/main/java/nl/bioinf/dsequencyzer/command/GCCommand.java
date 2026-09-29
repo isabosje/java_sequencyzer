@@ -1,4 +1,5 @@
-package nl.bioinf.dsequencyzer;
+package nl.bioinf.dsequencyzer.command;
+import nl.bioinf.dsequencyzer.SequenceFunctions;
 import picocli.CommandLine;
 
 @CommandLine.Command(
