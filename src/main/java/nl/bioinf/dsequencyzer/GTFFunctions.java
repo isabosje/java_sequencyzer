@@ -1,0 +1,177 @@
+package nl.bioinf.dsequencyzer;
+
+import java.io.*;
+import java.util.HashMap;
+
+public class GTFFunctions {
+
+    private String input_file;
+
+    public GTFFunctions(String input_file) {
+        this.input_file = input_file;
+    }
+
+    /**
+     * Returns the count of all features in the terminal.
+     *
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     */
+    public void summaryCount() throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(input_file + "_summary.txt"));
+
+        String line = reader.readLine();
+
+        // Stores each feature and how often it occurs
+        // I used the next site: https://www.w3schools.com/java/java_hashmap.asp#:~:text=A%20HashMap%20stores%20items%20in%20key%2Fvalue%20pairs%2C%20where,use%20a%20key%20to%20retrieve%20its%20associated%20value.
+        HashMap<String, Integer> features = new HashMap<>();
+
+        while (line != null) {
+
+            // Skip comments and header lines
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
+                String feature = columns[2];
+
+                // Check if this feature has already been found
+                if (features.containsKey(feature)) {
+
+                    // Add one to the existing count
+                    int count = features.get(feature);
+                    features.put(feature, count + 1);
+
+                } else {
+
+                    // If feature not found-> start at 1
+                    features.put(feature, 1);
+                }
+            }
+
+            line = reader.readLine();
+        }
+
+        reader.close();
+
+        // Print summary + features and count together
+        System.out.println("GTF Summary");
+        for (String feature : features.keySet()) {
+            System.out.println(feature + " : " + features.get(feature));
+        }
+    }
+
+    /**
+     * Filters on a gene and gives back all lines connected to the gene.
+     * Saves those lines in a seperate .gtf file.
+     *
+     * @param option       input argument 2 - the feature the user wants to filter
+     * @param value        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     */
+    public void findValue(String option, String value)
+            throws IOException {
+
+        // Read .gtf file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        // Writes new .gtf file with chosen lines
+        BufferedWriter writer = new BufferedWriter(new FileWriter(value + ".gtf"));
+
+        String line = reader.readLine();
+
+        while (line != null) {
+
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
+
+                if (option.equals("gene")) {
+
+                    if (columns[8].contains(value)) {
+                        System.out.println(line);
+                        writer.write(line);
+                        writer.newLine();
+                    }
+
+                } else if (option.equals("chromosome")) {
+
+                    if (columns[0].equals(value)) {
+                        System.out.println(line);
+                        writer.write(line);
+                        writer.newLine();
+                    }
+
+                } else if (option.equals("feature")) {
+
+                    if (columns[2].equals(value)) {
+                        System.out.println(line);
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
+            }
+
+            // Read next line
+            line = reader.readLine();
+        }
+
+        reader.close();
+        writer.close();
+    }
+
+    /**
+     * Filters a certain region between an end and start point on a chromosome.
+     *
+     * @param chromosome   input a chromosome
+     * @param start        input the start coordinates
+     * @param end          input the end coordinates
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     */
+    public void findRegion(String chromosome, String start, String end) throws IOException {
+
+        // Read .gtf file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        // Writes new .gtf file with chosen lines
+        BufferedWriter writer = new BufferedWriter(new FileWriter(chromosome + ".gtf"));
+
+        // Needs to be integer because of numbers
+        int region_start = Integer.parseInt(start);
+        int region_end = Integer.parseInt(end);
+
+        String line = reader.readLine();
+
+        while (line != null) {
+
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
+
+                // Also needs to be integers because numbers
+                int feature_start = Integer.parseInt(columns[3]);
+                int feature_end = Integer.parseInt(columns[4]);
+
+                // First arg is chromosome number
+                if (columns[0].equals(chromosome)) {
+
+                    // Region falls in between the start and end in the gtf file
+                    if (feature_start >= region_start && feature_end <= region_end) {
+
+                        System.out.println(line);
+
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
+            }
+
+            line = reader.readLine();
+        }
+
+        reader.close();
+        writer.close();
+    }
+}
+
