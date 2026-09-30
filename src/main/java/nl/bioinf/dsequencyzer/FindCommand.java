@@ -7,21 +7,22 @@ import picocli.CommandLine.ArgGroup;
 import java.io.IOException;
 
 @Command(
-        name = "--find",
-        description = "@|bold Searches for given features in a GTF file with a value input option.|@")
+        name = "find",
+        description = "@|bold Searches for given features in a GTF file with a value input %n" +
+                      "option.|@")
 
 public class FindCommand implements Runnable {
 
     @ArgGroup(
             validate = false,
-            heading = "%n@|bold,cyan Input:|@%n",
+            heading = "%n@|bold,blue Input:|@%n",
             order = 1
     )
     InputGroup Input;
 
     @ArgGroup(
             validate = false,
-            heading = "%n@|bold,cyan Search:|@%n",
+            heading = "%n@|bold,blue Search:|@%n",
             order = 2
     )
     SearchGroup Search;
@@ -30,7 +31,7 @@ public class FindCommand implements Runnable {
 
         @Option(
                 names = {"-i, --input"},
-                description = "Input a GTF file",
+                description = "@|bold Input a valid GTF file.|@",
                 required = true)
         String input_file;
 
@@ -39,12 +40,12 @@ public class FindCommand implements Runnable {
     static class SearchGroup {
 
     @Option(names = {"-o", "--option"},
-            description = "What to search for: gene, chromosome or feature")
+            description = "@|bold What to search for: gene, chromosome or feature.|@")
     String option;
 
     @Option(names = {"-v", "--value"},
-            description = "Value to search for" +
-    "Can be a gene name, chromosome number or feature type for instance.")
+            description = "@|bold Value to search for. |@%n" +
+                          "@|bold Can be a gene name, chromosome number or feature type.|@")
     String value;
 
     }

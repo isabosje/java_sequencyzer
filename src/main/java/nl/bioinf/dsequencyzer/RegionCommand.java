@@ -7,20 +7,21 @@ import picocli.CommandLine.ArgGroup;
 import java.io.IOException;
 
 @Command(
-        name = "--region",
-        description = "%n@|bold Retrieves the region on a given chromosome based on the start and end points.|@%n")
+        name = "region",
+        description = "%n@|bold Retrieves the region on a given chromosome based on the start and %n" +
+                      "end points.|@")
 public class RegionCommand implements Runnable {
 
     @ArgGroup(
             validate = false,
-            heading = "%n@|bold,cyan Input:|@%n",
+            heading = "%n@|bold,blue Input:|@%n",
             order = 1
     )
     InputGroup Input;
 
     @ArgGroup(
             validate = false,
-            heading = "%n@|bold,cyan Search:|@%n",
+            heading = "%n@|bold,blue Search:|@%n",
             order = 1
     )
     RegionGroup Region;
@@ -29,7 +30,7 @@ public class RegionCommand implements Runnable {
 
         @Option(
                 names = {"-i, --input"},
-                description = "Input a valid GTF file",
+                description = "@|bold Input a valid GTF file.|@",
                 required = true)
         String input_file;
     }
@@ -38,20 +39,22 @@ public class RegionCommand implements Runnable {
 
         @Option(
                 names = {"-chr, --chromosome"},
-                description = "Add a chromosome and its number" +
-                        "Note it the following way: 'chr1', chr2, etc.")
+                description = "@|bold Add a chromosome and its number.|@%n" +
+                              "@|bold Note it the following way: 'chr1', chr2, etc.|@")
+
         String chromosome;
 
         @Option(
                 names = {"-s, --start"},
-                description = "Add a start point" +
-                        "By default, the numbers go up to millions.")
+                description = "@|bold Add a start point.|@%n" +
+                              "@|bold By default, the numbers go up to millions.|@"
+        )
         String start;
 
         @Option(
                 names = {"-e, --end"},
-                description = "Add an end point" +
-                        "By default, the numbers go up to millions.")
+                description = "@|bold Add an end point.|@%n" +
+                              "@|bold By default, the numbers go up to millions.|@")
         String end;
 
     }

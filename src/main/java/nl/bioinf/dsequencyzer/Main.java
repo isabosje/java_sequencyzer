@@ -8,12 +8,12 @@ import picocli.CommandLine;
 
 @Command(
         name = "DSequencyzer",
-        header = "@|bold,cyan DSequencyzer|@",
+        header = "@|bold,underline,blue DSequencyzer|@",
         description = "@|italic,blue A bioinformatics tool to help you analyse sequences and GTF (Gene Transfer Format) files. |@",
         version = "1.0",
         mixinStandardHelpOptions = true,
-        commandListHeading = "%n@|bold,cyan Commands:|@%n",
-        optionListHeading = "%n@|bold,cyan Options:|@%n",
+        commandListHeading = "%n@|bold,blue Commands:|@%n",
+        optionListHeading = "%n@|bold,blue Options:|@%n",
         subcommands = {
                 RegionCommand.class,
                 FindCommand.class,

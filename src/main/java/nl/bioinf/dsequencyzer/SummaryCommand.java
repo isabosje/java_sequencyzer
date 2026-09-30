@@ -7,14 +7,14 @@ import picocli.CommandLine.ArgGroup;
 import java.io.IOException;
 
 @Command(
-        name = "--summary",
+        name = "summary",
         description = "@|bold Gives a summary containing features depending on file type.|@")
 
 public class SummaryCommand implements Runnable {
 
     @ArgGroup(
             validate = false,
-            heading = "%n@|bold,cyan Input:|@%n",
+            heading = "%n@|bold,blue Input:|@%n",
             order = 1
     )
     InputGroup Input;
@@ -23,7 +23,7 @@ public class SummaryCommand implements Runnable {
 
         @Option(
                 names = {"-i, --input"},
-                description = "Input a valid GTF or FASTA file",
+                description = "@|bold Input a valid GTF or FASTA file.|@",
                 required = true)
         String input_file;
     }
