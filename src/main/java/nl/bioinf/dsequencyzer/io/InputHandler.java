@@ -1,4 +1,4 @@
-package nl.bioinf.dsequencyzer;
+package nl.bioinf.dsequencyzer.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
