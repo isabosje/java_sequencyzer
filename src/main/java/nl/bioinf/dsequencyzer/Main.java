@@ -10,8 +10,6 @@ import picocli.CommandLine;
         version = "1.0",
         mixinStandardHelpOptions = true,
         subcommands = {
-                GCCommand.class,
-                LengthCommand.class,
                 RegionCommand.class,
                 FindCommand.class,
                 HeadCommand.class,

@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Identifies different input files and returns the correct type
+ * Handles several file types for DSequencyzer
  */
 public class InputHandler {
     /**

@@ -32,7 +32,7 @@ public class BlastCommand implements Runnable {
 
     }
 
-    // test, nog verwijderen
+//     test, nog verwijderen
 //    public static void main(String[] args) {
 //        new CommandLine(new BlastCommand()).execute(args);
 //    }
