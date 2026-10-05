@@ -7,6 +7,14 @@ import picocli.CommandLine.Option;
 
 import java.io.IOException;
 
+/**
+ * Commandline command for analysing FASTA files or a nucleotide sequence
+ * This consists of: sequence length, gc percentage, validation
+ * or displaying the header.
+ *
+ * v0.1
+ * Date 05/10/2026
+ */
 @Command(
         name = "fasta",
         description = "Analyse a FASTA sequence",
@@ -14,6 +22,9 @@ import java.io.IOException;
 )
 public class FastaCommand implements Runnable {
 
+    /**
+     * Input either FASTA file or nucleotide sequence
+     */
     @Option(
             names = {"-i", "--input"},
             description = "Input FASTA file or sequence",
@@ -21,24 +32,36 @@ public class FastaCommand implements Runnable {
     )
     private String input;
 
+    /**
+     * Displays the sequence length if requested
+     */
     @Option(
             names = {"-l", "--length"},
             description = "Show sequence length"
     )
     private boolean length;
 
+    /**
+     * Displays the GC percentage is requested
+     */
     @Option(
             names = {"-g", "--gc"},
             description = "Show GC percentage"
     )
     private boolean gc;
 
+    /**
+     * Validates whether a sequence is valid or not
+     */
     @Option(
             names = {"-v", "--validate"},
             description = "Validate nucleotide sequence"
     )
     private boolean validate;
 
+    /**
+     * Shows the first 10 lines of the input file
+     */
     @Option(
             names = {"--head"},
             description = "Show the first 10 lines of the file"
@@ -54,11 +77,6 @@ public class FastaCommand implements Runnable {
 
         try {
 
-            /*
-             * HEAD
-             *
-             * Head works directly on the input file.
-             */
             if (head) {
 
                 if (inputType.equals("sequence")) {
@@ -95,7 +113,7 @@ public class FastaCommand implements Runnable {
             FastaFunctions fasta = new FastaFunctions(sequence);
 
             /*
-             * Validate sequence.
+             * Validate sequence
              */
             if (!fasta.isValidNucleotide()) {
 
@@ -104,7 +122,7 @@ public class FastaCommand implements Runnable {
             }
 
             /*
-             * Perform requested operations.
+             * Perform requested operations
              */
             if (validate) {
                 System.out.println("Sequence is valid.");

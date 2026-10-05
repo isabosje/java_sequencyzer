@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Functions for reading and analysing FASTA sequences.
+ * Method for reading and analysing of FASTA sequences
  */
 public class FastaFunctions {
 
@@ -19,7 +19,6 @@ public class FastaFunctions {
      * Reads a sequence from a FASTA file.
      * FASTA header lines are ignored.
      *
-     * @param input path to FASTA file
      * @return sequence as String
      * @throws IOException when the file cannot be read
      */
@@ -43,15 +42,14 @@ public class FastaFunctions {
     }
 
     /**
-     * Checks whether all characters in the sequence
-     * are valid DNA/RNA nucleotides.
+     * Checks the validity of a DNA sequence
      *
-     * @return true if the sequence is valid
+     * @return true if the sequence is correct
      */
     public boolean isValidNucleotide() {
 
         if (sequence == null || sequence.isEmpty()) {
-            return false;
+            return false; // error nog verwerken
         }
 
         return sequence.matches("[ACGTUacgtu]+");
@@ -94,7 +92,6 @@ public class FastaFunctions {
     /**
      * Prints the first 10 lines of a file.
      *
-     * @param input path to input file
      * @throws IOException when the file cannot be read
      */
     public static void getHeader(String input) throws IOException {
