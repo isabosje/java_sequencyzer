@@ -1,6 +1,8 @@
 package nl.bioinf.dsequencyzer;
 
-import picocli.CommandLine.Help.Ansi;
+import nl.bioinf.dsequencyzer.command.FindCommand;
+import nl.bioinf.dsequencyzer.command.RegionCommand;
+import nl.bioinf.dsequencyzer.command.SummaryCommand;
 import picocli.CommandLine.Command;
 import picocli.CommandLine;
 

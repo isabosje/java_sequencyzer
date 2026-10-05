@@ -11,11 +11,10 @@ for short: DSequencyzer.
 'GTFFunctions.java':
 - Uses the user_input and gtf_option to open a .gtf-file and return a specific value the user chooses.
 
-'FileFunctions.java':
-- Uses the user_input and the file_option to analyze any file besides GTF.
-
-'SequenceFunctions.java':
+'FastaFunctions.java':
 - 
+
+
 
 Map maken voor output files + in .gitignore
 - > 

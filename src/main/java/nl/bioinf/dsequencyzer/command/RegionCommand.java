@@ -1,6 +1,6 @@
-package nl.bioinf.dsequencyzer;
+package nl.bioinf.dsequencyzer.command;
 
-import picocli.CommandLine;
+import nl.bioinf.dsequencyzer.GTFFunctions;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ArgGroup;
