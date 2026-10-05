@@ -12,7 +12,6 @@ import picocli.CommandLine;
         subcommands = {
                 RegionCommand.class,
                 FindCommand.class,
-                HeadCommand.class,
                 SummaryCommand.class,
                 BlastCommand.class,
                 FastaCommand.class
