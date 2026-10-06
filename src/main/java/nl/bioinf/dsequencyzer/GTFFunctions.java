@@ -20,8 +20,6 @@ public class GTFFunctions {
 
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
-        BufferedWriter writer = new BufferedWriter(new FileWriter(input_file + "_summary.txt"));
-
         String line = reader.readLine();
 
         // Stores each feature and how often it occurs
@@ -70,14 +68,14 @@ public class GTFFunctions {
      * @param value        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public void findValue(String option, String value)
+    public void findValues(String option, String values)
             throws IOException {
 
         // Read .gtf file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         // Writes new .gtf file with chosen lines
-        BufferedWriter writer = new BufferedWriter(new FileWriter(value + ".gtf"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(values + ".gtf"));
 
         String line = reader.readLine();
 
@@ -89,7 +87,7 @@ public class GTFFunctions {
 
                 if (option.equals("gene")) {
 
-                    if (columns[8].contains(value)) {
+                    if (columns[8].contains(values)) {
                         System.out.println(line);
                         writer.write(line);
                         writer.newLine();
@@ -97,7 +95,7 @@ public class GTFFunctions {
 
                 } else if (option.equals("chromosome")) {
 
-                    if (columns[0].equals(value)) {
+                    if (columns[0].equals(values)) {
                         System.out.println(line);
                         writer.write(line);
                         writer.newLine();
@@ -105,7 +103,7 @@ public class GTFFunctions {
 
                 } else if (option.equals("feature")) {
 
-                    if (columns[2].equals(value)) {
+                    if (columns[2].equals(values)) {
                         System.out.println(line);
                         writer.write(line);
                         writer.newLine();
