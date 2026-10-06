@@ -5,6 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.ArgGroup;
 import java.io.IOException;
+import java.util.List;
 
 @Command(
         name = "find",
@@ -30,7 +31,7 @@ public class FindCommand implements Runnable {
     static class InputGroup {
 
         @Option(
-                names = {"-i, --input"},
+                names = {"-i", "--input"},
                 description = "@|bold Input a valid GTF file.|@",
                 required = true)
         String input_file;
@@ -39,14 +40,16 @@ public class FindCommand implements Runnable {
 
     static class SearchGroup {
 
-    @Option(names = {"-o", "--option"},
-            description = "@|bold What to search for: gene, chromosome or feature.|@")
-    String option;
+        @Option(names = {"-o", "--option"},
+                description = "@|bold What to search for: gene, chromosome or feature.|@")
+        String option;
 
-    @Option(names = {"-v", "--value"},
-            description = "@|bold Value to search for. |@%n" +
-                          "@|bold Can be a gene name, chromosome number or feature type.|@")
-    String value;
+        @Option(names = {"-v", "--values"},
+                split = ",",
+                description = "@|bold Value to search for. |@%n" +
+                        "@|bold Can be a gene name, chromosome number or feature type.|@")
+
+        List<String> values;
 
     }
 
@@ -55,7 +58,7 @@ public class FindCommand implements Runnable {
 
         try {
             GTFFunctions gtf = new GTFFunctions(Input.input_file);
-            gtf.findValue(Search.option, Search.value);
+            gtf.findValues(Search.option, Search.values);
 
         } catch (IOException e) {
             System.out.println("Error reading GTF file.");
