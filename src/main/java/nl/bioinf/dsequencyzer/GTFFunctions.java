@@ -65,7 +65,7 @@ public class GTFFunctions {
      * Saves those lines in a seperate .gtf file.
      *
      * @param option       input argument 2 - the feature the user wants to filter
-     * @param value        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
+     * @param values        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public void findValues(String option, String values)

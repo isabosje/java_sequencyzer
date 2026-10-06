@@ -2,13 +2,14 @@ package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.FastaFunctions;
 import nl.bioinf.dsequencyzer.io.InputHandler;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.io.IOException;
 
 /**
- * Commandline command for analysing FASTA files or a nucleotide sequence
+ * Commandline command for analyzing FASTA files or a nucleotide sequence
  * This consists of: sequence length, gc percentage, validation
  * or displaying the header.
  *
@@ -25,12 +26,8 @@ public class FastaCommand implements Runnable {
     /**
      * Input either FASTA file or nucleotide sequence
      */
-    @Option(
-            names = {"-i", "--input"},
-            description = "Input FASTA file or sequence",
-            required = true
-    )
-    private String input;
+    @CommandLine.Mixin
+    InputCommand input = new InputCommand();
 
     /**
      * Displays the sequence length if requested
@@ -73,7 +70,7 @@ public class FastaCommand implements Runnable {
 
         InputHandler inputHandler = new InputHandler();
 
-        String inputType = inputHandler.getInputType(input);
+        String inputType = inputHandler.getInputType(input.input_file);
 
         try {
 
@@ -84,7 +81,7 @@ public class FastaCommand implements Runnable {
                     return;
                 }
 
-                FastaFunctions.getHeader(input);
+                FastaFunctions.getHeader(input.input_file);
                 return;
             }
 
@@ -95,11 +92,11 @@ public class FastaCommand implements Runnable {
 
             if (inputType.equals("sequence")) {
 
-                sequence = input;
+                sequence = input.input_file;
 
             } else if (inputType.equals("sequence_file")) {
 
-                sequence = FastaFunctions.readSequence(input);
+                sequence = FastaFunctions.readSequence(input.input_file);
 
             } else {
 
