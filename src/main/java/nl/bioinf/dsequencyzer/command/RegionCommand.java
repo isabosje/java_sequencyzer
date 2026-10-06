@@ -1,43 +1,72 @@
-package nl.bioinf.dsequencyzer.command;
+package nl.bioinf.dsequencyzer;
 
-import nl.bioinf.dsequencyzer.GTFFunctions;
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ArgGroup;
 import java.io.IOException;
 
-@CommandLine.Command(
-        name = "RegionCommand",
-        description = "Gives region")
+@Command(
+        name = "region",
+        description = "%n@|bold Retrieves the region on a given chromosome based on the start and %n" +
+                "end points.|@")
 public class RegionCommand implements Runnable {
 
-    @CommandLine.Option(
-            names = {"-i"},
-            description = "input file",
-    required = true)
-    String input_file;
+    @ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Input:|@%n",
+            order = 1
+    )
+    InputGroup Input;
 
-    @CommandLine.Option(
-            names = {"-chr"},
-            description = "give chromosome")
-    String chromosome;
+    @ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Search:|@%n",
+            order = 1
+    )
+    RegionGroup Region;
 
-    @CommandLine.Option(
-            names = {"-s"},
-            description = "give start")
-    String start;
+    static class InputGroup {
 
-    @CommandLine.Option(
-            names = {"-e"},
-            description = "give end")
-    String end;
+        @Option(
+                names = {"-i, --input"},
+                description = "@|bold Input a valid GTF file.|@",
+                required = true)
+        String input_file;
+    }
+
+    static class RegionGroup {
+
+        @Option(
+                names = {"-chr, --chromosome"},
+                description = "@|bold Add a chromosome and its number.|@%n" +
+                        "@|bold Note it the following way: 'chr1', chr2, etc.|@")
+
+        String chromosome;
+
+        @Option(
+                names = {"-s, --start"},
+                description = "@|bold Add a start point.|@%n" +
+                        "@|bold By default, the numbers go up to millions.|@"
+        )
+        String start;
+
+        @Option(
+                names = {"-e, --end"},
+                description = "@|bold Add an end point.|@%n" +
+                        "@|bold By default, the numbers go up to millions.|@")
+        String end;
+
+    }
 
     @Override
     public void run() {
 
         try {
 
-            GTFFunctions gtf = new GTFFunctions(input_file);
+            GTFFunctions gtf = new GTFFunctions(Input.input_file);
 
-            gtf.findRegion(chromosome, start, end);
+            gtf.findRegion(Region.chromosome, Region.start, Region.end);
 
         } catch (IOException e) {
 
