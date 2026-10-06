@@ -12,7 +12,7 @@ import java.io.IOException;
 public class FindCommand implements Runnable {
 
     @CommandLine.Option(names = {"-i", "--input"},
-            description = "Input GTF file")
+            description = "Input GTF file -- required")
     String input_file;
 
     @CommandLine.Option(names = {"-o", "--option"},

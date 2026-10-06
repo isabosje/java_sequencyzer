@@ -42,7 +42,7 @@ public class FastaCommand implements Runnable {
     private boolean length;
 
     /**
-     * Displays the GC percentage is requested
+     * Displays the GC percentage if requested
      */
     @Option(
             names = {"-g", "--gc"},
