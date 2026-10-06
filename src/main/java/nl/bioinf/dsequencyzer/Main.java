@@ -1,10 +1,11 @@
 package nl.bioinf.dsequencyzer;
 
+import nl.bioinf.dsequencyzer.command.*;
+import picocli.CommandLine;
 import nl.bioinf.dsequencyzer.command.FindCommand;
 import nl.bioinf.dsequencyzer.command.RegionCommand;
 import nl.bioinf.dsequencyzer.command.SummaryCommand;
 import picocli.CommandLine.Command;
-import picocli.CommandLine;
 
 // TODO: Check if everything is OO now.
 
@@ -19,7 +20,9 @@ import picocli.CommandLine;
         subcommands = {
                 RegionCommand.class,
                 FindCommand.class,
-                SummaryCommand.class
+                SummaryCommand.class,
+                BlastCommand.class,
+                FastaCommand.class
         })
 
 public class Main implements Runnable {

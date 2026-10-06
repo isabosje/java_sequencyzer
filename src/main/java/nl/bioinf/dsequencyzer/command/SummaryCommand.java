@@ -1,39 +1,23 @@
 package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.GTFFunctions;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine;
 import java.io.IOException;
 
-@Command(
-        name = "summary",
-        description = "@|bold Gives a summary containing features depending on file type.|@")
+@CommandLine.Command(
+        name = "SummaryCommand",
+        description = "Gives summary gtf file")
 
 public class SummaryCommand implements Runnable {
-
-    @ArgGroup(
-            validate = false,
-            heading = "%n@|bold,blue Input:|@%n",
-            order = 1
-    )
-    InputGroup Input;
-
-    static class InputGroup {
-
-        @Option(
-                names = {"-i, --input"},
-                description = "@|bold Input a valid GTF or FASTA file.|@",
-                required = true)
-        String input_file;
-    }
+    @CommandLine.Option(names = {"-i", "--input"},
+            description = "Input GTF file")
+    String input_file;
 
     @Override
     public void run() {
 
-        // Needs changes for different filetypes
         try {
-            GTFFunctions gtf = new GTFFunctions(Input.input_file);
+            GTFFunctions gtf = new GTFFunctions(input_file);
             gtf.summaryCount();
 
         } catch (IOException e) {
