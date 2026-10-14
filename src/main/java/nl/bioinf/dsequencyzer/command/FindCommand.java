@@ -7,8 +7,7 @@ import java.io.IOException;
 
 @CommandLine.Command(
         name = "find",
-        description = "@|bold Searches for given features in a GTF file with a value input %n" +
-                "option.|@"
+        description = "@|bold Filters GTF annotations using multiple conditions.|@"
 )
 public class FindCommand implements Runnable {
 
@@ -24,23 +23,33 @@ public class FindCommand implements Runnable {
             heading = "%n@|bold,blue Search:|@%n",
             order = 2
     )
-    SearchGroup Search = new SearchGroup();
+    SearchGroup search = new SearchGroup();
 
     static class SearchGroup {
 
         @CommandLine.Option(
-                names = {"-o", "--option"},
-                description = "@|bold What to search for: gene, chromosome or feature.|@"
+                names = {"--feature"},
+                description = "Filter by feature, example: exon"
         )
-        String option;
+        String feature = "";
 
         @CommandLine.Option(
-                names = {"-v", "--value"},
-                description = "@|bold Values to search for, separated by commas.|@%n" +
-                        "@|bold Can be a gene name, chromosome number or feature type.|@",
-                split = ","
+                names = {"--chromosome"},
+                description = "Filter by chromosome, example: chr1"
         )
-        String[] values;
+        String chromosome = "";
+
+        @CommandLine.Option(
+                names = {"--strand"},
+                description = "Filter by strand: + or -"
+        )
+        String strand = "";
+
+        @CommandLine.Option(
+                names = {"-o", "--output"},
+                description = "Name of the output GTF file"
+        )
+        String output_file = "filtered.gtf";
     }
 
     @Override
@@ -48,9 +57,12 @@ public class FindCommand implements Runnable {
         try {
             GTFFunctions gtf = new GTFFunctions(input.input_file);
 
-            for (String value : Search.values) {
-                gtf.findValues(Search.option, value);
-            }
+            gtf.findValues(
+                    search.feature,
+                    search.chromosome,
+                    search.strand,
+                    search.output_file
+            );
 
         } catch (IOException e) {
             System.out.println("Error reading GTF file.");

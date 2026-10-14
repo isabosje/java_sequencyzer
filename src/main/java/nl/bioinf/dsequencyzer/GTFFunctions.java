@@ -23,8 +23,15 @@ public class GTFFunctions {
         String line = reader.readLine();
 
         // Stores each feature and how often it occurs
-        // I used the next site: https://www.w3schools.com/java/java_hashmap.asp#:~:text=A%20HashMap%20stores%20items%20in%20key%2Fvalue%20pairs%2C%20where,use%20a%20key%20to%20retrieve%20its%20associated%20value.
+        // I used the next site: https://www.w3schools.com/java/java_hashmap.asp
         HashMap<String, Integer> features = new HashMap<>();
+
+        // Stores each chromosome and gene
+        HashMap<String, Integer> chromosomes = new HashMap<>();
+        HashMap<String, Integer> genes = new HashMap<>();
+
+        // Counts all annotation lines
+        int total_lines = 0;
 
         while (line != null) {
 
@@ -32,6 +39,10 @@ public class GTFFunctions {
             if (!line.startsWith("#")) {
 
                 String[] columns = line.split("\t");
+
+                // Count total annotation lines
+                total_lines++;
+
                 String feature = columns[2];
 
                 // Check if this feature has already been found
@@ -43,8 +54,16 @@ public class GTFFunctions {
 
                 } else {
 
-                    // If feature not found-> start at 1
+                    // If feature not found -> start at 1
                     features.put(feature, 1);
+                }
+
+                // Store each chromosome only once
+                chromosomes.put(columns[0], 1);
+
+                // Store each gene only once
+                if (feature.equals("gene")) {
+                    genes.put(columns[8], 1);
                 }
             }
 
@@ -55,6 +74,10 @@ public class GTFFunctions {
 
         // Print summary + features and count together
         System.out.println("GTF Summary");
+        System.out.println("Total annotation lines: " + total_lines);
+        System.out.println("Unique chromosomes: " + chromosomes.size());
+        System.out.println("Genes: " + genes.size());
+
         for (String feature : features.keySet()) {
             System.out.println(feature + " : " + features.get(feature));
         }
@@ -62,20 +85,21 @@ public class GTFFunctions {
 
     /**
      * Filters on a gene and gives back all lines connected to the gene.
-     * Saves those lines in a seperate .gtf file.
+     * Saves those lines in a separate .gtf file.
      *
-     * @param option       input argument 2 - the feature the user wants to filter
-     * @param values        input argument 3 - the value of the option the user wants to filter (chr number, gene type, etc.)
-     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+     * @param feature       input argument 2 - the feature the user wants to filter (exon, transcript, etc.)
+     * @param chromosome    input argument 3 - the chromosome the user wants to filter (chr1, chr2, etc.)
+     * @param strand        input argument 4 - the strand the user wants to filter (+ / -)
+     * @throws IOException  if the file does not end with .gtf (is not a .gtf file)
      */
-    public void findValues(String option, String values)
+    public void findValues(String feature, String chromosome, String strand, String output_file)
             throws IOException {
 
         // Read .gtf file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         // Writes new .gtf file with chosen lines
-        BufferedWriter writer = new BufferedWriter(new FileWriter(values + ".gtf"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
 
         String line = reader.readLine();
 
@@ -85,33 +109,31 @@ public class GTFFunctions {
 
                 String[] columns = line.split("\t");
 
-                if (option.equals("gene")) {
+                boolean matches = true;
 
-                    if (columns[8].contains(values)) {
-                        System.out.println(line);
-                        writer.write(line);
-                        writer.newLine();
-                    }
+                // Check feature
+                if (!feature.isEmpty() && !columns[2].equals(feature)) {
+                    matches = false;
+                }
 
-                } else if (option.equals("chromosome")) {
+                // Check chromosome
+                if (!chromosome.isEmpty() && !columns[0].equals(chromosome)) {
+                    matches = false;
+                }
 
-                    if (columns[0].equals(values)) {
-                        System.out.println(line);
-                        writer.write(line);
-                        writer.newLine();
-                    }
+                // Check strand
+                if (!strand.isEmpty() && !columns[6].equals(strand)) {
+                    matches = false;
+                }
 
-                } else if (option.equals("feature")) {
-
-                    if (columns[2].equals(values)) {
-                        System.out.println(line);
-                        writer.write(line);
-                        writer.newLine();
-                    }
+                // Print and write lines if all filters match
+                if (matches) {
+                    System.out.println(line);
+                    writer.write(line);
+                    writer.newLine();
                 }
             }
 
-            // Read next line
             line = reader.readLine();
         }
 
@@ -170,6 +192,52 @@ public class GTFFunctions {
 
         reader.close();
         writer.close();
+    }
+
+    public void chromosomeCount() throws IOException {
+
+        // Read GTF file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        String line = reader.readLine();
+
+        // Stores each chromosome and how often it occurs
+        HashMap<String, Integer> chromosomes = new HashMap<>();
+
+        while (line != null) {
+
+            // Skip comments and header lines
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
+                String chromosome = columns[0];
+
+                // Check if this chromosome has already been found
+                if (chromosomes.containsKey(chromosome)) {
+
+                    // Add one to the existing count
+                    int count = chromosomes.get(chromosome);
+                    chromosomes.put(chromosome, count + 1);
+
+                } else {
+
+                    // If chromosome not found -> start at 1
+                    chromosomes.put(chromosome, 1);
+                }
+            }
+
+            // Read next line
+            line = reader.readLine();
+        }
+
+        reader.close();
+
+        // Print chromosome overview
+        System.out.println("Chromosome overview");
+
+        for (String chromosome : chromosomes.keySet()) {
+            System.out.println(chromosome + " : " + chromosomes.get(chromosome));
+        }
     }
 }
 
