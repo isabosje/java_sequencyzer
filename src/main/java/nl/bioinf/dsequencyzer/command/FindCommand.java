@@ -20,36 +20,39 @@ public class FindCommand implements Runnable {
 
     @CommandLine.ArgGroup(
             validate = false,
-            heading = "%n@|bold,blue Search:|@%n",
+            heading = "%n@|bold,blue Output:|@%n",
             order = 2
+    )
+    OutputCommand output = new OutputCommand();
+
+    @CommandLine.ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Search:|@%n",
+            order = 3
     )
     SearchGroup search = new SearchGroup();
 
     static class SearchGroup {
 
         @CommandLine.Option(
-                names = {"-f","--feature"},
+                names = {"-f", "--feature"},
                 description = "Filter by feature, example: exon"
         )
         String feature = "";
 
+        // Check toevoegen gebruiker
+
         @CommandLine.Option(
-                names = {"-chr","--chromosome"},
+                names = {"-chr", "--chromosome"},
                 description = "Filter by chromosome, example: chr1"
         )
         String chromosome = "";
 
         @CommandLine.Option(
-                names = {"-s","--strand"},
+                names = {"-s", "--strand"},
                 description = "Filter by strand: + or -"
         )
         String strand = "";
-
-        @CommandLine.Option(
-                names = {"-o", "--output"},
-                description = "Name of the output GTF file"
-        )
-        String output_file = "filtered.gtf";
     }
 
     @Override
@@ -61,7 +64,7 @@ public class FindCommand implements Runnable {
                     search.feature,
                     search.chromosome,
                     search.strand,
-                    search.output_file
+                    output.output_file
             );
 
         } catch (IOException e) {

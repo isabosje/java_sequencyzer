@@ -149,13 +149,13 @@ public class GTFFunctions {
      * @param end          input the end coordinates
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public void findRegion(String chromosome, String start, String end) throws IOException {
+    public void findRegion(String chromosome, String start, String end, String output_file) throws IOException {
 
         // Read .gtf file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         // Writes new .gtf file with chosen lines
-        BufferedWriter writer = new BufferedWriter(new FileWriter(chromosome + ".gtf"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
 
         // Needs to be integer because of numbers
         int region_start = Integer.parseInt(start);

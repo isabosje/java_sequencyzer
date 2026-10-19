@@ -12,13 +12,24 @@ import java.io.IOException;
 )
 public class RegionCommand implements Runnable {
 
-    @CommandLine.Mixin
+    @CommandLine.ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Input:|@%n",
+            order = 1
+    )
     InputCommand input = new InputCommand();
 
     @CommandLine.ArgGroup(
             validate = false,
+            heading = "%n@|bold,blue Output:|@%n",
+            order = 2
+    )
+    OutputCommand output = new OutputCommand();
+
+    @CommandLine.ArgGroup(
+            validate = false,
             heading = "%n@|bold,blue Region:|@%n",
-            order = 1
+            order = 3
     )
     RegionGroup Region;
 
@@ -43,12 +54,6 @@ public class RegionCommand implements Runnable {
                 description = "@|bold Add an end point.|@"
         )
         String end;
-
-        @CommandLine.Option(
-                names = {"-o", "--output"},
-                description = "Name of the output GTF file"
-        )
-        String output_file = "filtered.gtf";
     }
 
     @Override
@@ -60,7 +65,8 @@ public class RegionCommand implements Runnable {
             gtf.findRegion(
                     Region.chromosome,
                     Region.start,
-                    Region.end
+                    Region.end,
+                    output.output_file
             );
 
         } catch (IOException e) {
