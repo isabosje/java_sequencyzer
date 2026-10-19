@@ -43,6 +43,12 @@ public class RegionCommand implements Runnable {
                 description = "@|bold Add an end point.|@"
         )
         String end;
+
+        @CommandLine.Option(
+                names = {"-o", "--output"},
+                description = "Name of the output GTF file"
+        )
+        String output_file = "filtered.gtf";
     }
 
     @Override

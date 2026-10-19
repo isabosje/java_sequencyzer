@@ -28,19 +28,19 @@ public class FindCommand implements Runnable {
     static class SearchGroup {
 
         @CommandLine.Option(
-                names = {"--feature"},
+                names = {"-f","--feature"},
                 description = "Filter by feature, example: exon"
         )
         String feature = "";
 
         @CommandLine.Option(
-                names = {"--chromosome"},
+                names = {"-chr","--chromosome"},
                 description = "Filter by chromosome, example: chr1"
         )
         String chromosome = "";
 
         @CommandLine.Option(
-                names = {"--strand"},
+                names = {"-s","--strand"},
                 description = "Filter by strand: + or -"
         )
         String strand = "";

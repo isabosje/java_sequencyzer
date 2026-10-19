@@ -21,6 +21,7 @@ import picocli.CommandLine.Command;
                 SummaryCommand.class,
                 BlastCommand.class,
                 FastaCommand.class,
+                ChromosomeCommand.class
         })
 public class Main implements Runnable {
 
