@@ -19,7 +19,7 @@ class FastaFunctionsTest {
     @Test
     void isValidNucleotide() {
         FastaFunctions invalid = new FastaFunctions("BBBGCTATC");
-        FastaFunctions valid = new FastaFunctions("CGGCTATC");
+        FastaFunctions valid = new FastaFunctions("CGGCCCTATC");
 
         assertTrue(valid.isValidNucleotide());
         assertFalse(invalid.isValidNucleotide());
@@ -32,9 +32,9 @@ class FastaFunctionsTest {
      */
     @Test
     void getLength() {
-        FastaFunctions fasta = new FastaFunctions("ATCG");
+        FastaFunctions fasta = new FastaFunctions("ATUGGCG");
 
-        assertEquals(4, fasta.getLength());
+        assertEquals(7, fasta.getLength());
     }
 
     @Test

@@ -3,6 +3,25 @@
 A repository with a terminal-driven Java DNA sequence analyzer, 
 for short: DSequencyzer.
 
+## Requirements 
+
+* Java 17 or newer 
+* A terminal (powershell, IDE terminal etc.)
+
+## Build Gradle and run
+
+The following commands must be run from te root of the project. 
+This is the directory containing `gradlew` and `build.gradle.kts`.
+
+### Run with Gradle
+
+On Windows: 
+
+`.\gradlew.bat run --args "--help"`
+
+On mac/linux:
+
+
 ## Files
 
 `Main.java`:
