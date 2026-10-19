@@ -1,17 +1,23 @@
 package nl.bioinf.dsequencyzer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GTFFunctionsTest {
+    private String inputFile;
 
-    @Test
-    void summaryCount() throws IOException {
-        String inputFile = getClass()
+    @BeforeEach
+    void setUp() {
+        inputFile = getClass()
                 .getClassLoader()
                 .getResource("generated_test.gtf")
                 .getPath();
+    }
+
+    @Test
+    void summaryCount() throws IOException {
 
         GTFFunctions gtf = new GTFFunctions(inputFile);
 
@@ -20,10 +26,6 @@ class GTFFunctionsTest {
 
     @Test
     void findValue() throws IOException {
-        String inputFile = getClass()
-                .getClassLoader()
-                .getResource("generated_test.gtf")
-                .getPath();
 
         GTFFunctions gtf = new GTFFunctions(inputFile);
 
@@ -32,10 +34,6 @@ class GTFFunctionsTest {
 
     @Test
     void findRegion() throws IOException {
-        String inputFile = getClass()
-                .getClassLoader()
-                .getResource("generated_test.gtf")
-                .getPath();
 
         GTFFunctions gtf = new GTFFunctions(inputFile);
 

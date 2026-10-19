@@ -7,6 +7,7 @@ public class GTFFunctions {
 
     private String input_file;
 
+    // Constructor
     public GTFFunctions(String input_file) {
         this.input_file = input_file;
     }
@@ -150,6 +151,7 @@ public class GTFFunctions {
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public void findRegion(String chromosome, String start, String end, String output_file) throws IOException {
+        // Op gaan splitsen in verschillende methoden (inlezen + filteren + uitschrijven).
 
         // Read .gtf file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
