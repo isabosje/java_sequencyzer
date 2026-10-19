@@ -2,8 +2,6 @@ package nl.bioinf.dsequencyzer;
 
 import nl.bioinf.dsequencyzer.command.*;
 import picocli.CommandLine;
-import nl.bioinf.dsequencyzer.command.FindCommand;
-import nl.bioinf.dsequencyzer.command.RegionCommand;
 import nl.bioinf.dsequencyzer.command.SummaryCommand;
 import picocli.CommandLine.Command;
 
@@ -22,9 +20,9 @@ import picocli.CommandLine.Command;
                 FindCommand.class,
                 SummaryCommand.class,
                 BlastCommand.class,
-                FastaCommand.class
+                FastaCommand.class,
+                ChromosomeCommand.class
         })
-
 public class Main implements Runnable {
 
     public static void main(String[] args) {

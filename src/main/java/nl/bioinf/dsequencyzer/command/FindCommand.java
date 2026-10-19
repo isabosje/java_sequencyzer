@@ -6,33 +6,72 @@ import picocli.CommandLine;
 import java.io.IOException;
 
 @CommandLine.Command(
-        name = "FindCommand",
-        description = "Finds features")
-
+        name = "find",
+        // The @|bold is used to make --help more plain
+        description = "@|bold Filters GTF annotations using multiple conditions.|@"
+)
 public class FindCommand implements Runnable {
 
-    @CommandLine.Option(names = {"-i", "--input"},
-            description = "Input GTF file -- required")
-    String input_file;
+    // These ArgGroups change --help by sorting them
+    @CommandLine.ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Input:|@%n",
+            order = 1
+    )
+    InputCommand input = new InputCommand();
 
-    @CommandLine.Option(names = {"-o", "--option"},
-            description = "What to search for: gene, chromosome or feature")
-    String option;
+    @CommandLine.ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Output:|@%n",
+            order = 2
+    )
+    OutputCommand output = new OutputCommand();
 
-    @CommandLine.Option(names = {"-v", "--value"},
-            description = "Value to search for")
-    String value;
+    @CommandLine.ArgGroup(
+            validate = false,
+            heading = "%n@|bold,blue Search:|@%n",
+            order = 3
+    )
+    SearchGroup search = new SearchGroup();
+
+    static class SearchGroup {
+
+        @CommandLine.Option(
+                names = {"-f", "--feature"},
+                description = "Filter by feature, example: exon"
+        )
+        String feature = "";
+
+        // Check toevoegen gebruiker
+
+        @CommandLine.Option(
+                names = {"-chr", "--chromosome"},
+                description = "Filter by chromosome, example: chr1"
+        )
+        String chromosome = "";
+
+        @CommandLine.Option(
+                names = {"-s", "--strand"},
+                description = "Filter by strand: + or -"
+        )
+        String strand = "";
+    }
 
     @Override
     public void run() {
-
+        // Catch exception while reading file
         try {
-            GTFFunctions gtf = new GTFFunctions(input_file);
-            gtf.findValue(option, value);
+            GTFFunctions gtf = new GTFFunctions(input.input_file);
+
+            gtf.findValues(
+                    search.feature,
+                    search.chromosome,
+                    search.strand,
+                    output.output_file
+            );
 
         } catch (IOException e) {
             System.out.println("Error reading GTF file.");
         }
     }
 }
-
