@@ -141,6 +141,7 @@ public class GTFFunctions {
             reader.close();
             writer.close();
         }
+    }
 
         /**
          * Filters a certain region between an end and start point on a chromosome.
@@ -195,7 +196,6 @@ public class GTFFunctions {
             reader.close();
             writer.close();
         }
-    }
 
     public void chromosomeCount() throws IOException {
 
