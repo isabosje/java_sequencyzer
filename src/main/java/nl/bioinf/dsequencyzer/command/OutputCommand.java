@@ -6,8 +6,7 @@ public class OutputCommand {
 
     @CommandLine.Option(
             names = {"-o", "--output"},
-            description = "@|bold Add an output file name|@",
-            required = true
+            description = "@|bold Add an output file name|@"
     )
     String output_file;
 }
