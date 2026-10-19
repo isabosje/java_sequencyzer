@@ -104,6 +104,9 @@ public class GTFFunctions {
 
         String line = reader.readLine();
 
+        // Max 3 lines in terminal for user
+        int printed_lines = 0;
+
         while (line != null) {
 
             if (!line.startsWith("#")) {
@@ -129,19 +132,25 @@ public class GTFFunctions {
 
                 // Print and write lines if all filters match
                 if (matches) {
-                    System.out.println(line);
+
+                    // Print a maximum of 3 lines in the terminal
+                    if (printed_lines < 3) {
+                        System.out.println(line);
+                        printed_lines++;
+                    }
+
+                    // Write all matching lines to the output file
                     writer.write(line);
                     writer.newLine();
-
                 }
 
-                line = reader.readLine();
             }
-
-            reader.close();
-            writer.close();
+            line = reader.readLine();
         }
-    }
+
+        reader.close();
+        writer.close();
+        }
 
         /**
          * Filters a certain region between an end and start point on a chromosome.
@@ -166,6 +175,8 @@ public class GTFFunctions {
 
             String line = reader.readLine();
 
+            int printed_lines = 0;
+
             while (line != null) {
 
                 if (!line.startsWith("#")) {
@@ -182,8 +193,11 @@ public class GTFFunctions {
                         // Region falls in between the start and end in the gtf file
                         if (feature_start >= region_start && feature_end <= region_end) {
 
-                            System.out.println(line);
-
+                            // Print a max of 3 lines in the terminal
+                            if (printed_lines < 3) {
+                                System.out.println(line);
+                                printed_lines++;
+                            }
                             writer.write(line);
                             writer.newLine();
                         }
@@ -191,11 +205,13 @@ public class GTFFunctions {
                 }
 
                 line = reader.readLine();
+
             }
 
             reader.close();
             writer.close();
         }
+
 
     public void chromosomeCount() throws IOException {
 
