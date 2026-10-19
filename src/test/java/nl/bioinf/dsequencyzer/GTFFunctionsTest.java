@@ -8,22 +8,37 @@ class GTFFunctionsTest {
 
     @Test
     void summaryCount() throws IOException {
-        GTFFunctions gtf = new GTFFunctions("test.gtf");
+        String inputFile = getClass()
+                .getClassLoader()
+                .getResource("generated_test.gtf")
+                .getPath();
 
-        assertDoesNotThrow(() -> gtf.summaryCount());
+        GTFFunctions gtf = new GTFFunctions(inputFile);
+
+        gtf.summaryCount();
     }
 
     @Test
     void findValue() throws IOException {
-        GTFFunctions gtf = new GTFFunctions("test.gtf");
+        String inputFile = getClass()
+                .getClassLoader()
+                .getResource("generated_test.gtf")
+                .getPath();
 
-        assertDoesNotThrow(() -> gtf.findValues("feature", "gene"));
+        GTFFunctions gtf = new GTFFunctions(inputFile);
+
+        gtf.findValues("exon", "chr1_test", "-", "output_test_find");
     }
 
     @Test
     void findRegion() throws IOException {
-        GTFFunctions gtf = new GTFFunctions("test.gtf");
+        String inputFile = getClass()
+                .getClassLoader()
+                .getResource("generated_test.gtf")
+                .getPath();
 
-        assertDoesNotThrow(() -> gtf.findRegion("chr1", "100", "500"));
+        GTFFunctions gtf = new GTFFunctions(inputFile);
+
+        gtf.findRegion("chr1_test", "1", "500", "output_test_region");
     }
 }
