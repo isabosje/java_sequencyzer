@@ -7,11 +7,13 @@ import java.io.IOException;
 
 @CommandLine.Command(
         name = "region",
+        // The @|bold is used to make --help more plain
         description = "%n@|bold Retrieves the region on a given chromosome based on the start and %n" +
                 "end points.|@"
 )
 public class RegionCommand implements Runnable {
 
+    // These ArgGroups change --help by sorting them
     @CommandLine.ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Input:|@%n",
@@ -58,7 +60,7 @@ public class RegionCommand implements Runnable {
 
     @Override
     public void run() {
-
+        // Catch exception while reading file
         try {
             GTFFunctions gtf = new GTFFunctions(input.input_file);
 

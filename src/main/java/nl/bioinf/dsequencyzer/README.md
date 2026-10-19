@@ -84,14 +84,14 @@ java -jar build/libs/<generated-jar-name>.jar fasta --input example.fasta --leng
 
 Options:
 
-| Option | Description |
-| --- | --- |
-| `-i`, `--input` | Required. FASTA file path or nucleotide sequence. |
-| `-l`, `--length` | Print the sequence length. |
-| `-g`, `--gc` | Print the GC percentage. |
-| `-v`, `--validate` | Report whether the sequence contains only valid nucleotide characters. |
-| `--head` | Print the first 10 lines of a file. This option is for files, not sequences entered directly. |
-| `-h`, `--help` | Show command help. |
+| Option | Description | Required (y / n) |
+| --- | --- | --- |
+| `-i`, `--input` | FASTA file path or nucleotide sequence. | y |
+| `-l`, `--length` | Print the sequence length. | n |
+| `-g`, `--gc` | Print the GC percentage. | n |
+| `-v`, `--validate` | Report whether the sequence contains only valid nucleotide characters. | n |
+| `--head` | Print the first 10 lines of a file. This option is for files, not sequences entered directly. | n |
+| `-h`, `--help` | Show command help. | n |
 
 Example with a sequence entered directly:
 
@@ -129,7 +129,7 @@ java -jar build/libs/<generated-jar-name>.jar FindCommand --input annotations.gt
 ```
 
 | Option | Description | Required (y/n) |
-| --- | --- |
+| --- | --- | --- |
 | `-i`, `--input` | Input GTF file. | y |
 | `-f`, `--feature` | Feature to filter, for example `exon` or `transcript`. | n |
 | `-chr`, `--chromosome` | Chromosome to filter for, for example `chr1`. | n |
@@ -149,11 +149,11 @@ java -jar build/libs/<generated-jar-name>.jar RegionCommand --input annotations.
 ```
 
 | Option | Description | Required (y/n) |
-| --- | --- |
+| --- | --- | --- |
 | `-i`, `--input` | Required input GTF file. | y |
 | `-chr`, `--chromosome` | Chromosome name, for example `chr1`. | n |
 | `-s`, `--start` | Start coordinate. | n |
-| `-e`, `--end` | End coordinate. | n 
+| `-e`, `--end` | End coordinate. | n |
 
 Matching records are printed to the terminal and written to a file named `filtered.gtf` in the current working directory, unless the output parameter (`-o`, `--output`) is used.
 This allows you to choose the output filename yourself, and a `.gtf` extension will be added automatically.
@@ -165,8 +165,8 @@ The current implementation expects numeric start/end coordinates and includes on
 java -jar build/libs/<generated-jar-name>.jar SummaryCommand --input annotations.gtf
 ```
 
-| Option | Description | Required (y/n)
-| --- | --- |
+| Option | Description | Required (y/n) |
+| --- | --- | --- |
 | `-i`, `--input` | Input GTF file. | y |
 
 The command counts records by the third tab-separated GTF column (feature type) and prints the counts to the terminal. 
@@ -188,23 +188,25 @@ Run commands from a directory where you have write permissions and keep importan
 
 ```text
 src/main/java/nl/bioinf/dsequencyzer/
-├── Main.java                 # Picocli entry point and command registration
-├── FastaFunctions.java       # FASTA reading and sequence analysis
-├── GTFFunctions.java         # GTF filtering and feature counting
+├── Main.java                  # Picocli entry point and command registration
+├── FastaFunctions.java        # FASTA reading and sequence analysis
+├── GTFFunctions.java          # GTF filtering and feature counting
 ├── command/
-│   ├── BlastCommand.java     # BLAST result analysis
-│   ├── FastaCommand.java     # FASTA / nucleotide sequence analysis
-│   ├── FindCommand.java      # Search GTF records by three parameters or less
-│   ├── RegionCommand.java    # Filter GTF records by genomic region and chromosome
-│   └── SummaryCommand.java   # Count GTF feature types
+│   ├── BlastCommand.java      # BLAST result analysis
+│   ├── FastaCommand.java      # FASTA / nucleotide sequence analysis
+│   ├── FindCommand.java       # Search GTF records by three parameters or less
+│   ├── RegionCommand.java     # Filter GTF records by genomic region and chromosome
+│   ├── SummaryCommand.java    # Count GTF feature types
+    └── ChromosomeCommand.java # Counts the various chromosomes and associated lines
 └── io/
-    ├── InputHandler.java     # Detect input type
-    └── ReadBLAST.java        # Read and process BLAST result files
+    ├── InputHandler.java      # Detect input type
+    └── ReadBLAST.java         # Read and process BLAST result files
 ```
 
 ## Notes and limitations
 
-- The commands listed above reflect the command names currently configured in the source. In particular, `FindCommand`, `RegionCommand`, and `SummaryCommand` have not yet been given shorter lowercase command names.
+- The commands listed above reflect the command names currently configured in the source. 
+In particular, `FindCommand`, `RegionCommand`, and `SummaryCommand` have not yet been given shorter lowercase command names.
 - GTF commands expect standard tab-separated GTF records with the relevant columns present.
 - Use `--help` if a command or option does not behave as expected.
-- The project includes JUnit tests under `src/test/`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - These are not finished yet unfortunately.
+- The project includes JUnit tests under `src/test/`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately.

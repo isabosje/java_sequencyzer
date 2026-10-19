@@ -7,10 +7,12 @@ import java.io.IOException;
 
 @CommandLine.Command(
         name = "find",
+        // The @|bold is used to make --help more plain
         description = "@|bold Filters GTF annotations using multiple conditions.|@"
 )
 public class FindCommand implements Runnable {
 
+    // These ArgGroups change --help by sorting them
     @CommandLine.ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Input:|@%n",
@@ -57,6 +59,7 @@ public class FindCommand implements Runnable {
 
     @Override
     public void run() {
+        // Catch exception while reading file
         try {
             GTFFunctions gtf = new GTFFunctions(input.input_file);
 

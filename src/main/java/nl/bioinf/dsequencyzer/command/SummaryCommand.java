@@ -7,16 +7,18 @@ import java.io.IOException;
 
 @CommandLine.Command(
         name = "summary",
+        // The @|bold is used to make --help more plain
         description = "@|bold Gives a summary containing features depending on file type.|@"
 )
 public class SummaryCommand implements Runnable {
 
+    // Inserts InputCommand
     @CommandLine.Mixin
     InputCommand input = new InputCommand();
 
     @Override
     public void run() {
-
+        // Catch exception while reading file
         try {
             GTFFunctions gtf = new GTFFunctions(input.input_file);
             gtf.summaryCount();

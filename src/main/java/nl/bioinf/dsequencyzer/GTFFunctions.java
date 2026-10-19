@@ -19,12 +19,12 @@ public class GTFFunctions {
      */
     public void summaryCount() throws IOException {
 
+        // Reads input gtf-file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
         String line = reader.readLine();
 
         // Stores each feature and how often it occurs
-        // I used the next site: https://www.w3schools.com/java/java_hashmap.asp
         HashMap<String, Integer> features = new HashMap<>();
 
         // Stores each chromosome and gene
@@ -48,13 +48,11 @@ public class GTFFunctions {
 
                 // Check if this feature has already been found
                 if (features.containsKey(feature)) {
-
                     // Add one to the existing count
                     int count = features.get(feature);
                     features.put(feature, count + 1);
 
                 } else {
-
                     // If feature not found -> start at 1
                     features.put(feature, 1);
                 }
@@ -73,12 +71,13 @@ public class GTFFunctions {
 
         reader.close();
 
-        // Print summary + features and count together
+        // Prints summary, features and count
         System.out.println("GTF Summary");
         System.out.println("Total annotation lines: " + total_lines);
         System.out.println("Unique chromosomes: " + chromosomes.size());
         System.out.println("Genes: " + genes.size());
 
+        // Prints keys with values
         for (String feature : features.keySet()) {
             System.out.println(feature + " : " + features.get(feature));
         }
@@ -96,10 +95,10 @@ public class GTFFunctions {
     public void findValues(String feature, String chromosome, String strand, String output_file)
             throws IOException {
 
-        // Read .gtf file
+        // Read input gtf-file
         BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
-        // Writes new .gtf file with chosen lines
+        // Writes new .gtf file with filtered lines
         BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
 
         String line = reader.readLine();
@@ -109,10 +108,12 @@ public class GTFFunctions {
 
         while (line != null) {
 
+            // Skip header and comments
             if (!line.startsWith("#")) {
 
                 String[] columns = line.split("\t");
 
+                // Using a boolean for the different parameters
                 boolean matches = true;
 
                 // Check feature
@@ -145,12 +146,14 @@ public class GTFFunctions {
                 }
 
             }
+
             line = reader.readLine();
         }
 
         reader.close();
         writer.close();
-        }
+    }
+
 
         /**
          * Filters a certain region between an end and start point on a chromosome.
@@ -159,17 +162,19 @@ public class GTFFunctions {
          * @param start        input the start coordinates
          * @param end          input the end coordinates
          * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+         *
+         * I am going to change this method into 3 or 4 different methods, because it performs too many tasks.
+         * It will likely be split into one method for reading input, one for processing, and one for writing the output.
          */
         public void findRegion (String chromosome, String start, String end, String output_file) throws IOException {
-            // Op gaan splitsen in verschillende methoden (inlezen + filteren + uitschrijven).
 
-            // Read .gtf file
+            // Read input gtf-file
             BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
-            // Writes new .gtf file with chosen lines
+            // Writes new .gtf file with filtered lines and adds gtf extention
             BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
 
-            // Needs to be integer because of numbers
+            // Makes the values integers
             int region_start = Integer.parseInt(start);
             int region_end = Integer.parseInt(end);
 
@@ -183,7 +188,7 @@ public class GTFFunctions {
 
                     String[] columns = line.split("\t");
 
-                    // Also needs to be integers because numbers
+                    // Makes the values integers
                     int feature_start = Integer.parseInt(columns[3]);
                     int feature_end = Integer.parseInt(columns[4]);
 
@@ -240,7 +245,7 @@ public class GTFFunctions {
 
                 } else {
 
-                    // If chromosome not found -> start at 1
+                    // If chromosome not found, start at 1
                     chromosomes.put(chromosome, 1);
                 }
             }
@@ -254,6 +259,7 @@ public class GTFFunctions {
         // Print chromosome overview
         System.out.println("Chromosome overview");
 
+        // Print each key and value
         for (String chromosome : chromosomes.keySet()) {
             System.out.println(chromosome + " : " + chromosomes.get(chromosome));
         }
