@@ -20,7 +20,7 @@ public class ChromosomeCommand implements Runnable {
     public void run() {
         // Catch exception while reading file
         try {
-            GTFFunctions gtf = new GTFFunctions(input.input_file);
+            GTFFunctions gtf = new GTFFunctions(input.inputFile);
             gtf.chromosomeCount();
 
         } catch (IOException e) {

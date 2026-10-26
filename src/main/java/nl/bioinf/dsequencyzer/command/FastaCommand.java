@@ -70,7 +70,7 @@ public class FastaCommand implements Runnable {
 
         InputHandler inputHandler = new InputHandler();
 
-        String inputType = inputHandler.getInputType(input.input_file);
+        String inputType = inputHandler.getInputType(input.inputFile);
 
         try {
 
@@ -81,7 +81,7 @@ public class FastaCommand implements Runnable {
                     return;
                 }
 
-                FastaFunctions.getHeader(input.input_file);
+                FastaFunctions.getHeader(input.inputFile);
                 return;
             }
 
@@ -92,11 +92,11 @@ public class FastaCommand implements Runnable {
 
             if (inputType.equals("sequence")) {
 
-                sequence = input.input_file;
+                sequence = input.inputFile;
 
             } else if (inputType.equals("sequence_file")) {
 
-                sequence = FastaFunctions.readSequence(input.input_file);
+                sequence = FastaFunctions.readSequence(input.inputFile);
 
             } else {
 
