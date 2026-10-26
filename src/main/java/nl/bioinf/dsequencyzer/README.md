@@ -1,7 +1,7 @@
 # DSequencyzer
 
 DSequencyzer is a Java command-line application for inspecting and filtering FASTA and GTF annotation files,
-and summarising tabular BLAST results. It uses [Picocli](https://picocli.info/) to parse commands and options.
+and summarizing tabular BLAST results. It uses [Picocli](https://picocli.info/) to parse commands and options.
 
 
 ## Requirements
@@ -13,24 +13,24 @@ and summarising tabular BLAST results. It uses [Picocli](https://picocli.info/) 
 
 Run these commands from the project root (the directory containing `gradlew` and `build.gradle.kts`).
 
-### Run with Gradle
+### Run with shadowJar
 
 On Windows:
 
 ```powershell
-.\gradlew.bat run --args="--help"
+java -jar build/libs/<generated-jar-name>.jar find -i <input-file-name>.gtf -f <feature> -chr <chromosome> -s <strand +/-> 
 ```
 
 On macOS/Linux:
 
 ```bash
-./gradlew run --args="--help"
+java -jar build/libs/<generated-jar-name>.jar find -i <input-file-name>.gtf -f <feature> -chr <chromosome> -s <strand +/-> 
 ```
 
 To run a command, replace `--help` with the command and its arguments. For example:
 
 ```bash
-./gradlew run --args="fasta --input example.fasta --length --gc --validate"
+java -jar build/libs/<generated-jar-name>.jar --help
 ```
 
 On Windows, use `gradlew.bat` instead of `./gradlew`.
@@ -123,9 +123,9 @@ The implementation skips blank lines and lines beginning with `#`. It reads perc
 The command filters a GTF file by a gene-related attribute, chromosome, or feature type. The command name is currently `FindCommand` (case-sensitive), as configured in the source code.
 
 ```bash
-java -jar build/libs/<generated-jar-name>.jar FindCommand --input annotations.gtf --option chromosome --value chr1
-java -jar build/libs/<generated-jar-name>.jar FindCommand --input annotations.gtf --option feature --value exon
-java -jar build/libs/<generated-jar-name>.jar FindCommand --input annotations.gtf --option gene --value ENSG000001
+java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option chromosome --value chr1
+java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option feature --value exon
+java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option gene --value ENSG000001
 ```
 
 | Option | Description | Required (y/n) |
@@ -145,7 +145,7 @@ This command selects records on a chromosome that fall entirely within the suppl
 Its current command name is `RegionCommand` (case-sensitive).
 
 ```bash
-java -jar build/libs/<generated-jar-name>.jar RegionCommand --input annotations.gtf -chr chr1 -s 1000 -e 5000
+java -jar build/libs/<generated-jar-name>.jar region --input annotations.gtf -chr chr1 -s 1000 -e 5000
 ```
 
 | Option | Description | Required (y/n) |
@@ -162,7 +162,7 @@ The current implementation expects numeric start/end coordinates and includes on
 ### `SummaryCommand` — count GTF feature types
 
 ```bash
-java -jar build/libs/<generated-jar-name>.jar SummaryCommand --input annotations.gtf
+java -jar build/libs/<generated-jar-name>.jar summary --input annotations.gtf
 ```
 
 | Option | Description | Required (y/n) |

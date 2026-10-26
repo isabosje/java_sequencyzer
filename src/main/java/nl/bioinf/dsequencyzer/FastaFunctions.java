@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * Method for reading and analysing of FASTA sequences
+ * Method for reading and analyzing of FASTA sequences
  */
 public class FastaFunctions {
 

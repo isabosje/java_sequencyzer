@@ -5,11 +5,11 @@ import java.util.HashMap;
 
 public class GTFFunctions {
 
-    private String input_file;
+    private String inputFile;
 
     // Constructor
-    public GTFFunctions(String input_file) {
-        this.input_file = input_file;
+    public GTFFunctions(String inputFile) {
+        this.inputFile = inputFile;
     }
 
     /**
@@ -20,7 +20,7 @@ public class GTFFunctions {
     public void summaryCount() throws IOException {
 
         // Reads input gtf-file
-        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
         String line = reader.readLine();
 
@@ -96,7 +96,7 @@ public class GTFFunctions {
             throws IOException {
 
         // Read input gtf-file
-        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
         // Writes new .gtf file with filtered lines
         BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
@@ -169,7 +169,7 @@ public class GTFFunctions {
         public void findRegion (String chromosome, String start, String end, String output_file) throws IOException {
 
             // Read input gtf-file
-            BufferedReader reader = new BufferedReader(new FileReader(input_file));
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
             // Writes new .gtf file with filtered lines and adds gtf extention
             BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
@@ -221,7 +221,7 @@ public class GTFFunctions {
     public void chromosomeCount() throws IOException {
 
         // Read GTF file
-        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
 
         String line = reader.readLine();
 
