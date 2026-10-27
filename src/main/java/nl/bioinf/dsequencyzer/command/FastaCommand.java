@@ -2,6 +2,8 @@ package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.FastaFunctions;
 import nl.bioinf.dsequencyzer.io.InputHandler;
+import nl.bioinf.dsequencyzer.io.ReadFasta;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -84,7 +86,8 @@ public class FastaCommand implements Runnable {
                     return;
                 }
 
-                FastaFunctions.getHeader(input);
+                ReadFasta.readFirstLines(input, 10)
+                        .forEach(System.out::println);
                 return;
             }
 
@@ -99,7 +102,7 @@ public class FastaCommand implements Runnable {
 
             } else if (inputType.equals("sequence_file")) {
 
-                sequence = FastaFunctions.readSequence(input);
+                sequence = ReadFasta.readSequence(input);
 
             } else {
 
@@ -143,6 +146,10 @@ public class FastaCommand implements Runnable {
             System.out.println(
                     "Could not read input file: " + e.getMessage()
             );
+
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Invalid FASTA input: " + e.getMessage());
         }
     }
 }
