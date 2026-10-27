@@ -1,104 +1,117 @@
 package nl.bioinf.dsequencyzer;
 
-import nl.bioinf.dsequencyzer.io.ReadGTF;
-import nl.bioinf.dsequencyzer.model.GTFParser;
-import nl.bioinf.dsequencyzer.model.Gene;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-/**
- * Provides functions to process and filter a GTF file.
- * The file is read and parsed once when a GTFFunctions object is created.
- */
 public class GTFFunctions {
 
-    private final List<String[]> gtfLines;
-    private final Map<String, Gene> geneMap;
+    private String input_file;
 
-    /**
-     * Reads the GTF file and parses its contents into genes.
-     *
-     * @param inputFile the path to the input GTF file
-     * @throws IOException if the file cannot be read or is not a valid GTF file
-     */
-    public GTFFunctions(String inputFile) throws IOException {
-
-        // Read the GTF file
-        ReadGTF readGTF = new ReadGTF(inputFile);
-        this.gtfLines = readGTF.readFile();
-
-        // Parse the GTF lines
-        GTFParser parser = new GTFParser(gtfLines);
-        this.geneMap = parser.parse();
+    // Constructor
+    public GTFFunctions(String input_file) {
+        this.input_file = input_file;
     }
 
     /**
-     * Counts the annotation lines, unique chromosomes, genes and feature types.
-     * Prints the summary in the terminal.
+     * Returns the count of all features in the terminal.
+     *
+     * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public void summaryCount() {
+    public void summaryCount() throws IOException {
 
-        // Create hashmaps
-        Map<String, Integer> features = new HashMap<>();
-        Map<String, Integer> chromosomes = new HashMap<>();
+        // Reads input gtf-file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
+        String line = reader.readLine();
+
+        // Stores each feature and how often it occurs
+        HashMap<String, Integer> features = new HashMap<>();
+
+        // Stores each chromosome and gene
+        HashMap<String, Integer> chromosomes = new HashMap<>();
+        HashMap<String, Integer> genes = new HashMap<>();
+
+        // Counts all annotation lines
         int total_lines = 0;
 
-        // For each line in columns
-        for (String[] columns : gtfLines) {
+        while (line != null) {
 
-            total_lines++;
+            // Skip comments and header lines
+            if (!line.startsWith("#")) {
 
-            String feature = columns[2];
+                String[] columns = line.split("\t");
 
-            // Count features
-            if (features.containsKey(feature)) {
-                int count = features.get(feature);
-                features.put(feature, count + 1);
-            } else {
-                features.put(feature, 1);
+                // Count total annotation lines
+                total_lines++;
+
+                String feature = columns[2];
+
+                // Check if this feature has already been found
+                if (features.containsKey(feature)) {
+                    // Add one to the existing count
+                    int count = features.get(feature);
+                    features.put(feature, count + 1);
+
+                } else {
+                    // If feature not found -> start at 1
+                    features.put(feature, 1);
+                }
+
+                // Store each chromosome only once
+                chromosomes.put(columns[0], 1);
+
+                // Store each gene only once
+                if (feature.equals("gene")) {
+                    genes.put(columns[8], 1);
+                }
             }
 
-            // Store each chromosome
-            chromosomes.put(columns[0], 1);
+            line = reader.readLine();
         }
 
-        // Print summary
+        reader.close();
+
+        // Prints summary, features and count
         System.out.println("GTF Summary");
         System.out.println("Total annotation lines: " + total_lines);
         System.out.println("Unique chromosomes: " + chromosomes.size());
-        System.out.println("Genes: " + geneMap.size());
+        System.out.println("Genes: " + genes.size());
 
+        // Prints keys with values
         for (String feature : features.keySet()) {
             System.out.println(feature + " : " + features.get(feature));
         }
     }
 
     /**
-     * Filters the GTF file by feature, chromosome and strand.
-     * Saves all matching lines in a separate GTF file and prints a maximum
-     * of three matching lines in the terminal.
+     * Filters on a gene and gives back all lines connected to the gene.
+     * Saves those lines in a separate .gtf file.
      *
-     * @param feature the feature to filter, for example exon or transcript
-     * @param chromosome the chromosome to filter, for example chr1 or chr2
-     * @param strand the strand to filter (+ or -)
-     * @param output_file the name of the output file, without the .gtf extension
-     * @throws IOException if the output file cannot be written
+     * @param feature       input argument 2 - the feature the user wants to filter (exon, transcript, etc.)
+     * @param chromosome    input argument 3 - the chromosome the user wants to filter (chr1, chr2, etc.)
+     * @param strand        input argument 4 - the strand the user wants to filter (+ / -)
+     * @throws IOException  if the file does not end with .gtf (is not a .gtf file)
      */
-    public void findValues(String feature, String chromosome, String strand,
-                           String output_file) throws IOException {
+    public void findValues(String feature, String chromosome, String strand, String output_file)
+            throws IOException {
 
-        try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter(output_file + ".gtf"))) {
+        // Read input gtf-file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
 
-            int printed_lines = 0;
+        // Writes new .gtf file with filtered lines
+        BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
 
-            for (String[] columns : gtfLines) {
+        String line = reader.readLine();
+
+        // Max 3 lines in terminal for user
+        int printed_lines = 0;
+
+        while (line != null) {
+
+            // Skip header and comments
+            if (!line.startsWith("#")) {
+
+                String[] columns = line.split("\t");
 
                 // Using a boolean for the different parameters
                 boolean matches = true;
@@ -121,8 +134,6 @@ public class GTFFunctions {
                 // Print and write lines if all filters match
                 if (matches) {
 
-                    String line = String.join("\t", columns);
-
                     // Print a maximum of 3 lines in the terminal
                     if (printed_lines < 3) {
                         System.out.println(line);
@@ -133,143 +144,125 @@ public class GTFFunctions {
                     writer.write(line);
                     writer.newLine();
                 }
+
             }
+
+            line = reader.readLine();
         }
+
+        reader.close();
+        writer.close();
     }
 
-    /**
-     * Filters features on a chromosome that fall completely within a region.
-     * Saves all matching lines in a separate GTF file and prints a maximum
-     * of three matching lines in the terminal.
-     *
-     * @param chromosome the chromosome to search
-     * @param start the start coordinate of the region
-     * @param end the end coordinate of the region
-     * @param output_file the name of the output file, without the .gtf extension
-     * @throws IOException if the output file cannot be written
-     * @throws NumberFormatException if start or end is not a valid integer
-     */
-    public void findRegion(String chromosome, String start, String end,
-                           String output_file) throws IOException {
 
-        // Convert the coordinates to integers
-        int region_start = Integer.parseInt(start);
-        int region_end = Integer.parseInt(end);
+        /**
+         * Filters a certain region between an end and start point on a chromosome.
+         *
+         * @param chromosome   input a chromosome
+         * @param start        input the start coordinates
+         * @param end          input the end coordinates
+         * @throws IOException if the file does not end with .gtf (is not a .gtf file)
+         *
+         * I am going to change this method into 3 or 4 different methods, because it performs too many tasks.
+         * It will likely be split into one method for reading input, one for processing, and one for writing the output.
+         */
+        public void findRegion (String chromosome, String start, String end, String output_file) throws IOException {
 
-        try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter(output_file + ".gtf"))) {
+            // Read input gtf-file
+            BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+            // Writes new .gtf file with filtered lines and adds gtf extention
+            BufferedWriter writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
+
+            // Makes the values integers
+            int region_start = Integer.parseInt(start);
+            int region_end = Integer.parseInt(end);
+
+            String line = reader.readLine();
 
             int printed_lines = 0;
 
-            for (String[] columns : gtfLines) {
+            while (line != null) {
 
-                int feature_start = Integer.parseInt(columns[3]);
-                int feature_end = Integer.parseInt(columns[4]);
+                if (!line.startsWith("#")) {
 
-                // Check chromosome
-                if (columns[0].equals(chromosome)) {
+                    String[] columns = line.split("\t");
 
-                    // Check if the feature falls completely within the region
-                    if (feature_start >= region_start && feature_end <= region_end) {
+                    // Makes the values integers
+                    int feature_start = Integer.parseInt(columns[3]);
+                    int feature_end = Integer.parseInt(columns[4]);
 
-                        String line = String.join("\t", columns);
+                    // First arg is chromosome number
+                    if (columns[0].equals(chromosome)) {
 
-                        // Print a maximum of 3 lines in the terminal
-                        if (printed_lines < 3) {
-                            System.out.println(line);
-                            printed_lines++;
+                        // Region falls in between the start and end in the gtf file
+                        if (feature_start >= region_start && feature_end <= region_end) {
+
+                            // Print a max of 3 lines in the terminal
+                            if (printed_lines < 3) {
+                                System.out.println(line);
+                                printed_lines++;
+                            }
+                            writer.write(line);
+                            writer.newLine();
                         }
-
-                        // Write matching lines to the output file
-                        writer.write(line);
-                        writer.newLine();
                     }
                 }
-            }
-        }
-    }
 
-    /**
-     * Counts how often each chromosome occurs in the GTF file.
-     * Prints the chromosome overview in the terminal.
-     */
-    public void chromosomeCount() {
+                line = reader.readLine();
+
+            }
+
+            reader.close();
+            writer.close();
+        }
+
+
+    public void chromosomeCount() throws IOException {
+
+        // Read GTF file
+        BufferedReader reader = new BufferedReader(new FileReader(input_file));
+
+        String line = reader.readLine();
 
         // Stores each chromosome and how often it occurs
-        Map<String, Integer> chromosomes = new HashMap<>();
+        HashMap<String, Integer> chromosomes = new HashMap<>();
 
-        for (String[] columns : gtfLines) {
+        while (line != null) {
 
-            String chromosome = columns[0];
+            // Skip comments and header lines
+            if (!line.startsWith("#")) {
 
-            // Check if this chromosome has already been found
-            if (chromosomes.containsKey(chromosome)) {
+                String[] columns = line.split("\t");
+                String chromosome = columns[0];
 
-                // Add one to the existing count
-                int count = chromosomes.get(chromosome);
-                chromosomes.put(chromosome, count + 1);
+                // Check if this chromosome has already been found
+                if (chromosomes.containsKey(chromosome)) {
 
-            } else {
+                    // Add one to the existing count
+                    int count = chromosomes.get(chromosome);
+                    chromosomes.put(chromosome, count + 1);
 
-                // If chromosome not found, start at 1
-                chromosomes.put(chromosome, 1);
+                } else {
+
+                    // If chromosome not found, start at 1
+                    chromosomes.put(chromosome, 1);
+                }
             }
+
+            // Read next line
+            line = reader.readLine();
         }
+
+        reader.close();
 
         // Print chromosome overview
         System.out.println("Chromosome overview");
 
-        // Print each chromosome and its count
+        // Print each key and value
         for (String chromosome : chromosomes.keySet()) {
             System.out.println(chromosome + " : " + chromosomes.get(chromosome));
         }
     }
-
-    /**
-     * Filters a gene and retrieves all GTF lines connected to that gene.
-     * Saves the matching lines in a separate GTF file.
-     *
-     * @param geneId the ID of the gene to find
-     * @param output_file the name of the output file, without the .gtf extension
-     * @throws IOException if the output file cannot be written
-     */
-    public void findGene(String geneId, String output_file) throws IOException {
-
-        // Create boolean found
-        boolean found = false;
-
-        try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter(output_file + ".gtf"))) {
-
-            for (String[] columns : gtfLines) {
-
-                // Contains all IDs
-                String attributes = columns[8];
-
-                // Check whether the line belongs to the requested gene
-                if (attributes.contains("gene_id \"" + geneId + "\"")) {
-
-                    String line = String.join("\t", columns);
-
-                    writer.write(line);
-                    writer.newLine();
-
-                    found = true;
-                }
-            }
-        }
-
-        if (!found) {
-            System.out.println("No entries found for gene: " + geneId);
-        }
-    }
-
-    /**
-     * Returns the parsed genes from the GTF file.
-     *
-     * @return a map containing gene IDs and their corresponding Gene objects
-     */
-    public Map<String, Gene> getGeneMap() {
-        return geneMap;
-    }
 }
+

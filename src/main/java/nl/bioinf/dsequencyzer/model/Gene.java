@@ -8,7 +8,6 @@ import java.util.List;
  * and a list of child-transcripts
  */
 
-public class Gene extends Feature {
 
     private final List<Transcript> transcripts =
             new ArrayList<>();

@@ -7,12 +7,10 @@ package nl.bioinf.dsequencyzer.model;
 class SimpleFeature extends Feature {
 
     public SimpleFeature(
-            String type,
             String chromosome,
             int start,
             int end) {
 
-        super(FeatureType.valueOf(type),
                 chromosome,
                 start,
                 end);
