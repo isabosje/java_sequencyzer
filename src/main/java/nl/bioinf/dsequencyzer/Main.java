@@ -19,7 +19,6 @@ import picocli.CommandLine.Command;
                 RegionCommand.class,
                 FindCommand.class,
                 SummaryCommand.class,
-                BlastCommand.class,
                 FastaCommand.class,
                 ChromosomeCommand.class
         })

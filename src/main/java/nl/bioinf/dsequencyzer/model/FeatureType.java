@@ -5,5 +5,9 @@ enum FeatureType {
     GENE,
     TRANSCRIPT,
     EXON,
-    CDS
+    CDS,
+    UTR,
+    START_CODON,
+    STOP_CODON,
+    SELENOCYSTEINE
 }
