@@ -5,7 +5,6 @@ import picocli.CommandLine;
 import nl.bioinf.dsequencyzer.command.SummaryCommand;
 import picocli.CommandLine.Command;
 
-// TODO: Check if everything is OO now.
 
 @Command(
         name = "DSequencyzer",
