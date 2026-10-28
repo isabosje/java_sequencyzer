@@ -5,7 +5,6 @@ import picocli.CommandLine;
 import nl.bioinf.dsequencyzer.command.SummaryCommand;
 import picocli.CommandLine.Command;
 
-// TODO: Check if everything is OO now.
 
 @Command(
         name = "DSequencyzer",
@@ -19,7 +18,6 @@ import picocli.CommandLine.Command;
                 RegionCommand.class,
                 FindCommand.class,
                 SummaryCommand.class,
-                BlastCommand.class,
                 FastaCommand.class,
                 ChromosomeCommand.class
         })

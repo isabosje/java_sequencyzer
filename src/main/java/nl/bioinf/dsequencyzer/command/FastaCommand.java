@@ -2,14 +2,15 @@ package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.FastaFunctions;
 import nl.bioinf.dsequencyzer.io.InputHandler;
-import picocli.CommandLine;
+import nl.bioinf.dsequencyzer.io.ReadFasta;
+
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.io.IOException;
 
 /**
- * Commandline command for analyzing FASTA files or a nucleotide sequence
+ * Commandline command for analysing FASTA files or a nucleotide sequence
  * This consists of: sequence length, gc percentage, validation
  * or displaying the header.
  *
@@ -26,8 +27,12 @@ public class FastaCommand implements Runnable {
     /**
      * Input either FASTA file or nucleotide sequence
      */
-    @CommandLine.Mixin
-    InputCommand input = new InputCommand();
+    @Option(
+            names = {"-i", "--input"},
+            description = "Input FASTA file or sequence",
+            required = true
+    )
+    private String input;
 
     /**
      * Displays the sequence length if requested
@@ -70,7 +75,7 @@ public class FastaCommand implements Runnable {
 
         InputHandler inputHandler = new InputHandler();
 
-        String inputType = inputHandler.getInputType(input.input_file);
+        String inputType = inputHandler.getInputType(input);
 
         try {
 
@@ -81,7 +86,8 @@ public class FastaCommand implements Runnable {
                     return;
                 }
 
-                FastaFunctions.getHeader(input.input_file);
+                ReadFasta.readFirstLines(input, 10)
+                        .forEach(System.out::println);
                 return;
             }
 
@@ -92,11 +98,11 @@ public class FastaCommand implements Runnable {
 
             if (inputType.equals("sequence")) {
 
-                sequence = input.input_file;
+                sequence = input;
 
             } else if (inputType.equals("sequence_file")) {
 
-                sequence = FastaFunctions.readSequence(input.input_file);
+                sequence = ReadFasta.readSequence(input);
 
             } else {
 
@@ -140,6 +146,10 @@ public class FastaCommand implements Runnable {
             System.out.println(
                     "Could not read input file: " + e.getMessage()
             );
+
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Invalid FASTA input: " + e.getMessage());
         }
     }
 }

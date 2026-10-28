@@ -10,5 +10,5 @@ public class InputCommand {
             description = "@|bold Input a valid GTF or FASTA file.|@",
             required = true
     )
-    String input_file;
+    String inputFile;
 }

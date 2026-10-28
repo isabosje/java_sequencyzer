@@ -20,7 +20,7 @@ public class SummaryCommand implements Runnable {
     public void run() {
         // Catch exception while reading file
         try {
-            GTFFunctions gtf = new GTFFunctions(input.input_file);
+            GTFFunctions gtf = new GTFFunctions(input.inputFile);
             gtf.summaryCount();
 
         } catch (IOException e) {

@@ -62,7 +62,7 @@ public class RegionCommand implements Runnable {
     public void run() {
         // Catch exception while reading file
         try {
-            GTFFunctions gtf = new GTFFunctions(input.input_file);
+            GTFFunctions gtf = new GTFFunctions(input.inputFile);
 
             gtf.findRegion(
                     Region.chromosome,
