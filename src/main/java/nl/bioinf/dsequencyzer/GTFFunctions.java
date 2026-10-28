@@ -5,6 +5,8 @@ import nl.bioinf.dsequencyzer.io.ReadGTF;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GTFFunctions {
 
@@ -16,6 +18,9 @@ public class GTFFunctions {
         this.lines = reader.readFile();
     }
 
+    // Log4j for exceptions
+    private static final Logger logger =
+            LogManager.getLogger(GTFFunctions.class);
 
     /**
      * Returns the count of all features in the terminal.
@@ -23,6 +28,7 @@ public class GTFFunctions {
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public void summaryCount() throws IOException {
+        logger.info("Starting GTF summary");
 
         // Stores each feature and how often it occurs
         HashMap<String, Integer> features = new HashMap<>();
@@ -68,6 +74,8 @@ public class GTFFunctions {
             for (String featureName : features.keySet()) {
                 System.out.println(featureName + " : " + features.get(featureName));
             }
+
+            logger.info("GTF summary completed. Total lines: {}", total_lines);
         }
     }
 
@@ -83,6 +91,8 @@ public class GTFFunctions {
      */
     public void findValues(String feature, String chromosome, String strand,
                            String output_file) throws IOException {
+
+        GTFFunctions.logger.info("Starting to search for values");
 
         BufferedWriter writer = null;
 
@@ -133,6 +143,7 @@ public class GTFFunctions {
         if (writer != null) {
             writer.close();
         }
+        GTFFunctions.logger.info("Found all information that matched your values.");
     }
 
 

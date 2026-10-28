@@ -12,12 +12,18 @@ repositories {
 }
 
 dependencies {
+    // Unittests
     testImplementation(platform("org.junit:junit-bom:6.0.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    // Source: https://mvnrepository.com/artifact/info.picocli/picocli
+    // PicoCLI
     implementation("info.picocli:picocli:4.7.7")
+
+    // Log4j
+    implementation(platform("org.apache.logging.log4j:log4j-bom:2.26.1"))
+    implementation("org.apache.logging.log4j:log4j-api")
+    runtimeOnly("org.apache.logging.log4j:log4j-core")
 }
 
 application {
@@ -31,5 +37,20 @@ tasks.test {
 tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "nl.bioinf.dsequencyzer.Main"
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            exclude(
+                "**/SimpleFeature.java",
+                "**/GTFParser.java",
+                "**/Gene.java",
+                "**/FeatureType.java",
+                "**/Feature.java",
+                "**/Transcript.java"
+            )
+        }
     }
 }
