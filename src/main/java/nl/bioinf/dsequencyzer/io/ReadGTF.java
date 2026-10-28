@@ -29,8 +29,31 @@ public class ReadGTF {
 
         List<String[]> lines = new ArrayList<>();
 
+        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
 
+            while ((line = reader.readLine()) != null ) {
+                if (line.startsWith("#")) {
+                    continue;
+                }
+
+                String[] columns = line.split("\t", -1);
+
+                if (columns.length != 9) {
+                    throw new IOException("Invalid GTF format.");
+                }
+
+                lines.add(columns);
+            }
+        }
+
+        if (lines.isEmpty()) {
+            throw new IOException("The input file contains no GTF data.");
+        }
+
+        return lines;
     }
+}
 
 
 

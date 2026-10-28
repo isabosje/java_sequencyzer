@@ -12,8 +12,6 @@ public class GTFParser {
         this.gtfLines = gtfLines;
     }
 
-
-
         // Parse every line in the GTF
         for (String[] columns : gtfLines) {
 
