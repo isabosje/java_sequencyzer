@@ -1,3 +1,4 @@
+
 package nl.bioinf.dsequencyzer.model;
 
 import java.util.HashMap;
@@ -12,48 +13,55 @@ public class GTFParser {
         this.gtfLines = gtfLines;
     }
 
-        // Parse every line in the GTF
-        for (String[] columns : gtfLines) {
+    public Map<String, Gene> parse() {
+        Map<String, Gene> geneMap = new HashMap<>();
+        Map<String, Transcript> transcriptMap = new HashMap<>();
 
-            // TODO: Extract values from the line and store/cast when needed
+        for (String[] columns : gtfLines) {
             String chromosome = columns[0];
+            String type = columns[2];
             int start = Integer.parseInt(columns[3]);
             int end = Integer.parseInt(columns[4]);
             String attributes = columns[8];
 
+            String geneId = getId(attributes, "gene_id");
+            String transcriptId = getId(attributes, "transcript_id");
 
-                    Gene gene = new Gene(
-                            chromosome,
-                            start,
-                            end);
+            if ("gene".equals(type)) {
+                geneMap.put(geneId, new Gene(chromosome, start, end));
 
-                    geneMap.put(geneId, gene);
-                }
-
-                // Transcript feature, always a child of a Gene
+            } else if ("transcript".equals(type)) {
                 Transcript transcript =
-                        new Transcript(
-                                chromosome,
-                                start,
-                                end);
+                        new Transcript(chromosome, start, end);
 
-                transcriptMap.put(
-                        transcriptId,
-                        transcript);
+                transcriptMap.put(transcriptId, transcript);
+                geneMap.get(geneId).addTranscript(transcript);
 
-                // Couple transcript to parent-gene
-                    }
-                else {
-                    // Generic feature, always a child of a Transcript
-                    Feature feature =
-                            new SimpleFeature(
-                                    type,
-                                    chromosome,
-                                    start,
-                                    end);
+            } else if ("exon".equals(type) || "CDS".equals(type)) {
+                Transcript transcript = transcriptMap.get(transcriptId);
 
-                    // Couple feature to parent-transcript
-                    }
+                if (transcript != null) {
+                    FeatureType featureType = "CDS".equals(type)
+                            ? FeatureType.CDS : FeatureType.EXON;
+
+                    transcript.addFeature(new SimpleFeature(
+                            featureType, chromosome, start, end));
                 }
+            }
         }
+
+        return geneMap;
     }
+
+    private String getId(String attributes, String key) {
+        for (String attribute : attributes.split(";")) {
+            String[] parts = attribute.trim().split("\\s+", 2);
+
+            if (parts.length == 2 && parts[0].equals(key)) {
+                return parts[1].replace("\"", "").trim();
+            }
+        }
+
+        return null;
+    }
+}

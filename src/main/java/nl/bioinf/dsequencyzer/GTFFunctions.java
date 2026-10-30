@@ -48,8 +48,7 @@ public class GTFFunctions {
             // Check if this feature has already been found
             if (features.containsKey(feature)) {
                 // Add one to the existing count
-                int count = features.get(feature);
-                features.put(feature, count + 1);
+                features.compute(feature, (k, count) -> count + 1);
 
             } else {
                 // If feature not found -> start at 1
@@ -157,6 +156,8 @@ public class GTFFunctions {
      *                     <p>
      *                     I am going to change this method into 3 or 4 different methods, because it performs too many tasks.
      *                     It will likely be split into one method for reading input, one for processing, and one for writing the output.
+     *
+     *                     NOTITIE: Dit staat nu ook in de Parser, hier weg?
      */
     public void findRegion(String chromosome, String start, String end, String output_file)
             throws IOException {

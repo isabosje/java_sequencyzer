@@ -5,4 +5,5 @@ enum FeatureType {
     GENE,
     TRANSCRIPT,
     EXON,
+    CDS,
 }
