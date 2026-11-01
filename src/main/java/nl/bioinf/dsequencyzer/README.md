@@ -118,9 +118,9 @@ java -jar build/libs/<generated-jar-name>.jar blast results.tsv best
 
 The implementation skips blank lines and lines beginning with `#`. It reads percentage identity from the third tab-separated column, so the input file must have that column in the expected format.
 
-### `FindCommand` — find matching GTF features
+### `FilterCommand` — find matching GTF features
 
-The command filters a GTF file by a gene-related attribute, chromosome, or feature type. The command name is currently `FindCommand` (case-sensitive), as configured in the source code.
+The command filters a GTF file by a gene-related attribute, chromosome, or feature type. The command name is currently `FilterCommand` (case-sensitive), as configured in the source code.
 
 ```bash
 java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option chromosome --value chr1
@@ -176,7 +176,7 @@ Lines beginning with `#` are skipped.
 
 Some commands create output files in the directory from which the application is run:
 
-- `FindCommand`: `<output>.gtf`
+- `FilterCommand`: `<output>.gtf`
 - `RegionCommand`: `<output>.gtf`
 
 If the user does not enter a `-o/--output` parameter, the output file name will automatically be named `filtered.gtf`.
@@ -205,8 +205,8 @@ src/main/java/nl/bioinf/dsequencyzer/
 
 ## Notes and limitations
 
-- The commands listed above reflect the command names currently configured in the source. 
-In particular, `FindCommand`, `RegionCommand`, and `SummaryCommand` have not yet been given shorter lowercase command names.
+- The commands listed above reflect the command names currently configured in the source.
+  In particular, `FilterCommand`, `RegionCommand`, and `SummaryCommand` have not yet been given shorter lowercase command names.
 - GTF commands expect standard tab-separated GTF records with the relevant columns present.
 - Use `--help` if a command or option does not behave as expected.
 - The project includes JUnit tests under `src/test/`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately.

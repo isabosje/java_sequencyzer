@@ -48,7 +48,7 @@ Current command include: (beschijving nog toevoegen)
 
 - `BlastCommand`
 - `FastaCommand`
-- `FindCommand`
+- `FilterCommand`
 - `RegionComand`
 - `SummaryCommand`
 

@@ -1,37 +1,54 @@
 package nl.bioinf.dsequencyzer;
 
+import nl.bioinf.dsequencyzer.command.OutputCommand;
 import nl.bioinf.dsequencyzer.io.ReadGTF;
 import nl.bioinf.dsequencyzer.model.GTFParser;
 import nl.bioinf.dsequencyzer.model.Gene;
-import java.util.Map;
+import nl.bioinf.dsequencyzer.model.Transcript;
+import nl.bioinf.dsequencyzer.model.Feature;
+import nl.bioinf.dsequencyzer.io.OutputHandler;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GTFFunctions {
 
-    // Constructor
-    private List<String[]> lines;
+    // Log4j for exceptions
+    private static final Logger logger =
+            LogManager.getLogger(GTFFunctions.class);
 
+    // Stores the original GTF lines
+    private final List<String[]> lines;
+
+    // Stores parsed genes and their connected transcripts and features
+    private Map<String, Gene> genes;
+
+    // Constructor
     public GTFFunctions(String inputFile) throws IOException {
         ReadGTF reader = new ReadGTF(inputFile);
         this.lines = reader.readFile();
     }
 
+    /**
+     * Parses the GTF file and returns all genes.
+     * The parsed genes are stored so the file does not need to be parsed again.
+     */
     public Map<String, Gene> parseGTF() {
 
-        GTFParser parser = new GTFParser(lines);
+        if (genes == null) {
+            GTFParser parser = new GTFParser(lines);
+            genes = parser.parse();
 
-        return parser.parse();
+            logger.info("GTF file parsed successfully. Genes found: {}", genes.size());
+        }
+
+        return genes;
     }
-
-    // Log4j for exceptions
-    private static final Logger logger =
-            LogManager.getLogger(GTFFunctions.class);
-
     /**
      * Returns the count of all features in the terminal.
      *
@@ -98,60 +115,47 @@ public class GTFFunctions {
      * @param strand     input argument 4 - the strand the user wants to filter (+ / -)
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public void findValues(String feature, String chromosome, String strand,
-                           String output_file) throws IOException {
+    public void filterValues(
+            String feature,
+            String chromosome,
+            String strand,
+            OutputCommand.OutputMode outputMode,
+            String outputFile
+    ) throws IOException {
 
-        GTFFunctions.logger.info("Starting to search for values");
+        GTFFunctions.logger.info("Starting to search for values.");
 
-        BufferedWriter writer = null;
+        try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
 
-        // Create output file only if the user specified one
-        // TODO: need to make an output_file option / subcommand / class
-        if (output_file != null && !output_file.isEmpty()) {
-            writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
-        }
+            // Loop through all lines from the input file
+            for (String[] columns : lines) {
 
-        // Loop through all lines from the input file
-        for (String[] columns : lines) {
+                // Using a boolean for the different parameters
+                boolean matches = true;
 
-            // Using a boolean for the different parameters
-            boolean matches = true;
+                // Check feature
+                if (!feature.isEmpty() && !columns[2].equals(feature)) {
+                    matches = false;
+                }
 
-            // Check feature
-            if (!feature.isEmpty() && !columns[2].equals(feature)) {
-                matches = false;
-            }
+                // Check chromosome
+                if (!chromosome.isEmpty() && !columns[0].equals(chromosome)) {
+                    matches = false;
+                }
 
-            // Check chromosome
-            if (!chromosome.isEmpty() && !columns[0].equals(chromosome)) {
-                matches = false;
-            }
+                // Check strand
+                if (!strand.isEmpty() && !columns[6].equals(strand)) {
+                    matches = false;
+                }
 
-            // Check strand
-            if (!strand.isEmpty() && !columns[6].equals(strand)) {
-                matches = false;
-            }
-
-            // Print and write lines if all filters match
-            if (matches) {
-                String line = String.join("\t", columns);
-
-                // Print matching lines in the terminal
-                System.out.println(line);
-
-                // Write matching lines to the output file if specified
-                if (writer != null) {
-                    writer.write(line);
-                    writer.newLine();
+                // Print and write lines if all filters match
+                if (matches) {
+                    String line = String.join("\t", columns);
+                    output.write(line);
                 }
             }
         }
 
-        // Close output file if one was created
-        // TODO: still needs the code to work
-        if (writer != null) {
-            writer.close();
-        }
         GTFFunctions.logger.info("Found all information that matched your values.");
     }
 
@@ -169,49 +173,36 @@ public class GTFFunctions {
      *
      *                     NOTITIE: Dit staat nu ook in de Parser, hier weg?
      */
-    public void findRegion(String chromosome, String start, String end, String output_file)
-            throws IOException {
-
-        BufferedWriter writer = null;
-
-        // Create output file only if the user specified one
-        if (!output_file.isEmpty()) {
-            writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
-        }
+    public void findRegion(
+            String chromosome,
+            String start,
+            String end,
+            String outputFile,
+            OutputCommand.OutputMode outputMode
+    ) throws IOException {
 
         // Makes the values integers
         int region_start = Integer.parseInt(start);
         int region_end = Integer.parseInt(end);
 
-        // Loop through all lines from the input file
-        for (String[] columns : lines) {
+        try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
 
-            // Makes the values integers
-            int feature_start = Integer.parseInt(columns[3]);
-            int feature_end = Integer.parseInt(columns[4]);
+            // Loop through all lines from the input file
+            for (String[] columns : lines) {
 
-            // Check chromosome and region
-            if (columns[0].equals(chromosome)
-                    && feature_start >= region_start
-                    && feature_end <= region_end) {
+                // Makes the values integers
+                int feature_start = Integer.parseInt(columns[3]);
+                int feature_end = Integer.parseInt(columns[4]);
 
-                String line = String.join("\t", columns);
+                // Check chromosome and region
+                if (columns[0].equals(chromosome)
+                        && feature_start >= region_start
+                        && feature_end <= region_end) {
 
-                // Print matching lines in the terminal
-                System.out.println(line);
-
-                // Write matching lines to the output file if specified
-                if (writer != null) {
-                    writer.write(line);
-                    writer.newLine();
+                    String line = String.join("\t", columns);
+                    output.write(line);
                 }
             }
-        }
-
-        // Close output file if one was created
-        // TODO: same as findValue
-        if (writer != null) {
-            writer.close();
         }
     }
 
@@ -252,6 +243,46 @@ public class GTFFunctions {
         // Print each key and value
         for (String chromosome : chromosomes.keySet()) {
             System.out.println(chromosome + " : " + chromosomes.get(chromosome));
+        }
+    }
+
+    public void findGene(
+            String geneId,
+            OutputCommand.OutputMode outputMode,
+            String outputFile
+    ) {
+
+        // Parse the GTF file
+        Map<String, Gene> genes = parseGTF();
+
+        // Find the requested gene
+        Gene gene = genes.get(geneId);
+
+        if (gene != null) {
+
+            System.out.println("Gene: " + geneId);
+            System.out.println("Chromosome: " + gene.getChromosome());
+            System.out.println("Start: " + gene.getStart());
+            System.out.println("End: " + gene.getEnd());
+
+            // Loop through all transcripts
+            for (Transcript transcript : gene.getTranscripts()) {
+
+                System.out.println("\nTranscript found");
+
+                // Loop through all features
+                for (Feature feature : transcript.getFeatures()) {
+
+                    System.out.println(
+                            feature.getType() + ": "
+                                    + feature.getStart() + "-"
+                                    + feature.getEnd()
+                    );
+                }
+            }
+
+        } else {
+            System.out.println("Gene not found.");
         }
     }
 }

@@ -35,7 +35,11 @@ public class GTFParser {
                         new Transcript(chromosome, start, end);
 
                 transcriptMap.put(transcriptId, transcript);
-                geneMap.get(geneId).addTranscript(transcript);
+                Gene gene = geneMap.get(geneId);
+
+                if (gene != null) {
+                    gene.addTranscript(transcript);
+                }
 
             } else if ("exon".equals(type) || "CDS".equals(type)) {
                 Transcript transcript = transcriptMap.get(transcriptId);

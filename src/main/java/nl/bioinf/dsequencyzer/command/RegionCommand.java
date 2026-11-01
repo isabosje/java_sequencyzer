@@ -2,8 +2,8 @@ package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.GTFFunctions;
 import picocli.CommandLine;
-
 import java.io.IOException;
+
 
 @CommandLine.Command(
         name = "region",
@@ -33,7 +33,7 @@ public class RegionCommand implements Runnable {
             heading = "%n@|bold,blue Region:|@%n",
             order = 3
     )
-    RegionGroup Region;
+    RegionGroup Region = new RegionGroup();
 
     static class RegionGroup {
 
@@ -68,7 +68,8 @@ public class RegionCommand implements Runnable {
                     Region.chromosome,
                     Region.start,
                     Region.end,
-                    output.output_file
+                    output.outputFile,
+                    output.outputMode
             );
 
         } catch (IOException e) {

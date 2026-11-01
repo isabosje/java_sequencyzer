@@ -1,4 +1,6 @@
+
 package nl.bioinf.dsequencyzer.command;
+
 import nl.bioinf.dsequencyzer.GTFFunctions;
 import picocli.CommandLine;
 
@@ -7,7 +9,7 @@ import java.io.IOException;
 @CommandLine.Command(
         name = "gene",
         // The @|bold is used to make --help more plain
-        description = "@|bold Filters GTF annotations using multiple conditions.|@"
+        description = "@|bold Displays information about a specific gene.|@"
 )
 public class GeneCommand implements Runnable {
 
@@ -36,37 +38,21 @@ public class GeneCommand implements Runnable {
     static class SearchGroup {
 
         @CommandLine.Option(
-                names = {"-g", "--gene"},
-                description = "Filter by feature, example: exon"
+                names = {"-g", "--gene-id"},
+                description = "Gene ID to search for"
         )
-        String feature = "";
-
-        // Check toevoegen gebruiker
-
-        @CommandLine.Option(
-                names = {"-chr", "--chromosome"},
-                description = "Filter by chromosome, example: chr1"
-        )
-        String chromosome = "";
-
-        @CommandLine.Option(
-                names = {"-s", "--strand"},
-                description = "Filter by strand: + or -"
-        )
-        String strand = "";
+        String geneId = "";
     }
 
     @Override
     public void run() {
-        // Catch exception while reading file
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
 
-            gtf.findValues(
-                    search.feature,
-                    search.chromosome,
-                    search.strand,
-                    output.output_file
+            gtf.findGene(
+                    search.geneId,
+                    output.outputMode,
+                    output.outputFile
             );
 
         } catch (IOException e) {
@@ -74,3 +60,4 @@ public class GeneCommand implements Runnable {
         }
     }
 }
+

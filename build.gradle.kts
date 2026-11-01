@@ -23,7 +23,7 @@ dependencies {
     // Log4j
     implementation(platform("org.apache.logging.log4j:log4j-bom:2.26.1"))
     implementation("org.apache.logging.log4j:log4j-api")
-    runtimeOnly("org.apache.logging.log4j:log4j-core")
+    implementation("org.apache.logging.log4j:log4j-core")
 }
 
 application {

@@ -6,11 +6,11 @@ import picocli.CommandLine;
 import java.io.IOException;
 
 @CommandLine.Command(
-        name = "find",
+        name = "filter",
         // The @|bold is used to make --help more plain
         description = "@|bold Filters GTF annotations using multiple conditions.|@"
 )
-public class FindCommand implements Runnable {
+public class FilterCommand implements Runnable {
 
     // These ArgGroups change --help by sorting them
     @CommandLine.ArgGroup(
@@ -63,11 +63,12 @@ public class FindCommand implements Runnable {
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
 
-            gtf.findValues(
+            gtf.filterValues(
                     search.feature,
                     search.chromosome,
                     search.strand,
-                    output.output_file
+                    output.outputMode,
+                    output.outputFile
             );
 
         } catch (IOException e) {

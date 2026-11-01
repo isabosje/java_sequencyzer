@@ -16,10 +16,11 @@ import picocli.CommandLine.Command;
         optionListHeading = "%n@|bold,blue Options:|@%n",
         subcommands = {
                 RegionCommand.class,
-                FindCommand.class,
+                FilterCommand.class,
                 SummaryCommand.class,
                 FastaCommand.class,
-                ChromosomeCommand.class
+                ChromosomeCommand.class,
+                GeneCommand.class
         })
 public class Main implements Runnable {
 

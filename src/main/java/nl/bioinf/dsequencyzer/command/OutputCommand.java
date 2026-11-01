@@ -1,3 +1,4 @@
+
 package nl.bioinf.dsequencyzer.command;
 
 import picocli.CommandLine;
@@ -6,8 +7,21 @@ public class OutputCommand {
 
     @CommandLine.Option(
             names = {"-o", "--output"},
-            // The @|bold is used to make --help more plain
-            description = "@|bold Add an output file name|@"
+            description = "@|bold Add an output file name|@",
+            defaultValue = "output.gtf"
     )
-    String output_file;
+    String outputFile = "output.gtf";
+
+    @CommandLine.Option(
+            names = {"--output-mode"},
+            description = "Output mode: TERMINAL, FILE or BOTH.",
+            defaultValue = "TERMINAL"
+    )
+    OutputMode outputMode = OutputMode.TERMINAL;
+
+    public enum OutputMode {
+        TERMINAL,
+        FILE,
+        BOTH
+    }
 }

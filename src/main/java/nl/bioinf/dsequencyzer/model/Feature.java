@@ -3,7 +3,7 @@ package nl.bioinf.dsequencyzer.model;
 /**
  * Common properties shared by all GTF features.
  */
-abstract class Feature {
+public abstract class Feature {
 
     private final FeatureType type;
     private final String chromosome;
