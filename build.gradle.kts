@@ -39,18 +39,3 @@ tasks.withType<Jar> {
         attributes["Main-Class"] = "nl.bioinf.dsequencyzer.Main"
     }
 }
-
-sourceSets {
-    main {
-        java {
-            exclude(
-                "**/SimpleFeature.java",
-                "**/GTFParser.java",
-                "**/Gene.java",
-                "**/FeatureType.java",
-                "**/Feature.java",
-                "**/Transcript.java"
-            )
-        }
-    }
-}

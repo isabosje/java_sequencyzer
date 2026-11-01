@@ -1,18 +1,22 @@
+
 package nl.bioinf.dsequencyzer.model;
 
 /**
- * Represents EXON, CDS, etc.
- * (required becaues we cannot make a direct Feature object)
+ * Represents simple GTF features such as EXON and CDS.
  */
 class SimpleFeature extends Feature {
 
     public SimpleFeature(
-            FeatureType featureType, String chromosome,
+            FeatureType featureType,
+            String chromosome,
             int start,
             int end) {
 
+        super(
+                featureType,
                 chromosome,
                 start,
-                end);
+                end
+        );
     }
 }

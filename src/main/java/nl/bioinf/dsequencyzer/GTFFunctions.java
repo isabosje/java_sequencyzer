@@ -1,6 +1,9 @@
 package nl.bioinf.dsequencyzer;
 
 import nl.bioinf.dsequencyzer.io.ReadGTF;
+import nl.bioinf.dsequencyzer.model.GTFParser;
+import nl.bioinf.dsequencyzer.model.Gene;
+import java.util.Map;
 
 import java.io.*;
 import java.util.HashMap;
@@ -16,6 +19,13 @@ public class GTFFunctions {
     public GTFFunctions(String inputFile) throws IOException {
         ReadGTF reader = new ReadGTF(inputFile);
         this.lines = reader.readFile();
+    }
+
+    public Map<String, Gene> parseGTF() {
+
+        GTFParser parser = new GTFParser(lines);
+
+        return parser.parse();
     }
 
     // Log4j for exceptions
@@ -97,7 +107,7 @@ public class GTFFunctions {
 
         // Create output file only if the user specified one
         // TODO: need to make an output_file option / subcommand / class
-        if (!output_file.isEmpty()) {
+        if (output_file != null && !output_file.isEmpty()) {
             writer = new BufferedWriter(new FileWriter(output_file + ".gtf"));
         }
 
