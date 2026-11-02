@@ -5,6 +5,9 @@ import picocli.CommandLine;
 
 import java.io.IOException;
 
+/**
+ * Subcommand to filter on a chromosome.
+ */
 @CommandLine.Command(
         name = "chromosome",
         // The @|bold is used to make --help more plain

@@ -11,7 +11,7 @@ import picocli.CommandLine.Option;
 import java.io.IOException;
 
 /**
- * Commandline command for analysing FASTA files or a nucleotide sequence
+ * Commandline command for analyzing FASTA files or a nucleotide sequence
  * This consists of: sequence length, gc percentage, validation
  * or displaying the header.
  *
@@ -57,7 +57,7 @@ public class FastaCommand implements Runnable {
      * Validates whether a sequence is valid or not
      */
     @Option(
-            names = {"-v", "--validate"},
+            names = {"-va", "--validate"},
             description = "Validate nucleotide sequence"
     )
     private boolean validate;

@@ -29,7 +29,8 @@ public class GTFFunctions {
     private Map<String, Gene> genes;
 
     // Constructor
-    public GTFFunctions(String inputFile) throws IOException {
+    public GTFFunctions(String inputFile)
+            throws IOException {
         ReadGTF reader = new ReadGTF(inputFile);
         this.lines = reader.readFile();
     }
@@ -55,7 +56,8 @@ public class GTFFunctions {
      *
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public void summaryCount() throws IOException {
+    public void summaryCount()
+            throws IOException {
         logger.info("Starting GTF summary");
 
         // Stores each feature and how often it occurs
@@ -113,6 +115,8 @@ public class GTFFunctions {
      * @param feature    input argument 2 - the feature the user wants to filter (exon, transcript, etc.)
      * @param chromosome input argument 3 - the chromosome the user wants to filter (chr1, chr2, etc.)
      * @param strand     input argument 4 - the strand the user wants to filter (+ / -)
+     * @param outputMode using FILE, TERMINAL or BOTH, you can self bepeel how you want the output to show up.
+     * @param outputFile name the output file or the standard name.
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
     public void filterValues(
@@ -120,8 +124,8 @@ public class GTFFunctions {
             String chromosome,
             String strand,
             OutputCommand.OutputMode outputMode,
-            String outputFile
-    ) throws IOException {
+            String outputFile)
+            throws IOException {
 
         GTFFunctions.logger.info("Starting to search for values.");
 
@@ -166,6 +170,8 @@ public class GTFFunctions {
      * @param chromosome input a chromosome
      * @param start      input the start coordinates
      * @param end        input the end coordinates
+     * @param outputMode using FILE, TERMINAL or BOTH, you can self bepeel how you want the output to show up.
+     * @param outputFile name the output file or the standard name.
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      *                     <p>
      *                     I am going to change this method into 3 or 4 different methods, because it performs too many tasks.
@@ -178,8 +184,8 @@ public class GTFFunctions {
             String start,
             String end,
             String outputFile,
-            OutputCommand.OutputMode outputMode
-    ) throws IOException {
+            OutputCommand.OutputMode outputMode)
+            throws IOException {
 
         // Makes the values integers
         int region_start = Integer.parseInt(start);
@@ -213,7 +219,8 @@ public class GTFFunctions {
      *
      * @throws IOException if an error occurs while reading the GTF file
      */
-    public void chromosomeCount() throws IOException {
+    public void chromosomeCount()
+            throws IOException {
 
         // Stores each chromosome and how often it occurs
         HashMap<String, Integer> chromosomes = new HashMap<>();
@@ -249,12 +256,16 @@ public class GTFFunctions {
     /**
      * Searches for the input gene based on the gene_id.
      * The lines associated with the gene can be added in a generated output file.
+     *
+     * @param geneId     the name of a gene you want to search for.
+     * @param outputMode using FILE, TERMINAL or BOTH, you can self bepeel how you want the output to show up.
+     * @param outputFile name the output file or the standard name.
      */
     public void findGene(
             String geneId,
             OutputCommand.OutputMode outputMode,
-            String outputFile
-    ) throws IOException {
+            String outputFile)
+            throws IOException {
 
         // Parse the GTF file
         Map<String, Gene> genes = parseGTF();

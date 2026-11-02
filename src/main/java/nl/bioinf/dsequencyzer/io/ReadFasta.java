@@ -8,7 +8,9 @@ import java.util.List;
 
 public class ReadFasta {
 
-    public static String readSequence(String input) throws IOException {
+    public static String readSequence(String input)
+            throws IOException {
+
         StringBuilder sequence = new StringBuilder();
         boolean headerFound = false;
 
@@ -39,8 +41,10 @@ public class ReadFasta {
         return sequence.toString();
     }
     public static List<String> readFirstLines(
-            String input, int numberOfLines)
-        throws IOException {
+            String input,
+            int numberOfLines)
+            throws IOException {
+
         if (numberOfLines <= 0) {
             throw new IllegalArgumentException("Number of lines must be greater than 0 and not negative.");
         }
