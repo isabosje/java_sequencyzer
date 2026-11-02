@@ -4,6 +4,7 @@ import nl.bioinf.dsequencyzer.FastaFunctions;
 import nl.bioinf.dsequencyzer.io.InputHandler;
 import nl.bioinf.dsequencyzer.io.ReadFasta;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 

@@ -20,6 +20,9 @@ public class GeneCommand implements Runnable {
     )
     InputCommand input = new InputCommand();
 
+    @CommandLine.Mixin
+    VerboseCommand verbose = new VerboseCommand();
+
     @CommandLine.ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Output:|@%n",
@@ -45,6 +48,7 @@ public class GeneCommand implements Runnable {
 
     @Override
     public void run() {
+        verbose.run();
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
 

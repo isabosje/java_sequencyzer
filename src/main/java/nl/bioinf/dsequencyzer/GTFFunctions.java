@@ -246,11 +246,15 @@ public class GTFFunctions {
         }
     }
 
+    /**
+     * Searches for the input gene based on the gene_id.
+     * The lines associated with the gene can be added in a generated output file.
+     */
     public void findGene(
             String geneId,
             OutputCommand.OutputMode outputMode,
             String outputFile
-    ) {
+    ) throws IOException {
 
         // Parse the GTF file
         Map<String, Gene> genes = parseGTF();
@@ -260,24 +264,18 @@ public class GTFFunctions {
 
         if (gene != null) {
 
-            System.out.println("Gene: " + geneId);
-            System.out.println("Chromosome: " + gene.getChromosome());
-            System.out.println("Start: " + gene.getStart());
-            System.out.println("End: " + gene.getEnd());
+            // Write all lines connected to the gene
+            try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
 
-            // Loop through all transcripts
-            for (Transcript transcript : gene.getTranscripts()) {
+                // Loop through all original GTF lines
+                for (String[] columns : lines) {
 
-                System.out.println("\nTranscript found");
+                    // Check if the gene_id matches
+                    if (columns[8].contains("gene_id \"" + geneId + "\"")) {
 
-                // Loop through all features
-                for (Feature feature : transcript.getFeatures()) {
-
-                    System.out.println(
-                            feature.getType() + ": "
-                                    + feature.getStart() + "-"
-                                    + feature.getEnd()
-                    );
+                        String line = String.join("\t", columns);
+                        output.write(line);
+                    }
                 }
             }
 

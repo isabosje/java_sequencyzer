@@ -20,6 +20,9 @@ public class FilterCommand implements Runnable {
     )
     InputCommand input = new InputCommand();
 
+    @CommandLine.Mixin
+    VerboseCommand verbose = new VerboseCommand();
+
     @CommandLine.ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Output:|@%n",
@@ -59,6 +62,7 @@ public class FilterCommand implements Runnable {
 
     @Override
     public void run() {
+        verbose.run();
         // Catch exception while reading file
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
