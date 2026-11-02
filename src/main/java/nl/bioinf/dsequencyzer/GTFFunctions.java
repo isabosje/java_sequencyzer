@@ -49,6 +49,7 @@ public class GTFFunctions {
 
         return genes;
     }
+
     /**
      * Returns the count of all features in the terminal.
      *
@@ -103,7 +104,6 @@ public class GTFFunctions {
 
         logger.info("GTF summary completed. Total lines: {}", total_lines);
         }
-    }
 
 
     /**
@@ -196,8 +196,8 @@ public class GTFFunctions {
 
                 // Check chromosome and region
                 if (columns[0].equals(chromosome)
-                        && feature_start >= region_start
-                        && feature_end <= region_end) {
+                        && feature_start <= region_start
+                        && feature_end >= region_end) {
 
                     String line = String.join("\t", columns);
                     output.write(line);

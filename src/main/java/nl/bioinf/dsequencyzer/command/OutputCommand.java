@@ -1,4 +1,3 @@
-
 package nl.bioinf.dsequencyzer.command;
 
 import picocli.CommandLine;
