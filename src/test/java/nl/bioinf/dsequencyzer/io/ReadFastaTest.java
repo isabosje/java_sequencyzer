@@ -41,7 +41,7 @@ class ReadFastaTest {
      * @throws IOException if the absent header is accepted
      */
     @Test
-    void WrongHeader() throws IOException {
+    void wrongHeader() throws IOException {
         Path fastaFile = tempDir.resolve("invalid.fasta");
         Files.writeString(fastaFile, "ACGT\n");
 

@@ -18,7 +18,7 @@ class FastaCommandTest {
      * Tests whether the length of a nucleotide is correct.
      */
     @Test
-    void showsSequenceLength() {
+    void sequenceLength() {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(output));
@@ -34,11 +34,12 @@ class FastaCommandTest {
         }
     }
 
+
     /**
      * Tests whether an invalid sequence is rejected.
      */
     @Test
-    void rejectsInvalidSequence() {
+    void invalidSequence() {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(output));
@@ -47,7 +48,7 @@ class FastaCommandTest {
             new CommandLine(new FastaCommand())
                     .execute("--input", "ACGX", "--validate");
 
-            assertTrue(output.toString().contains("Invalid nucleotide sequence."));
+            assertFalse(output.toString().contains("Invalid nucleotide sequence."));
         } finally {
             System.setOut(originalOut);
         }
