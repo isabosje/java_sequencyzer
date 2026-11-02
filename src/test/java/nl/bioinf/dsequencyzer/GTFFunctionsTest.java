@@ -1,4 +1,4 @@
-package java.nl.bioinf.dsequencyzer;
+package nl.bioinf.dsequencyzer;
 
 import org.junit.jupiter.api.Test;
 
