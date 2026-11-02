@@ -6,4 +6,8 @@ public enum FeatureType {
     TRANSCRIPT,
     EXON,
     CDS,
+    //START_CODON,
+    //STOP_CODON,
+    //SELENOCYSTEINE,
+    //UTR
 }

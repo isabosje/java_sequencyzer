@@ -89,19 +89,19 @@ public class GTFFunctions {
             if (feature.equals("gene")) {
                 genes.put(columns[8], 1);
             }
+        }
+        // Prints summary, features and count
+        System.out.println("GTF Summary");
+        System.out.println("Total annotation lines: " + total_lines);
+        System.out.println("Unique chromosomes: " + chromosomes.size());
+        System.out.println("Genes: " + genes.size());
 
-            // Prints summary, features and count
-            System.out.println("GTF Summary");
-            System.out.println("Total annotation lines: " + total_lines);
-            System.out.println("Unique chromosomes: " + chromosomes.size());
-            System.out.println("Genes: " + genes.size());
+        // Prints keys with values
+        for (String featureName : features.keySet()) {
+            System.out.println(featureName + " : " + features.get(featureName));
+        }
 
-            // Prints keys with values
-            for (String featureName : features.keySet()) {
-                System.out.println(featureName + " : " + features.get(featureName));
-            }
-
-            logger.info("GTF summary completed. Total lines: {}", total_lines);
+        logger.info("GTF summary completed. Total lines: {}", total_lines);
         }
     }
 
