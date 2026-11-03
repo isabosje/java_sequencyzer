@@ -4,8 +4,6 @@ import nl.bioinf.dsequencyzer.command.OutputCommand;
 import nl.bioinf.dsequencyzer.io.ReadGTF;
 import nl.bioinf.dsequencyzer.model.GTFParser;
 import nl.bioinf.dsequencyzer.model.Gene;
-import nl.bioinf.dsequencyzer.model.Transcript;
-import nl.bioinf.dsequencyzer.model.Feature;
 import nl.bioinf.dsequencyzer.io.OutputHandler;
 
 import java.io.*;
@@ -41,11 +39,13 @@ public class GTFFunctions {
      */
     public Map<String, Gene> parseGTF() {
 
+        logger.info("Starting to parse GTF file.");
+
         if (genes == null) {
             GTFParser parser = new GTFParser(lines);
             genes = parser.parse();
 
-            logger.info("GTF file parsed successfully. Genes found: {}", genes.size());
+            logger.info("GTF file parsed successfully.");
         }
 
         return genes;
@@ -68,6 +68,8 @@ public class GTFFunctions {
         HashMap<String, Integer> genes = new HashMap<>();
 
         int total_lines = 0;
+
+        logger.info("Starting to go through all lines.");
 
         // Reads input gtf-file
         for (String[] columns : lines) {
@@ -100,9 +102,22 @@ public class GTFFunctions {
         summary.put("chromosomes", chromosomes.size());
         summary.put("genes", genes.size());
 
-        logger.info("GTF summary completed. Total lines: {}", total_lines);
+        logger.info("GTF summary data search completed.");
 
         return summary;
+    }
+
+    /**
+     * Prints the count of all features in the terminal.
+     */
+    public void printSummary(Map<String, Integer> summary) {
+
+        System.out.println("GTF Summary");
+        System.out.println("Total lines: " + summary.get("total_lines"));
+        System.out.println("Chromosomes: " + summary.get("chromosomes"));
+        System.out.println("Genes: " + summary.get("genes"));
+
+        logger.info("GTF summary printed successfully.");
     }
 
 
@@ -191,6 +206,8 @@ public class GTFFunctions {
 
         try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
 
+            logger.info("Searching in your region.");
+
             // Loop through all lines from the input file
             for (String[] columns : lines) {
 
@@ -208,6 +225,7 @@ public class GTFFunctions {
                 }
             }
         }
+        logger.info("Collected all data in your region successfully.");
     }
 
 
@@ -222,6 +240,8 @@ public class GTFFunctions {
 
         // Stores each chromosome and how often it occurs
         HashMap<String, Integer> chromosomes = new HashMap<>();
+
+        logger.info("Starting to count all the chromosomes.");
 
         // Loop through all lines from the input file
         for (String[] columns : lines) {
@@ -250,6 +270,8 @@ public class GTFFunctions {
             System.out.println(chromosome + " : " + chromosomes.get(chromosome));
         }
 
+        logger.info("Counted all chromosomes in GTF file.");
+
         return chromosomes;
     }
 
@@ -270,6 +292,8 @@ public class GTFFunctions {
         // Parse the GTF file
         Map<String, Gene> genes = parseGTF();
 
+        logger.info("Starting to try and find your gene.");
+
         // Find the requested gene
         Gene gene = genes.get(geneId);
 
@@ -289,6 +313,7 @@ public class GTFFunctions {
                     }
                 }
             }
+            logger.info("Found your gene and matches.");
 
         } else {
             System.out.println("Gene not found.");

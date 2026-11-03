@@ -1,11 +1,15 @@
 package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.GTFFunctions;
-import picocli.CommandLine;
+
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
+import picocli.CommandLine.ArgGroup;
 
 import java.io.IOException;
 
-@CommandLine.Command(
+@Command(
         name = "gene",
         // The @|bold is used to make --help more plain
         description = "@|bold Displays information about a specific gene.|@"
@@ -13,24 +17,24 @@ import java.io.IOException;
 public class GeneCommand implements Runnable {
 
     // These ArgGroups change --help by sorting them
-    @CommandLine.ArgGroup(
+    @ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Input:|@%n",
             order = 1
     )
     InputCommand input = new InputCommand();
 
-    @CommandLine.Mixin
+    @Mixin
     VerboseCommand verbose = new VerboseCommand();
 
-    @CommandLine.ArgGroup(
+    @ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Output:|@%n",
             order = 2
     )
     OutputCommand output = new OutputCommand();
 
-    @CommandLine.ArgGroup(
+    @ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Search:|@%n",
             order = 3
@@ -39,7 +43,7 @@ public class GeneCommand implements Runnable {
 
     static class SearchGroup {
 
-        @CommandLine.Option(
+        @Option(
                 names = {"-g", "--gene-id"},
                 description = "Gene ID to search for"
         )

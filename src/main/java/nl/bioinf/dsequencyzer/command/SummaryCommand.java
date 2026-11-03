@@ -1,11 +1,14 @@
 package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.GTFFunctions;
-import picocli.CommandLine;
+
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
 
 import java.io.IOException;
+import java.util.Map;
 
-@CommandLine.Command(
+@Command(
         name = "summary",
         // The @|bold is used to make --help more plain
         description = "@|bold Gives a summary containing features depending on file type.|@"
@@ -13,10 +16,10 @@ import java.io.IOException;
 public class SummaryCommand implements Runnable {
 
     // Inserts InputCommand
-    @CommandLine.Mixin
+    @Mixin
     InputCommand input = new InputCommand();
 
-    @CommandLine.Mixin
+    @Mixin
     VerboseCommand verbose = new VerboseCommand();
 
     @Override
@@ -26,7 +29,10 @@ public class SummaryCommand implements Runnable {
         // Catch exception while reading file
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
-            gtf.summaryCount();
+
+            Map<String, Integer> summary = gtf.summaryCount();
+
+            gtf.printSummary(summary);
 
         } catch (IOException e) {
             System.out.println("Error reading GTF file.");

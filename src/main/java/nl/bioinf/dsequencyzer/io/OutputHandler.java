@@ -2,6 +2,9 @@ package nl.bioinf.dsequencyzer.io;
 
 import nl.bioinf.dsequencyzer.command.OutputCommand;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +15,9 @@ public class OutputHandler implements AutoCloseable {
 
     private final OutputCommand.OutputMode outputMode;
     private BufferedWriter writer;
+
+    private static final Logger logger =
+            LogManager.getLogger(OutputHandler.class);
 
     /**
      * Handles the output by printing it in the terminal, writing a file or both using an enum.
@@ -56,6 +62,7 @@ public class OutputHandler implements AutoCloseable {
 
         // Write matching lines to the output file
         if (writer != null) {
+
             writer.write(line);
             writer.newLine();
         }

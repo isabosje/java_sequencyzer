@@ -1,14 +1,16 @@
 package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.GTFFunctions;
-import picocli.CommandLine;
+
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
 
 import java.io.IOException;
 
 /**
  * Subcommand to filter on a chromosome.
  */
-@CommandLine.Command(
+@Command(
         name = "chromosome",
         // The @|bold is used to make --help more plain
         description = "@|bold Gives an overview of annotations per chromosome.|@"
@@ -16,10 +18,10 @@ import java.io.IOException;
 public class ChromosomeCommand implements Runnable {
 
     // Inserts InputCommand
-    @CommandLine.Mixin
+    @Mixin
     InputCommand input = new InputCommand();
 
-    @CommandLine.Mixin
+    @Mixin
     VerboseCommand verbose = new VerboseCommand();
 
     @Override

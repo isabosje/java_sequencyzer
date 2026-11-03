@@ -18,13 +18,13 @@ Run these commands from the project root (the directory containing `gradlew` and
 On Windows:
 
 ```powershell
-java -jar build/libs/<generated-jar-name>.jar find -i <input-file-name>.gtf -f <feature> -chr <chromosome> -s <strand +/-> 
+java -jar build/libs/<generated-jar-name>.jar
 ```
 
 On macOS/Linux:
 
 ```bash
-java -jar build/libs/<generated-jar-name>.jar find -i <input-file-name>.gtf -f <feature> -chr <chromosome> -s <strand +/-> 
+java -jar build/libs/<generated-jar-name>.jar
 ```
 
 To run a command, replace `--help` with the command and its arguments. For example:
@@ -74,7 +74,7 @@ java -jar build/libs/<generated-jar-name>.jar fasta --help
 
 The examples below use the executable JAR. Replace `<generated-jar-name>.jar` with the actual filename in `build/libs/`. If running through Gradle, use `./gradlew run --args="..."` (or `gradlew.bat run --args="..."` on Windows).
 
-### `fasta` — analyse a sequence or FASTA file
+### `fasta` — analyze a sequence or FASTA file
 
 The `fasta` command accepts either a DNA/RNA sequence entered directly or a FASTA file. Supported FASTA filename extensions are `.fasta`, `.fa`, and `.fna`.
 
@@ -89,7 +89,7 @@ Options:
 | `-i`, `--input` | FASTA file path or nucleotide sequence. | y |
 | `-l`, `--length` | Print the sequence length. | n |
 | `-g`, `--gc` | Print the GC percentage. | n |
-| `-v`, `--validate` | Report whether the sequence contains only valid nucleotide characters. | n |
+| `-va`, `--validate` | Report whether the sequence contains only valid nucleotide characters. | n |
 | `--head` | Print the first 10 lines of a file. This option is for files, not sequences entered directly. | n |
 | `-h`, `--help` | Show command help. | n |
 
@@ -101,31 +101,14 @@ java -jar build/libs/<generated-jar-name>.jar fasta --input ACGTACGT --length --
 
 The current validation accepts `A`, `C`, `G`, `T`, and `U` in upper- or lowercase. FASTA headers (lines starting with `>`) are skipped when the sequence is read from a FASTA file.
 
-### `blast` — inspect BLAST tabular results
-
-The `blast` command takes a BLAST result file followed by one of three analysis options:
-
-```bash
-java -jar build/libs/<generated-jar-name>.jar blast results.tsv hits
-java -jar build/libs/<generated-jar-name>.jar blast results.tsv average
-java -jar build/libs/<generated-jar-name>.jar blast results.tsv best
-```
-
-| Argument | Description |
-| --- | --- |
-| `file` | Path to a tab-separated BLAST results file. |
-| `option` | `hits` counts result rows, `average` calculates the mean percentage identity, and `best` returns the highest percentage identity. |
-
-The implementation skips blank lines and lines beginning with `#`. It reads percentage identity from the third tab-separated column, so the input file must have that column in the expected format.
-
 ### `FilterCommand` — find matching GTF features
 
 The command filters a GTF file by a gene-related attribute, chromosome, or feature type. The command name is currently `FilterCommand` (case-sensitive), as configured in the source code.
 
 ```bash
-java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option chromosome --value chr1
-java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option feature --value exon
-java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --option gene --value ENSG000001
+java -jar build/libs/<generated-jar-name>.jar filter --input annotations.gtf --feature gene --chromosome chr1 --strand -
+java -jar build/libs/<generated-jar-name>.jar filter --input annotations.gtf --feature exon --strand +
+java -jar build/libs/<generated-jar-name>.jar filter --input annotations.gtf --feature transcript --strand -
 ```
 
 | Option | Description | Required (y/n) |
@@ -134,10 +117,10 @@ java -jar build/libs/<generated-jar-name>.jar find --input annotations.gtf --opt
 | `-f`, `--feature` | Feature to filter, for example `exon` or `transcript`. | n |
 | `-chr`, `--chromosome` | Chromosome to filter for, for example `chr1`. | n |
 | `-s`, `--strand` | Strand to filter for: `+` or `-`. | n |
+| `--output-mode`  | Type of output: `FILE`, `TERMINAL` or `BOTH`. | n |
 | `-o`, `--output` | Name of the output file. The `.gtf` extension is added automatically. | n |
 
-Matching records are printed to the terminal and written to a file named `filtered.gtf` in the current working directory, unless the output parameter (`-o`, `--output`) is used. 
-This allows you to choose the output filename yourself, and a `.gtf` extension will be added automatically.
+Matching records are printed to the terminal and written to a file named `output.gtf` in the current working directory, unless the output parameter (`-o`, `--output`) is used.
 
 ### `RegionCommand` — filter a genomic region
 
@@ -192,15 +175,15 @@ src/main/java/nl/bioinf/dsequencyzer/
 ├── FastaFunctions.java        # FASTA reading and sequence analysis
 ├── GTFFunctions.java          # GTF filtering and feature counting
 ├── command/
-│   ├── BlastCommand.java      # BLAST result analysis
 │   ├── FastaCommand.java      # FASTA / nucleotide sequence analysis
 │   ├── FindCommand.java       # Search GTF records by three parameters or less
 │   ├── RegionCommand.java     # Filter GTF records by genomic region and chromosome
+│   ├── GeneCommand.java       # Search in GTF for a gene
 │   ├── SummaryCommand.java    # Count GTF feature types
-    └── ChromosomeCommand.java # Counts the various chromosomes and associated lines
+│   └── ChromosomeCommand.java # Counts the various chromosomes and associated lines
 └── io/
     ├── InputHandler.java      # Detect input type
-    └── ReadBLAST.java         # Read and process BLAST result files
+    └── OutputHandler.java     # Handles output type
 ```
 
 ## Notes and limitations

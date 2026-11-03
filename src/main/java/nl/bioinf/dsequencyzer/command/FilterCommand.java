@@ -1,11 +1,15 @@
 package nl.bioinf.dsequencyzer.command;
 
 import nl.bioinf.dsequencyzer.GTFFunctions;
-import picocli.CommandLine;
+
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Option;
 
 import java.io.IOException;
 
-@CommandLine.Command(
+@Command(
         name = "filter",
         // The @|bold is used to make --help more plain
         description = "@|bold Filters GTF annotations using multiple conditions.|@"
@@ -13,24 +17,24 @@ import java.io.IOException;
 public class FilterCommand implements Runnable {
 
     // These ArgGroups change --help by sorting them
-    @CommandLine.ArgGroup(
+    @ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Input:|@%n",
             order = 1
     )
     InputCommand input = new InputCommand();
 
-    @CommandLine.Mixin
+    @Mixin
     VerboseCommand verbose = new VerboseCommand();
 
-    @CommandLine.ArgGroup(
+    @ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Output:|@%n",
             order = 2
     )
     OutputCommand output = new OutputCommand();
 
-    @CommandLine.ArgGroup(
+    @ArgGroup(
             validate = false,
             heading = "%n@|bold,blue Search:|@%n",
             order = 3
@@ -38,8 +42,7 @@ public class FilterCommand implements Runnable {
     SearchGroup search = new SearchGroup();
 
     static class SearchGroup {
-
-        @CommandLine.Option(
+        @Option(
                 names = {"-f", "--feature"},
                 description = "Filter by feature, example: exon"
         )
@@ -47,13 +50,13 @@ public class FilterCommand implements Runnable {
 
         // Check toevoegen gebruiker
 
-        @CommandLine.Option(
+        @Option(
                 names = {"-chr", "--chromosome"},
                 description = "Filter by chromosome, example: chr1"
         )
         String chromosome = "";
 
-        @CommandLine.Option(
+        @Option(
                 names = {"-s", "--strand"},
                 description = "Filter by strand: + or -"
         )
