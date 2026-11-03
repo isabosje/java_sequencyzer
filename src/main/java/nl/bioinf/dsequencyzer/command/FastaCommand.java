@@ -4,6 +4,7 @@ import nl.bioinf.dsequencyzer.FastaFunctions;
 import nl.bioinf.dsequencyzer.io.InputHandler;
 import nl.bioinf.dsequencyzer.io.ReadFasta;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -70,8 +71,12 @@ public class FastaCommand implements Runnable {
     )
     private boolean head;
 
+    @CommandLine.Mixin
+    VerboseCommand verbose = new VerboseCommand();
+
     @Override
     public void run() {
+        verbose.run();
 
         InputHandler inputHandler = new InputHandler();
 
