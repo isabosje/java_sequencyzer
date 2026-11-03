@@ -1,5 +1,0 @@
-chr1_test	test	gene	451	751	.	-	.	gene_id "gene002"; gene_name "TestGene002";
-chr1_test	test	transcript	451	751	.	-	.	gene_id "gene002"; transcript_id "transcript002";
-chr1_test	test	exon	451	531	.	-	.	gene_id "gene002"; transcript_id "transcript002"; exon_number "1";
-chr1_test	test	exon	571	631	.	-	.	gene_id "gene002"; transcript_id "transcript002"; exon_number "2";
-chr1_test	test	exon	681	751	.	-	.	gene_id "gene002"; transcript_id "transcript002"; exon_number "3";
