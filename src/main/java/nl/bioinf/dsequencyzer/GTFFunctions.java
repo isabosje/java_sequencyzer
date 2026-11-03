@@ -56,7 +56,7 @@ public class GTFFunctions {
      *
      * @throws IOException if the file does not end with .gtf (is not a .gtf file)
      */
-    public void summaryCount()
+    public Map<String, Integer> summaryCount()
             throws IOException {
         logger.info("Starting GTF summary");
 
@@ -93,19 +93,17 @@ public class GTFFunctions {
                 genes.put(columns[8], 1);
             }
         }
-        // Prints summary, features and count
-        System.out.println("GTF Summary");
-        System.out.println("Total annotation lines: " + total_lines);
-        System.out.println("Unique chromosomes: " + chromosomes.size());
-        System.out.println("Genes: " + genes.size());
 
-        // Prints keys with values
-        for (String featureName : features.keySet()) {
-            System.out.println(featureName + " : " + features.get(featureName));
-        }
+        Map<String, Integer> summary = new HashMap<>();
+
+        summary.put("total_lines", total_lines);
+        summary.put("chromosomes", chromosomes.size());
+        summary.put("genes", genes.size());
 
         logger.info("GTF summary completed. Total lines: {}", total_lines);
-        }
+
+        return summary;
+    }
 
 
     /**
@@ -219,7 +217,7 @@ public class GTFFunctions {
      *
      * @throws IOException if an error occurs while reading the GTF file
      */
-    public void chromosomeCount()
+    public Map<String, Integer> chromosomeCount()
             throws IOException {
 
         // Stores each chromosome and how often it occurs
@@ -251,6 +249,8 @@ public class GTFFunctions {
         for (String chromosome : chromosomes.keySet()) {
             System.out.println(chromosome + " : " + chromosomes.get(chromosome));
         }
+
+        return chromosomes;
     }
 
     /**

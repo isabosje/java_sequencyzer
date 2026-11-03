@@ -1,52 +1,74 @@
 package nl.bioinf.dsequencyzer;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import nl.bioinf.dsequencyzer.model.Gene;
+import nl.bioinf.dsequencyzer.command.OutputCommand;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GTFFunctionsTest {
 
+    @TempDir
+    Path tempDir;
+
     @Test
     void summaryCount() throws IOException {
         GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
 
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(output));
+        Map<String, Integer> summary = gtf.summaryCount();
 
-        gtf.summaryCount();
-
-        System.setOut(System.out);
-
-        String result = output.toString();
-
-        assertTrue(result.contains("Total annotation lines: 100"));
-        assertTrue(result.contains("Unique chromosomes: 2"));
-        assertTrue(result.contains("Genes: 20"));
-        assertTrue(result.contains("gene : 20"));
-        assertTrue(result.contains("transcript : 20"));
-        assertTrue(result.contains("exon : 60"));
+        assertEquals(100, summary.get("total_lines"));
+        assertEquals(2, summary.get("chromosomes"));
+        assertEquals(20, summary.get("genes"));
     }
 
     @Test
-    void parseGTF() throws IOException {
+    void filterValues() throws IOException {
         GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
 
-        Map<String, Gene> genes = gtf.parseGTF();
+        Path output = tempDir.resolve("filter.gtf");
 
-        assertEquals(20, genes.size());
-        assertNotNull(genes.get("gene001"));
-        assertNotNull(genes.get("gene020"));
+        gtf.filterValues(
+                "exon",
+                "chr1_test",
+                "+",
+                OutputCommand.OutputMode.FILE,
+                output.toString()
+        );
+
+        assertEquals(18, Files.readAllLines(output).size());
     }
 
+    @Test
+    void findRegion() throws IOException {
+        GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
 
+        Path output = tempDir.resolve("region.gtf");
+
+        gtf.findRegion(
+                "chr1_test",
+                "1",
+                "81",
+                output.toString(),
+                OutputCommand.OutputMode.FILE
+        );
+
+        assertEquals(2, Files.readAllLines(output).size());
+    }
+
+    @Test
+    void chromosomeCount() throws IOException {
+        GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
+
+        Map<String, Integer> chromosomes = gtf.chromosomeCount();
+
+        assertEquals(60, chromosomes.get("chr1_test"));
+        assertEquals(40, chromosomes.get("chr2_test"));
+    }
 }
