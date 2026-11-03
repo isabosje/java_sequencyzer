@@ -27,5 +27,8 @@ public class VerboseCommand {
             Configurator.setRootLevel(Level.WARN);
             logger.warn("Verbosity level set to WARN");
         }
+        else if (verbose.length == 0) {
+            Configurator.setRootLevel(Level.OFF);
+        }
     }
 }
