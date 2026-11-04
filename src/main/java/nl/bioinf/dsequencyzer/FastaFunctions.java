@@ -20,7 +20,7 @@ public class FastaFunctions {
     public boolean isValidNucleotide() {
         return sequence != null
                 && !sequence.isEmpty()
-                && sequence.matches("[ACGTUacgtu]+");
+                && sequence.matches("[ACGTURYSWKMBDHVNacgturyswkmbdhvn]+"); // Broad regex for FASTA-characters
     }
 
     /**
