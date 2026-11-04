@@ -20,6 +20,9 @@ public class GTFFunctions {
     private static final Logger logger =
             LogManager.getLogger(GTFFunctions.class);
 
+    // Stores the original GTF headers
+    private final List<String> headers;
+
     // Stores the original GTF lines
     private final List<String[]> lines;
 
@@ -31,6 +34,7 @@ public class GTFFunctions {
             throws IOException {
         ReadGTF reader = new ReadGTF(inputFile);
         this.lines = reader.readFile();
+        this.headers = reader.getHeaders();
     }
 
     /**
@@ -144,6 +148,8 @@ public class GTFFunctions {
 
         try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
 
+            output.writeHeaders(headers);
+
             // Loop through all lines from the input file
             for (String[] columns : lines) {
 
@@ -205,6 +211,8 @@ public class GTFFunctions {
         int region_end = Integer.parseInt(end);
 
         try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
+
+            output.writeHeaders(headers);
 
             logger.info("Searching in your region.");
 
@@ -301,6 +309,8 @@ public class GTFFunctions {
 
             // Write all lines connected to the gene
             try (OutputHandler output = new OutputHandler(outputMode, outputFile)) {
+
+                output.writeHeaders(headers);
 
                 // Loop through all original GTF lines
                 for (String[] columns : lines) {

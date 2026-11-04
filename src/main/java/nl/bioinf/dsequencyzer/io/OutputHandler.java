@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 public class OutputHandler implements AutoCloseable {
 
@@ -33,19 +34,36 @@ public class OutputHandler implements AutoCloseable {
 
         this.outputMode = outputMode;
 
-        // Create output file if the mode is FILE or BOTH
-        if (outputMode == OutputCommand.OutputMode.FILE
-                || outputMode == OutputCommand.OutputMode.BOTH) {
+        // Add .gtf if the output file does not have this extension
+        if (!outputFile.endsWith(".gtf")) {
+            outputFile += ".gtf";
+        }
 
-            // Create output directory if it does not exist
-            Path outputPath = Path.of(outputFile);
-            Path parentDirectory = outputPath.getParent();
+        // Put the output file in the output dir
+        Path outputPath = Path.of(outputFile);
 
-            if (parentDirectory != null) {
-                Files.createDirectories(parentDirectory);
+        if (outputPath.getParent() == null) {
+            outputPath = Path.of("output", outputFile);
+        }
+
+        Path parentDirectory = outputPath.getParent();
+
+        if (parentDirectory != null) {
+            Files.createDirectories(parentDirectory);
+        }
+
+        writer = new BufferedWriter(new FileWriter(outputPath.toFile()));
+    }
+
+    // Write GTF headers
+    public void writeHeaders(List<String> headers)
+            throws IOException {
+
+        if (writer != null) {
+            for (String header : headers) {
+                writer.write(header);
+                writer.newLine();
             }
-
-            writer = new BufferedWriter(new FileWriter(outputFile));
         }
     }
 

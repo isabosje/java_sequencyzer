@@ -12,6 +12,8 @@ public class ReadGTF {
 
     private String inputFile;
 
+    private List<String> headers = new ArrayList<>();
+
     public ReadGTF(String inputFile) {
         this.inputFile = inputFile;
     }
@@ -35,6 +37,7 @@ public class ReadGTF {
 
             while ((line = reader.readLine()) != null ) {
                 if (line.startsWith("#")) {
+                    headers.add(line);
                     continue;
                 }
 
@@ -53,6 +56,10 @@ public class ReadGTF {
         }
 
         return lines;
+    }
+
+    public List<String> getHeaders() {
+        return headers;
     }
 }
 
