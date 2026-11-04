@@ -8,6 +8,7 @@ import nl.bioinf.dsequencyzer.command.OutputCommand;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,7 +43,13 @@ class GTFFunctionsTest {
                 output.toString()
         );
 
-        assertEquals(18, Files.readAllLines(output).size());
+        List<String> outputLines = Files.readAllLines(output);
+
+        long featureCount = outputLines.stream()
+                .filter(line -> !line.startsWith("#"))
+                .count();
+
+        assertEquals(18, featureCount);
     }
 
     @Test
@@ -59,7 +66,13 @@ class GTFFunctionsTest {
                 OutputCommand.OutputMode.FILE
         );
 
-        assertEquals(2, Files.readAllLines(output).size());
+        List<String> outputLines = Files.readAllLines(output);
+
+        long featureCount = outputLines.stream()
+                .filter(line -> !line.startsWith("#"))
+                .count();
+
+        assertEquals(3, featureCount);
     }
 
     @Test
