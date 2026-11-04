@@ -7,6 +7,13 @@ import org.apache.logging.log4j.core.config.Configurator;
 
 import picocli.CommandLine.Option;
 
+/**
+ * This command uses PicoCLI's code and verbose options to control
+ * the logging level. The logging level is determined by the number of '-v's.
+ *
+ * Uses Log4j
+ */
+
 public class VerboseCommand {
 
     @Option(

@@ -9,6 +9,10 @@ import picocli.CommandLine.ArgGroup;
 
 import java.io.IOException;
 
+/**
+ * Subcommands that retrieves annotations within a specified genomic region
+ * on a given chromosome for a GTF file.
+ */
 
 @Command(
         name = "region",
@@ -70,7 +74,7 @@ public class RegionCommand implements Runnable {
     public void run() {
         verbose.run();
 
-        // Catch exception while reading file
+        // Catch exception while reading file.
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
 

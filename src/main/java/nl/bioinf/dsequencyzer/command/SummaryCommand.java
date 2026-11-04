@@ -8,6 +8,10 @@ import picocli.CommandLine.Mixin;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Subcommand that generates a summary of the contents of an input file.
+ */
+
 @Command(
         name = "summary",
         // The @|bold is used to make --help more plain

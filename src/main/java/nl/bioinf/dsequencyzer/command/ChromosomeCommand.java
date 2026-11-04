@@ -8,7 +8,8 @@ import picocli.CommandLine.Mixin;
 import java.io.IOException;
 
 /**
- * Subcommand to filter on a chromosome.
+ * Subcommand that provides an overview of the annotations
+ * found per chromosome in a GTF file.
  */
 @Command(
         name = "chromosome",
@@ -27,7 +28,12 @@ public class ChromosomeCommand implements Runnable {
     @Override
     public void run() {
         verbose.run();
-        // Catch exception while reading file
+        /**
+         * Executes the chromosome subcommand.
+         *
+         * If an IOException occurs while reading the input file,
+         * and error message is printed.
+         */
         try {
             GTFFunctions gtf = new GTFFunctions(input.inputFile);
             gtf.chromosomeCount();

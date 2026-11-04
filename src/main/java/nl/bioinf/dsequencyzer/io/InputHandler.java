@@ -3,6 +3,9 @@ package nl.bioinf.dsequencyzer.io;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * handles the identification of input types based on user provided input.
+ */
 public class InputHandler {
 
     private static final Logger logger =

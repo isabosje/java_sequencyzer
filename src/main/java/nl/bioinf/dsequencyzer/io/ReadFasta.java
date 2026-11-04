@@ -6,10 +6,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * Utility class for reading and processing FASTA files.
+ */
+
 public class ReadFasta {
 
     public static String readSequence(String input)
             throws IOException {
+        /**
+         * Reads and extracts nucleotide sequences from a FASTA file.
+         */
 
         StringBuilder sequence = new StringBuilder();
         boolean headerFound = false;

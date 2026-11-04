@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles reading and basic structural validation of GTF files.
+ * It seperates header lines, stores the annotation as arrays of columns.
+ */
 
 public class ReadGTF {
 

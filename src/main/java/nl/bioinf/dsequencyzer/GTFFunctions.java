@@ -14,6 +14,12 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Provides functionality for processing, filtering and analysing GTF files.
+ *
+ * handles GTF file operations such as generating summaries or filtering features.
+ */
+
 public class GTFFunctions {
 
     // Log4j for exceptions

@@ -2,8 +2,9 @@
 package nl.bioinf.dsequencyzer.model;
 
 /**
- * Represents simple GTF features such as EXON and CDS.
+ * Represents simple GTF features such as EXON.
  */
+
 class SimpleFeature extends Feature {
 
     public SimpleFeature(

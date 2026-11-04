@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Converts raw GTF data, represented as arrays of columns,
+ * into objects containing associated Transcript and Feature objects.
+ */
+
 public class GTFParser {
 
     private final List<String[]> gtfLines;

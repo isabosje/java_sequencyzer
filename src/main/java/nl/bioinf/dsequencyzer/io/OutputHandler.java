@@ -12,6 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * Handles output operations by writing results to the terminal,
+ * an output file or both, depending on the selected output mode.
+ */
+
 public class OutputHandler implements AutoCloseable {
 
     private final OutputCommand.OutputMode outputMode;

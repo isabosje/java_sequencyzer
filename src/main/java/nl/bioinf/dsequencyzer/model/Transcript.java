@@ -7,6 +7,7 @@ import java.util.List;
  * Transcript data type storing standard data
  * and a list of child-features (can be anything)
  */
+
 public class Transcript extends Feature {
 
     private final List<Feature> features =

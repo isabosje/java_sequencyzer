@@ -2,6 +2,10 @@ package nl.bioinf.dsequencyzer.command;
 
 import picocli.CommandLine.Option;
 
+/**
+ * Mixin command that defines the output options for subcommands.
+ */
+
 public class OutputCommand {
 
     @Option(
@@ -18,6 +22,9 @@ public class OutputCommand {
     )
     OutputMode outputMode = OutputMode.TERMINAL;
 
+    /**
+     * Defines the available output modes.
+     */
     public enum OutputMode {
         TERMINAL,
         FILE,

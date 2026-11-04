@@ -1,6 +1,9 @@
 package nl.bioinf.dsequencyzer.model;
 
-// All possible feature types (extend when needed)
+/**
+ * Enumerate class with all possible feature types.
+ */
+
 public enum FeatureType {
     GENE,
     TRANSCRIPT,

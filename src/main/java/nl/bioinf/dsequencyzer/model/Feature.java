@@ -1,8 +1,9 @@
 package nl.bioinf.dsequencyzer.model;
 
 /**
- * Common properties shared by all GTF features.
+ * Class that stores properties shared by all GTF feature types.
  */
+
 public abstract class Feature {
 
     private final FeatureType type;
