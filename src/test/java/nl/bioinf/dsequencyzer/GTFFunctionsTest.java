@@ -13,11 +13,18 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the GTFFunctions class.
+ * Tests summary-, filter-, region-, chromosome and genesubcommand.
+ */
 class GTFFunctionsTest {
 
     @TempDir
     Path tempDir;
 
+    /**
+     * summaryCount test checks if all lines get checked and printed in the terminal.
+     */
     @Test
     void summaryCount() throws IOException {
         GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
@@ -29,6 +36,9 @@ class GTFFunctionsTest {
         assertEquals(20, summary.get("genes"));
     }
 
+    /**
+     * filterValues test checks with given parameters if output file gets created and if the filtering is as expected.
+     */
     @Test
     void filterValues() throws IOException {
         GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
@@ -52,6 +62,9 @@ class GTFFunctionsTest {
         assertEquals(18, featureCount);
     }
 
+    /**
+     * findRegion test checks with given parameters if an output file is created and if there is the right amount of output given back.
+     */
     @Test
     void findRegion() throws IOException {
         GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
@@ -75,6 +88,9 @@ class GTFFunctionsTest {
         assertEquals(3, featureCount);
     }
 
+    /**
+     * chromosomeCount test checks if the right count of chromosomes is given as the output.
+     */
     @Test
     void chromosomeCount() throws IOException {
         GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");

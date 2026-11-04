@@ -48,8 +48,6 @@ public class FilterCommand implements Runnable {
         )
         String feature = "";
 
-        // Check toevoegen gebruiker
-
         @Option(
                 names = {"-chr", "--chromosome"},
                 description = "Filter by chromosome, example: chr1"
