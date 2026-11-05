@@ -49,7 +49,7 @@ On macOS/Linux:
 ./gradlew shadowJar
 ```
 
-The Shadow plugin creates a JAR in `build/libs/` that includes the application's dependencies.
+The Shadow plugin creates a JAR in `build/libs` that includes the application's dependencies.
 Check the exact generated filename in that directory, then run it with:
 
 ```bash
@@ -72,7 +72,7 @@ java -jar build/libs/<generated-jar-name>.jar fasta --help
 
 ## Commands
 
-The examples below use the executable JAR. Replace `<generated-jar-name>.jar` with the actual filename in `build/libs/`. If running through Gradle, use `./gradlew run --args="..."` (or `gradlew.bat run --args="..."` on Windows).
+The examples below use the executable JAR. Replace `<generated-jar-name>.jar` with the actual filename in `build/libs`. If running through Gradle, use `./gradlew run --args="..."` (or `gradlew.bat run --args="..."` on Windows).
 
 ### `fasta` — analyze a sequence or FASTA file
 
@@ -192,9 +192,7 @@ src/main/java/nl/bioinf/dsequencyzer/
   In particular, `FilterCommand`, `RegionCommand`, and `SummaryCommand` have not yet been given shorter lowercase command names.
 - GTF commands expect standard tab-separated GTF records with the relevant columns present.
 - Use `--help` if a command or option does not behave as expected.
-- The project includes JUnit tests under `src/test/`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately.
-
-
+- The project includes JUnit tests under `src/test`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately.
 
 ## Sources
 
