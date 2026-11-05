@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the GTFFunctions class.
- * Tests summary-, filter-, region-, chromosome and genesubcommand.
+ * Tests summary-, filter-, region-, chromosome and genecommand.
  */
 class GTFFunctionsTest {
 
@@ -63,7 +63,7 @@ class GTFFunctionsTest {
     }
 
     /**
-     * findRegion test checks with given parameters if an output file is created and if there is the right amount of output given back.
+     * findRegion test checks with given parameters if an output file is created and if there is the right amount of information given back.
      */
     @Test
     void findRegion() throws IOException {
@@ -99,5 +99,27 @@ class GTFFunctionsTest {
 
         assertEquals(60, chromosomes.get("chr1_test"));
         assertEquals(40, chromosomes.get("chr2_test"));
+    }
+
+    /**
+     * findGene test checks if the correct gene is found and written to the output file.
+     */
+    @Test
+    void findGene() throws IOException {
+        GTFFunctions gtf = new GTFFunctions("src/test/resources/generated_test.gtf");
+
+        Path output = tempDir.resolve("gene.gtf");
+
+        gtf.findGene("gene002",
+                OutputCommand.OutputMode.FILE,
+                output.toString());
+
+        List<String> outputLines = Files.readAllLines(output);
+
+        long featureCount = outputLines.stream()
+                .filter(line -> !line.startsWith("#"))
+                .count();
+
+        assertEquals(5, featureCount);
     }
 }
