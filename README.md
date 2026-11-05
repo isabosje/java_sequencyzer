@@ -275,6 +275,12 @@ src/main/java/nl/bioinf/dsequencyzer/
 - Use `--help` if a command or option does not behave as expected.
 - The project includes JUnit tests under `src/test/`. Run them with `./gradlew test` or `gradlew.bat test` on Windows.
 
+### **Memory limitation**
+
+Processing very large GTF (or FASTA) files, such as a file containing the entire human genome,
+may result in an `OutOfMemoryError` due to memory limitations in the current implementation.
+The application is primarily intended for smaller input files and sequences.
+
 ## Sources
 
 - [Java Programming Book – Michiel Noback](https://michielnoback.github.io/java_book/intro.html)
