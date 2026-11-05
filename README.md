@@ -192,7 +192,13 @@ src/main/java/nl/bioinf/dsequencyzer/
   In particular, `FilterCommand`, `RegionCommand`, and `SummaryCommand` have not yet been given shorter lowercase command names.
 - GTF commands expect standard tab-separated GTF records with the relevant columns present.
 - Use `--help` if a command or option does not behave as expected.
-- The project includes JUnit tests under `src/test`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately.
+- The project includes JUnit tests under `src/test`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately. 
+
+### **Memory limitation** 
+
+Processing very large GTF (or FASTA) files, such as a file containing the entire human genome, 
+may result in an `OutOfMemoryError` due to memory limitations in the current implementation. 
+The application is primarily intended for smaller input files and sequences. 
 
 ## Sources
 
