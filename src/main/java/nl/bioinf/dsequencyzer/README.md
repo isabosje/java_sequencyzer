@@ -193,3 +193,19 @@ src/main/java/nl/bioinf/dsequencyzer/
 - GTF commands expect standard tab-separated GTF records with the relevant columns present.
 - Use `--help` if a command or option does not behave as expected.
 - The project includes JUnit tests under `src/test/`; run them with `./gradlew test` or `gradlew.bat test` on Windows. - The GTFFunctions tests are not finished yet unfortunately.
+
+
+
+## Sources
+
+- [Java Programming Book – Michiel Noback](https://michielnoback.github.io/java_book/intro.html)
+- [Java Applications – Michiel Noback](https://michielnoback.github.io/bincourses/java_apps.html)
+- [NCBI – FASTA Format](https://www.ncbi.nlm.nih.gov/genbank/fastaformat/) Documentation for FASTA file format
+- [Ensembl – GFF/GTF File Format](https://www.ensembl.org/info/website/upload/gff.html) Documentation for the GTF file format.
+
+## Libraries and Dependencies
+
+- [Picocli](https://picocli.info/) (v4.7.7) Command-line argument parsing and command handling.
+- [Apache Log4j 2](https://logging.apache.org/log4j/2.x/) (v2.26.1) Logging and verbosity management.
+- [JUnit Jupiter](https://junit.org/junit5/) (v6.0.0) Unit testing.
+- [Gradle Shadow Plugin](https://github.com/GradleUp/shadow) (v9.6.1) Packaging the application into an executable JAR.
